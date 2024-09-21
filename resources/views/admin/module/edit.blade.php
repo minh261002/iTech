@@ -16,9 +16,10 @@
             </div>
         </div>
 
-        <form class="row" action="{{ route('admin.module.update', $module->id) }}" method="POST">
+        <form class="row" action="{{ route('admin.module.update') }}" method="POST">
             @csrf
             @method('PUT')
+            <input type="hidden" name="id" value="{{ $module->id }}">
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between">

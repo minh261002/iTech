@@ -22,6 +22,7 @@ class ModuleUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'id' => 'required|integer|exists:modules,id',
             'name' => 'required',
             'description' => 'nullable',
             'status' => 'required',

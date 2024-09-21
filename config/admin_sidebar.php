@@ -2,6 +2,21 @@
 
 return [
     [
+        'href' => 'sidebarPostCatalogue',
+        'title' => 'Chuyên mục bài viết',
+        'icon' => '<i data-feather="book-open"></i>',
+        'sub_menu' => [
+            [
+                'title' => 'Thêm mới',
+                'route' => 'admin.post.catalogue.create',
+            ],
+            [
+                'title' => 'Danh sách',
+                'route' => 'admin.post.catalogue.index',
+            ],
+        ],
+    ],
+    [
         'href' => 'sidebarAdmin',
         'title' => 'Quản trị viên',
         'icon' => '<i data-feather="user-check"></i>',

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ModuleController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\PostCatalogueController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Ajax\LocationController;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +38,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::get('/create', [ModuleController::class, 'create'])->name('module.create');
             Route::post('/store', [ModuleController::class, 'store'])->name('module.store');
             Route::get('/edit/{id}', [ModuleController::class, 'edit'])->name('module.edit');
-            Route::put('/update/{id}', [ModuleController::class, 'update'])->name('module.update');
+            Route::put('/update', [ModuleController::class, 'update'])->name('module.update');
             Route::delete('/delete/{id}', [ModuleController::class, 'delete'])->name('module.delete');
         });
 
@@ -101,6 +102,27 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
             Route::middleware(['permission:deleteAdmin', 'auth:admin'])->group(function () {
                 Route::delete('/delete/{id}', [AdminController::class, 'delete'])->name('admin.delete');
+            });
+        });
+
+        //quản lý chuyên mục bài viết
+        Route::prefix('post/catalogue')->group(function () {
+            Route::middleware(['permission:viewPostCatalogue', 'auth:admin'])->group(function () {
+                Route::get('/', [PostCatalogueController::class, 'index'])->name('post.catalogue.index');
+            });
+
+            Route::middleware(['permission:createPostCatalogue', 'auth:admin'])->group(function () {
+                Route::get('/create', [PostCatalogueController::class, 'create'])->name('post.catalogue.create');
+                Route::post('/store', [PostCatalogueController::class, 'store'])->name('post.catalogue.store');
+            });
+
+            Route::middleware(['permission:editPostCatalogue', 'auth:admin'])->group(function () {
+                Route::get('/edit/{id}', [PostCatalogueController::class, 'edit'])->name('post.catalogue.edit');
+                Route::put('/update/{id}', [PostCatalogueController::class, 'update'])->name('post.catalogue.update');
+            });
+
+            Route::middleware(['permission:deletePostCatalogue', 'auth:admin'])->group(function () {
+                Route::delete('/delete/{id}', [PostCatalogueController::class, 'delete'])->name('post.catalogue.delete');
             });
         });
     });
