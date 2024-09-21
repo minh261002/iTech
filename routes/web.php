@@ -76,7 +76,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
             Route::middleware(['permission:editRole', 'auth:admin'])->group(function () {
                 Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('role.edit');
-                Route::put('/update/{id}', [RoleController::class, 'update'])->name('role.update');
+                Route::put('/update', [RoleController::class, 'update'])->name('role.update');
             });
 
             Route::middleware(['permission:deleteRole', 'auth:admin'])->group(function () {
