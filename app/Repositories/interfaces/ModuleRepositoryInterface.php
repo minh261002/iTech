@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\interfaces;
+namespace App\Repositories\Interfaces;
 interface ModuleRepositoryInterface extends EloquentRepositoryInterface
 {
     public function getQueryBuilderOrderBy($column = 'id', $sort = 'DESC');

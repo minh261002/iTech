@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Repositories\interfaces\EloquentRepositoryInterface;
+use App\Repositories\Interfaces\EloquentRepositoryInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 

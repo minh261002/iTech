@@ -1,13 +1,11 @@
 <?php
-
 namespace App\Services;
-
-use App\Repositories\Interfaces\ModuleRepositoryInterface;
-use App\Services\Interfaces\ModuleServiceInterface;
+use App\Models\Permission;
+use App\Repositories\Interfaces\PermissionRepositoryInterface;
+use App\Services\Interfaces\PermissionServiceInterface;
 use Illuminate\Http\Request;
 
-
-class ModuleService implements ModuleServiceInterface
+class PermissionService implements PermissionServiceInterface
 {
     /**
      * Current Object instance
@@ -18,22 +16,27 @@ class ModuleService implements ModuleServiceInterface
 
     protected $repository;
 
-    public function __construct(ModuleRepositoryInterface $repository)
+    public function __construct(PermissionRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
 
     public function store(Request $request)
     {
-
+        if (empty($request['module_id'])) {
+            $request['module_id'] = null;
+        }
         $this->data = $request->validated();
-        return $this->repository->create($this->data);
+        return Permission::create($this->data);
     }
 
     public function update(Request $request)
     {
-
+        if (empty($request['module_id'])) {
+            $request['module_id'] = null;
+        }
         $this->data = $request->validated();
+
         return $this->repository->update($this->data['id'], $this->data);
 
     }

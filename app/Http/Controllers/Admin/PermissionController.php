@@ -6,28 +6,41 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PermissionStoreRequest;
 use App\Http\Requests\Admin\PermissionUpdateRequest;
 use App\Models\Module;
+use App\Repositories\Interfaces\PermissionRepositoryInterface;
+use App\Services\Interfaces\PermissionServiceInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\View;
 use App\Models\Permission;
 
 class PermissionController extends Controller
 {
+    protected $permissionRepository;
+    protected $permissionService;
+
+    public function __construct(
+        PermissionRepositoryInterface $permissionRepository,
+        PermissionServiceInterface $permissionService
+    ) {
+        $this->permissionRepository = $permissionRepository;
+        $this->permissionService = $permissionService;
+    }
+
     public function index(): View
     {
-        $permissions = Permission::all();
+        $permissions = $this->permissionRepository->getAll();
         return view('admin.permission.index', compact('permissions'));
     }
 
     public function create(): View
     {
-        $modules = Module::orderBy('id', 'desc')->get();
+        $modules = $this->permissionRepository->getAllModules();
         return view('admin.permission.create', compact('modules'));
     }
 
     public function store(PermissionStoreRequest $request): RedirectResponse
     {
-        $data = $request->validated();
-        Permission::create($data);
+        $this->permissionService->store($request);
 
         notyf()->success('Thêm quyền thành công');
         return redirect()->route('admin.permission.index');
@@ -35,28 +48,23 @@ class PermissionController extends Controller
 
     public function edit(int $id): View
     {
-        $permission = Permission::findOrFail($id);
-        $modules = Module::orderBy('id', 'desc')->get();
+        $permission = $this->permissionRepository->findOrFail($id);
+        $modules = $this->permissionRepository->getAllModules();
         return view('admin.permission.edit', compact('permission', 'modules'));
     }
 
-    public function update(PermissionUpdateRequest $request, int $id): RedirectResponse
+    public function update(PermissionUpdateRequest $request): RedirectResponse
     {
-        $data = $request->validated();
-
-        $permission = Permission::findOrFail($id);
-        $permission->update($data);
-
+        $this->permissionService->update($request);
         notyf()->success('Cập nhật quyền thành công');
         return redirect()->back();
     }
 
-    public function delete(int $id): RedirectResponse
+    public function delete(int $id): JsonResponse
     {
-        $permission = Permission::findOrFail($id);
-        $permission->delete();
+        $this->permissionService->delete($id);
 
         notyf()->success('Xóa quyền thành công');
-        return redirect()->back();
+        return response()->json(['status' => 'success']);
     }
 }

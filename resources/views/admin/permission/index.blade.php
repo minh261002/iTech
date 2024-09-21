@@ -55,7 +55,7 @@
                                 <td>{{ $per->title }}</td>
                                 <td>{{ $per->name }}</td>
                                 <td>{{ $per->guard_name }}</td>
-                                <td>{{ $per->module->name }}</td>
+                                <td>{{ $per->module->name ?? 'Không thuộc module nào' }}</td>
                                 <td>
                                     <a href="{{ route('admin.permission.edit', $per->id) }}" class="btn btn-sm btn-primary">
                                         <i class="mdi mdi-pencil"></i>

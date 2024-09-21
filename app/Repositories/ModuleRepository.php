@@ -3,7 +3,7 @@
 namespace App\Repositories;
 use App\Models\Module;
 use App\Models\Permission;
-use App\Repositories\interfaces\ModuleRepositoryInterface;
+use App\Repositories\Interfaces\ModuleRepositoryInterface;
 
 class ModuleRepository extends EloquentRepository implements ModuleRepositoryInterface
 {

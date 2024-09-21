@@ -19,9 +19,10 @@
             </div>
         </div>
 
-        <form class="row" action="{{ route('admin.permission.update', $permission->id) }}" method="POST">
+        <form class="row" action="{{ route('admin.permission.update') }}" method="POST">
             @csrf
             @method('PUT')
+            <input type="hidden" name="id" value="{{ $permission->id }}">
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between">
