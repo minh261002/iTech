@@ -55,8 +55,10 @@
 
                             <div class="col-md-6 mb-3">
                                 <label for="birthday" class="form-label">Ngày sinh</label>
-                                <input type="date" class="form-control" id="birthday" name="birthday"
-                                    value="{{ old('birthday') }}">
+                                {{-- <input type="date" class="form-control" id="birthday" name="birthday"
+                                    value="{{ old('birthday') }}"> --}}
+                                <input type="text" class="form-control flatpickr-input" id="basic-datepicker"
+                                    name="birthday" readonly="readonly">
                                 @error('birthday')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

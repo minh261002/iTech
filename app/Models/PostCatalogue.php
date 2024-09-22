@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kalnoy\Nestedset\NodeTrait;
+use App\Helpers\Sluggable;
 
 class PostCatalogue extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory, NodeTrait, Sluggable;
 
     protected $table = 'post_catalogues';
 
@@ -24,12 +25,22 @@ class PostCatalogue extends Model
         'desc'
     ];
 
-    public function sluggable(): array
+    protected static function boot()
     {
-        return [
-            'slug' => [
-                'source' => 'name'
-            ]
-        ];
+        parent::boot();
+    }
+    public function isPublished()
+    {
+        return $this->status == 2;
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(PostCatalogue::class, 'post_catalogue_post', 'post_catalogue_id', 'post_id');
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('status', 2);
     }
 }

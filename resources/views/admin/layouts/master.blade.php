@@ -26,7 +26,8 @@
         type="text/css" />
 
     <link href="{{ asset('admin/assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
-
+    <link href="{{ asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/switchery.css') }}">
 </head>
 
 <!-- body start -->
@@ -75,7 +76,7 @@
     <script src="{{ asset('admin/assets/libs/waypoints/lib/jquery.waypoints.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/jquery.counterup/jquery.counterup.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/feather-icons/feather.min.js') }}"></script>
-
+    <script src="{{ asset('admin/assets/js/custom.js') }}"></script>
     <!--Select2 js-->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
@@ -93,7 +94,11 @@
     <script src="{{ asset('admin/assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/ckfinder_2/ckfinder.js') }}"></script>
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <!-- Flatpickr Timepicker Plugin js -->
+    <script src="{{ asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 
+    <script src="{{ asset('admin/assets/js/pages/form-picker.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/switchery.js') }}"></script>
     <script>
         $(document).ready(function() {
 

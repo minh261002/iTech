@@ -60,11 +60,6 @@ class RoleController extends Controller
 
     public function delete(int $id): JsonResponse
     {
-        // $role = Role::findOrFail($id);
-        // $role->permissions()->detach();
-
-        // $role->delete();
-
         $this->roleService->delete($id);
 
         notyf()->success('Xóa thành công');

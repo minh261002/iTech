@@ -118,7 +118,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
             Route::middleware(['permission:editPostCatalogue', 'auth:admin'])->group(function () {
                 Route::get('/edit/{id}', [PostCatalogueController::class, 'edit'])->name('post.catalogue.edit');
-                Route::put('/update/{id}', [PostCatalogueController::class, 'update'])->name('post.catalogue.update');
+                Route::put('/update', [PostCatalogueController::class, 'update'])->name('post.catalogue.update');
             });
 
             Route::middleware(['permission:deletePostCatalogue', 'auth:admin'])->group(function () {

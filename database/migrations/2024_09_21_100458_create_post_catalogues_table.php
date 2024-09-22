@@ -31,6 +31,10 @@ return new class extends Migration {
      */
     public function down(): void
     {
+        Schema::table('post_catalogues', function (Blueprint $table) {
+            // Drop foreign key constraint
+            $table->dropForeign(['parent_id']);
+        });
         Schema::dropIfExists('post_catalogues');
     }
 };

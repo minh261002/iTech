@@ -34,17 +34,15 @@
                         <th>Thao tác</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     @foreach ($post_catalogues as $catalogue)
                         <tr>
-                            <td>{{ $catalogue->name }}</td>
+                            <td>{{ generate_text_depth_tree($catalogue->depth) }}
+                                {{ $catalogue->name }}
+                            </td>
                             <td>
-                                @if ($catalogue->status == 1)
-                                    <span class="badge badge-success">Hiển thị</span>
-                                @else
-                                    <span class="badge badge-secondary">Ẩn</span>
-                                @endif
+                                <input type="checkbox" class="js-switch" data-switchery="true" data-color="#64b0f2"
+                                    {{ $catalogue->status == 2 ? 'checked' : '' }}>
                             </td>
                             <td>
                                 <a href="{{ route('admin.post.catalogue.edit', $catalogue->id) }}"
@@ -64,3 +62,6 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+@endpush
