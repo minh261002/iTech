@@ -64,4 +64,10 @@ class PostCatalogueController extends Controller
 
         return response()->json(['status' => 'success']);
     }
+
+    public function updateStatus(Request $request)
+    {
+        $this->service->updateStatus($request);
+        return response()->json(['status' => 'success']);
+    }
 }

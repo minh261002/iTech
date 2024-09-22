@@ -40,6 +40,13 @@ class PostCatalogueService implements PostCatalogueServiceInterface
 
     }
 
+    public function updateStatus(Request $request)
+    {
+        $this->data = $request->all();
+        return $this->repository->update($this->data['catalogue_id'], $this->data);
+
+    }
+
     public function delete($id)
     {
         return $this->repository->delete($id);

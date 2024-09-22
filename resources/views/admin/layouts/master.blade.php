@@ -28,11 +28,16 @@
     <link href="{{ asset('admin/assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin/assets/libs/flatpickr/flatpickr.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('admin/assets/css/switchery.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/css/toast@1.0.1/fuiToast.min.css">
+
 </head>
 
 <!-- body start -->
 
 <body data-menu-color="dark" data-sidebar="default">
+    <div id="fui-toast"></div>
+
     <!-- Begin page -->
     <div id="app-layout">
 
@@ -67,6 +72,8 @@
     </div>
     <!-- END wrapper -->
     <script src="{{ asset('admin/assets/libs/ckeditor/ckeditor.js') }}"></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/js/toast@1.0.1/fuiToast.min.js"></script>
 
     <!-- Vendor -->
     <script src="{{ asset('admin/assets/libs/jquery/jquery.min.js') }}"></script>

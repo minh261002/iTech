@@ -41,8 +41,8 @@
                                 {{ $catalogue->name }}
                             </td>
                             <td>
-                                <input type="checkbox" class="js-switch" data-switchery="true" data-color="#64b0f2"
-                                    {{ $catalogue->status == 2 ? 'checked' : '' }}>
+                                <input type="checkbox" class="js-switch" {{ $catalogue->status == 2 ? 'checked' : '' }}
+                                    data-id={{ $catalogue->id }}>
                             </td>
                             <td>
                                 <a href="{{ route('admin.post.catalogue.edit', $catalogue->id) }}"
@@ -64,4 +64,25 @@
 @endsection
 
 @push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.js-switch').change(function() {
+                let status = $(this).prop('checked') === true ? 2 : 1;
+                let catalogueId = $(this).data('id');
+
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: '{{ route('admin.post.catalogue.update.status') }}',
+                    data: {
+                        status: status,
+                        catalogue_id: catalogueId
+                    },
+                    success: function(data) {
+                        FuiToast.success('Cập nhật trạng thái thành công');
+                    }
+                });
+            });
+        });
+    </script>
 @endpush

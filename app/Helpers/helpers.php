@@ -1,6 +1,6 @@
 <?php
 
-function generate_text_depth_tree($depth, $word = '|-')
+function generate_text_depth_tree($depth, $word = '-')
 {
     $text = '';
     if ($depth > 0) {
