@@ -11,6 +11,8 @@ interface PostServiceInterface
 
     public function update(Request $request);
 
+    public function updateStatus(Request $request);
+
     public function delete($id);
 
 }

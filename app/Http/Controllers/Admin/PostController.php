@@ -68,4 +68,10 @@ class PostController extends Controller
         notyf()->success('Xóa bài viết thành công');
         return response()->json(['status' => 'success']);
     }
+
+    public function updateStatus(Request $request)
+    {
+        $this->postService->updateStatus($request);
+        return response()->json(['status' => 'success']);
+    }
 }

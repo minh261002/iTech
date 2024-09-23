@@ -75,15 +75,15 @@
         $(document).ready(function() {
             $('.js-switch').change(function() {
                 let status = $(this).prop('checked') === true ? 2 : 1;
-                let catalogueId = $(this).data('id');
+                let postId = $(this).data('id');
 
                 $.ajax({
                     type: "GET",
                     dataType: "json",
-                    url: '{{ route('admin.post.catalogue.update.status') }}',
+                    url: '{{ route('admin.post.update.status') }}',
                     data: {
                         status: status,
-                        catalogue_id: catalogueId
+                        post_id: postId
                     },
                     success: function(data) {
                         if (data.status == 'success') {
