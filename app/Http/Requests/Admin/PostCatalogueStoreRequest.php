@@ -29,6 +29,9 @@ class PostCatalogueStoreRequest extends FormRequest
             "status" => "required",
             'position' => 'required|integer',
             'image' => 'nullable',
+            'meta_title' => 'nullable',
+            'meta_description' => 'nullable',
+            'meta_keywords' => 'nullable',
         ];
     }
 

@@ -22,7 +22,10 @@ class PostCatalogue extends Model
         'slug',
         'position',
         'status',
-        'desc'
+        'desc',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
     ];
 
     protected static function boot()
