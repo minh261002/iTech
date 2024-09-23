@@ -13,6 +13,7 @@
             </nav>
         </div>
     </div>
+    {{-- <pre>{{ print_r($post_catalogues, true) }}</pre> --}}
 
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
@@ -37,9 +38,7 @@
                 <tbody>
                     @foreach ($post_catalogues as $catalogue)
                         <tr>
-                            <td>{{ generate_text_depth_tree($catalogue->depth) }}
-                                {{ $catalogue->name }}
-                            </td>
+                            <td>{{ generate_text_depth_tree($catalogue->depth) . '' . $catalogue->name }}</td>
                             <td>
                                 <input type="checkbox" class="js-switch" {{ $catalogue->status == 2 ? 'checked' : '' }}
                                     data-id={{ $catalogue->id }}>
