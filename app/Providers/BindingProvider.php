@@ -12,6 +12,7 @@ class BindingProvider extends ServiceProvider
         'App\Repositories\Interfaces\PermissionRepositoryInterface' => 'App\Repositories\PermissionRepository',
         'App\Repositories\Interfaces\RoleRepositoryInterface' => 'App\Repositories\RoleRepository',
         'App\Repositories\Interfaces\PostCatalogueRepositoryInterface' => 'App\Repositories\PostCatalogueRepository',
+        'App\Repositories\Interfaces\PostRepositoryInterface' => 'App\Repositories\PostRepository',
     ];
 
     protected $services = [
@@ -19,6 +20,7 @@ class BindingProvider extends ServiceProvider
         'App\Services\Interfaces\PermissionServiceInterface' => 'App\Services\PermissionService',
         'App\Services\Interfaces\RoleServiceInterface' => 'App\Services\RoleService',
         'App\Services\Interfaces\PostCatalogueServiceInterface' => 'App\Services\PostCatalogueService',
+        'App\Services\Interfaces\PostServiceInterface' => 'App\Services\PostService',
     ];
     /**
      * Register services.

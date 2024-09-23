@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Quản lý chuyên mục bài viết')
+@section('title', 'Quản lý bài viết')
 
 @section('content')
     <div class="card my-2">
@@ -8,7 +8,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Quản lý chuyên mục bài viết</li>
+                    <li class="breadcrumb-item active" aria-current="page">Quản lý bài viết</li>
                 </ol>
             </nav>
         </div>
@@ -16,10 +16,10 @@
 
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
-            <h2 class="card-title mb-0">Danh sách chuyên mục bài viết</h2>
+            <h2 class="card-title mb-0">Danh sách bài viết</h2>
 
             <div class="card-tools">
-                <a href="{{ route('admin.post.catalogue.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.post.create') }}" class="btn btn-primary">
                     <i class="mdi mdi-plus"></i> Thêm mới
                 </a>
             </div>
@@ -29,28 +29,35 @@
             <table class="table table-striped table-bordered" id="table">
                 <thead>
                     <tr>
-                        <th>Tên danh mục</th>
+                        <th>Tên bài viết</th>
+                        <th>Nổi bật</th>
                         <th>Trạng thái</th>
                         <th>Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($post_catalogues as $catalogue)
+                    @foreach ($posts as $post)
                         <tr>
-                            <td>{{ generate_text_depth_tree($catalogue->depth) }}
-                                {{ $catalogue->name }}
+                            <td>
+                                {{ $post->title }}
                             </td>
                             <td>
-                                <input type="checkbox" class="js-switch" {{ $catalogue->status == 2 ? 'checked' : '' }}
-                                    data-id={{ $catalogue->id }}>
+                                @if ($post->is_featured === 1)
+                                    <span class="badge text-bg-primary">Nổi bật</span>
+                                @elseif($post->is_featured === 0)
+                                    <span class="badge text-bg-danger">Không nổi bật</span>
+                                @endif
                             </td>
                             <td>
-                                <a href="{{ route('admin.post.catalogue.edit', $catalogue->id) }}"
-                                    class="btn btn-sm btn-primary">
+                                <input type="checkbox" class="js-switch" {{ $post->status == 2 ? 'checked' : '' }}
+                                    data-id={{ $post->id }}>
+                            </td>
+                            <td>
+                                <a href="{{ route('admin.post.edit', $post->id) }}" class="btn btn-sm btn-primary">
                                     <i class="mdi mdi-pencil"></i>
                                 </a>
 
-                                <a href="{{ route('admin.post.catalogue.delete', $catalogue->id) }}"
+                                <a href="{{ route('admin.post.delete', $post->id) }}"
                                     class="btn btn-sm btn-danger delete-item">
                                     <i class="mdi mdi-delete"></i>
                                 </a>

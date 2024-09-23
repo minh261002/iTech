@@ -14,14 +14,13 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->text('image');
+            $table->text('image')->nullable();
             $table->boolean('is_featured')->default(0);
             $table->tinyInteger('status')->default(1);
-            $table->text('excerpt')->nullable();
             $table->longText('content')->nullable();
-            $table->integer('priority')->default(0);
-            $table->tinyInteger('post_type');
-            $table->dateTime('posted_at');
+            $table->string('meta_title')->nullable();
+            $table->string('meta_description')->nullable();
+            $table->string('meta_keywords')->nullable();
             $table->timestamps();
         });
     }

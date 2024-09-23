@@ -1,21 +1,21 @@
 <?php
 
 return [
-    // [
-    //     'href' => 'sidebarPost',
-    //     'title' => 'Bài viết',
-    //     'icon' => '<i data-feather="file-text"></i>',
-    //     'sub_menu' => [
-    //         [
-    //             'title' => 'Thêm mới',
-    //             'route' => 'admin.post.create',
-    //         ],
-    //         [
-    //             'title' => 'Danh sách',
-    //             'route' => 'admin.post.index',
-    //         ],
-    //     ],
-    // ],
+    [
+        'href' => 'sidebarPost',
+        'title' => 'Bài viết',
+        'icon' => '<i data-feather="file-text"></i>',
+        'sub_menu' => [
+            [
+                'title' => 'Thêm mới',
+                'route' => 'admin.post.create',
+            ],
+            [
+                'title' => 'Danh sách',
+                'route' => 'admin.post.index',
+            ],
+        ],
+    ],
     [
         'href' => 'sidebarPostCatalogue',
         'title' => 'Chuyên mục bài viết',

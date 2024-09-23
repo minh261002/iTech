@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class PostCataloguePost extends Model
 {
     use HasFactory;
+
+    protected $table = 'post_catalogue_post';
+
+    protected $fillable = [
+        'post_catalogue_id',
+        'post_id',
+    ];
 }

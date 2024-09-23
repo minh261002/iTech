@@ -21,6 +21,9 @@ return new class extends Migration {
             $table->integer('position')->default(0);
             $table->tinyInteger('status');
             $table->longText('desc')->nullable();
+            $table->string('meta_title')->nullable();
+            $table->string('meta_description')->nullable();
+            $table->string('meta_keywords')->nullable();
             $table->timestamps();
             $table->foreign('parent_id')->references('id')->on('post_catalogues')->onUpdate('NO ACTION')->onDelete('SET NULL');
         });

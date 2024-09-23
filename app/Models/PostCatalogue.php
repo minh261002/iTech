@@ -34,10 +34,11 @@ class PostCatalogue extends Model
         return $this->status == 2;
     }
 
-    public function categories()
+    public function posts()
     {
-        return $this->belongsToMany(PostCatalogue::class, 'post_catalogue_post', 'post_catalogue_id', 'post_id');
+        return $this->belongsToMany(Post::class, 'post_catalogue_posts', 'post_catalogue_id', 'post_id');
     }
+
 
     public function scopePublished($query)
     {

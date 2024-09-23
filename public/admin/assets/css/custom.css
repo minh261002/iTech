@@ -2,6 +2,22 @@
     height: 300px !important;
 }
 
+.seo-preview-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #1a0dab;
+}
+
+.seo-preview-url {
+    font-size: 1rem;
+    color: #0dab2f;
+}
+
+.seo-preview-description {
+    font-size: 1rem;
+    color: #4b4b4b;
+}
+
 .custom-image-chat {
     width: 50px !important;
     height: 50px !important;
