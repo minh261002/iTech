@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\ModuleController;
@@ -170,6 +171,28 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
             Route::middleware(['permission:deleteMember', 'auth:admin'])->group(function () {
                 Route::delete('/delete/{id}', [MemberController::class, 'delete'])->name('member.delete');
+            });
+        });
+
+        //quản lý danh mục sản phẩm
+        Route::prefix('category')->group(function () {
+            Route::middleware(['permission:viewCategory', 'auth:admin'])->group(function () {
+                Route::get('/', [CategoryController::class, 'index'])->name('category.index');
+            });
+
+            Route::middleware(['permission:createCategory', 'auth:admin'])->group(function () {
+                Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
+                Route::post('/store', [CategoryController::class, 'store'])->name('category.store');
+            });
+
+            Route::middleware(['permission:editCategory', 'auth:admin'])->group(function () {
+                Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+                Route::put('/update', [CategoryController::class, 'update'])->name('category.update');
+                Route::get('/update/status', [CategoryController::class, 'updateStatus'])->name('category.update.status');
+            });
+
+            Route::middleware(['permission:deleteCategory', 'auth:admin'])->group(function () {
+                Route::delete('/delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
             });
         });
     });

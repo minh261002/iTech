@@ -2,6 +2,21 @@
 
 return [
     [
+        'href' => 'sidebarCategory',
+        'title' => 'Danh mục sản phẩm',
+        'icon' => '<i data-feather="grid"></i>',
+        'sub_menu' => [
+            [
+                'title' => 'Thêm mới',
+                'route' => 'admin.category.create',
+            ],
+            [
+                'title' => 'Danh sách',
+                'route' => 'admin.category.index',
+            ],
+        ],
+    ],
+    [
         'href' => 'sidebarPost',
         'title' => 'Bài viết',
         'icon' => '<i data-feather="file-text"></i>',
