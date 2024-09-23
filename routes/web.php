@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\ModuleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PostCatalogueController;
@@ -147,6 +148,28 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
             Route::middleware(['permission:deletePost', 'auth:admin'])->group(function () {
                 Route::delete('/delete/{id}', [PostController::class, 'delete'])->name('post.delete');
+            });
+        });
+
+        //quản lý thành viên
+        Route::prefix('member')->group(function () {
+            Route::middleware(['permission:viewMember', 'auth:admin'])->group(function () {
+                Route::get('/', [MemberController::class, 'index'])->name('member.index');
+            });
+
+            Route::middleware(['permission:createMember', 'auth:admin'])->group(function () {
+                Route::get('/create', [MemberController::class, 'create'])->name('member.create');
+                Route::post('/store', [MemberController::class, 'store'])->name('member.store');
+            });
+
+            Route::middleware(['permission:editMember', 'auth:admin'])->group(function () {
+                Route::get('/edit/{id}', [MemberController::class, 'edit'])->name('member.edit');
+                Route::put('/update', [MemberController::class, 'update'])->name('member.update');
+                Route::get('/update/status', [MemberController::class, 'updateStatus'])->name('member.update.status');
+            });
+
+            Route::middleware(['permission:deleteMember', 'auth:admin'])->group(function () {
+                Route::delete('/delete/{id}', [MemberController::class, 'delete'])->name('member.delete');
             });
         });
     });

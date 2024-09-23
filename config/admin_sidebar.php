@@ -32,6 +32,21 @@ return [
         ],
     ],
     [
+        'href' => 'sidebarMember',
+        'title' => 'Thành viên',
+        'icon' => '<i data-feather="users"></i>',
+        'sub_menu' => [
+            [
+                'title' => 'Thêm mới',
+                'route' => 'admin.member.create',
+            ],
+            [
+                'title' => 'Danh sách',
+                'route' => 'admin.member.index',
+            ],
+        ],
+    ],
+    [
         'href' => 'sidebarAdmin',
         'title' => 'Quản trị viên',
         'icon' => '<i data-feather="user-check"></i>',

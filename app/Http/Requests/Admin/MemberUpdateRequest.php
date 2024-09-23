@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminStoreRequest extends FormRequest
+class MemberUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,10 @@ class AdminStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'id' => 'required|exists:users,id',
             'name' => 'required',
             'email' => 'required|email|unique:admins,email',
-            'password' => 'required|min:6|confirmed',
-            'role' => 'required',
+            'password' => 'nullable|min:6|confirmed',
             'province_id' => 'nullable',
             'district_id' => 'nullable',
             'ward_id' => 'nullable',
@@ -34,6 +34,7 @@ class AdminStoreRequest extends FormRequest
             'birthday' => 'nullable',
             'image' => 'nullable',
             'description' => 'nullable',
+            'status' => 'required',
         ];
     }
 
@@ -42,16 +43,19 @@ class AdminStoreRequest extends FormRequest
      *
      * @return array<string, string>
      */
+
     public function messages(): array
     {
         return [
+            'id.required' => 'ID không được để trống',
+            'id.exists' => 'ID không tồn tại',
             'name.required' => 'Tên không được để trống',
             'email.required' => 'Email không được để trống',
             'email.email' => 'Email không đúng định dạng',
             'email.unique' => 'Email đã tồn tại',
-            'password.required' => 'Mật khẩu không được để trống',
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự',
-            'role.required' => 'Vui lòng chọn quyền',
+            'status.required' => 'Vui lòng chọn trạng thái',
         ];
     }
+
 }

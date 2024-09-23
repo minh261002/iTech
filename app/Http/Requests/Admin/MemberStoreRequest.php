@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminStoreRequest extends FormRequest
+class MemberStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,6 @@ class AdminStoreRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email|unique:admins,email',
             'password' => 'required|min:6|confirmed',
-            'role' => 'required',
             'province_id' => 'nullable',
             'district_id' => 'nullable',
             'ward_id' => 'nullable',
@@ -34,6 +33,7 @@ class AdminStoreRequest extends FormRequest
             'birthday' => 'nullable',
             'image' => 'nullable',
             'description' => 'nullable',
+            'status' => 'required',
         ];
     }
 
@@ -51,7 +51,7 @@ class AdminStoreRequest extends FormRequest
             'email.unique' => 'Email đã tồn tại',
             'password.required' => 'Mật khẩu không được để trống',
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự',
-            'role.required' => 'Vui lòng chọn quyền',
+            'status.required' => 'Vui lòng chọn trạng thái',
         ];
     }
 }

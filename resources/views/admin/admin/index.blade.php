@@ -46,10 +46,10 @@
                             <td>{{ $admin->name }}</td>
                             <td>{{ $admin->email }}</td>
                             <td>{{ $admin->phone }}</td>
-                            <td>{{ $admin->address }},
-                                {{ $admin->ward->full_name ?? '' }},
-                                {{ $admin->district->full_name ?? '' }},
-                                {{ $admin->province->full_name ?? '' }},
+                            <td>{{ $admin->address ?? 'Địa chỉ' }},
+                                {{ $admin->ward->full_name ?? 'Phường / Xã' }},
+                                {{ $admin->district->full_name ?? 'Quận / Huyện' }},
+                                {{ $admin->province->full_name ?? 'Tỉnh / Thành Phố' }},
                             </td>
                             <td>
                                 @foreach ($admin->role as $role)
