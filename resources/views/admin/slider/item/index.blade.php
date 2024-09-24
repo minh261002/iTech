@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Quản lý vai trò')
+@section('title', 'Quản lý slider')
 
 @section('content')
     <div class="card my-2">
@@ -8,7 +8,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Quản lý vai trò</li>
+                    <li class="breadcrumb-item active" aria-current="page">Quản lý slider</li>
                 </ol>
             </nav>
         </div>
@@ -16,10 +16,12 @@
 
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
-            <h2 class="card-title mb-0">Danh sách vai trò</h2>
+            <h2 class="card-title mb-0">
+                {{ \App\Models\Slider::where('id', $sliderId)->first()->name }}
+            </h2>
 
             <div class="card-tools">
-                <a href="{{ route('admin.role.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.slider.item.create', $sliderId) }}" class="btn btn-primary">
                     <i class="mdi mdi-plus"></i> Thêm mới
                 </a>
             </div>
@@ -29,27 +31,29 @@
             <table class="table table-striped table-bordered" id="table">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>Ảnh</th>
                         <th>Tiêu đề</th>
-                        <th>Vai trò (ROLE_NAME)</th>
-                        <th>Nhóm quyền (GUARD_NAME)</th>
+                        <th>Đường dẫn</th>
+                        <th>Thứ tự</th>
                         <th>Thao tác</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @foreach ($roles as $role)
+                    @foreach ($items as $item)
                         <tr>
-                            <td>{{ $role->id }}</td>
-                            <td>{{ $role->title }}</td>
-                            <td>{{ $role->name }}</td>
-                            <td>{{ $role->guard_name }}</td>
+                            <td style="width:70px">
+                                <img src="{{ asset($item->image) }}" alt="{{ $item->title }}" class="custom-img-table">
+                            </td>
+                            <td>{{ $item->title }}</td>
+                            <td>{{ $item->link }}</td>
+                            <td>{{ $item->position }}</td>
                             <td>
-                                <a href="{{ route('admin.role.edit', $role->id) }}" class="btn btn-sm btn-primary">
+                                <a href="{{ route('admin.slider.item.edit', $item->id) }}" class="btn btn-sm btn-primary">
                                     <i data-feather="edit"></i>
                                 </a>
 
-                                <a href="{{ route('admin.role.delete', $role->id) }}"
+                                <a href="{{ route('admin.slider.item.delete', $item->id) }}"
                                     class="btn btn-sm btn-danger delete-item">
                                     <i data-feather="trash"></i>
                                 </a>

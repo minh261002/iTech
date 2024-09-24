@@ -15,6 +15,8 @@ class BindingProvider extends ServiceProvider
         'App\Repositories\Interfaces\PostRepositoryInterface' => 'App\Repositories\PostRepository',
         'App\Repositories\Interfaces\MemberRepositoryInterface' => 'App\Repositories\MemberRepository',
         'App\Repositories\Interfaces\CategoryRepositoryInterface' => 'App\Repositories\CategoryRepository',
+        'App\Repositories\Interfaces\SliderRepositoryInterface' => 'App\Repositories\SliderRepository',
+        'App\Repositories\Interfaces\SliderItemRepositoryInterface' => 'App\Repositories\SliderItemRepository',
     ];
 
     protected $services = [
@@ -25,6 +27,8 @@ class BindingProvider extends ServiceProvider
         'App\Services\Interfaces\PostServiceInterface' => 'App\Services\PostService',
         'App\Services\Interfaces\MemberServiceInterface' => 'App\Services\MemberService',
         'App\Services\Interfaces\CategoryServiceInterface' => 'App\Services\CategoryService',
+        'App\Services\Interfaces\SliderServiceInterface' => 'App\Services\SliderService',
+        'App\Services\Interfaces\SliderItemServiceInterface' => 'App\Services\SliderItemService',
     ];
     /**
      * Register services.

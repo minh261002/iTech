@@ -113,7 +113,9 @@
                 'language': {
                     'url': '{{ asset('admin/assets/lang/dataTable.json') }}'
                 },
-                'order': []
+                'order': [
+                    [0, 'desc']
+                ]
             });
 
             $('.select2').select2({

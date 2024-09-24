@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Quản lý bài viết')
+@section('title', 'Quản lý slider')
 
 @section('content')
     <div class="card my-2">
@@ -8,7 +8,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Quản lý bài viết</li>
+                    <li class="breadcrumb-item active" aria-current="page">Quản lý slider</li>
                 </ol>
             </nav>
         </div>
@@ -16,10 +16,10 @@
 
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
-            <h2 class="card-title mb-0">Danh sách bài viết</h2>
+            <h2 class="card-title mb-0">Danh sách slider</h2>
 
             <div class="card-tools">
-                <a href="{{ route('admin.post.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.slider.create') }}" class="btn btn-primary">
                     <i class="mdi mdi-plus"></i> Thêm mới
                 </a>
             </div>
@@ -29,35 +29,31 @@
             <table class="table table-striped table-bordered" id="table">
                 <thead>
                     <tr>
-                        <th>Tên bài viết</th>
-                        <th>Nổi bật</th>
+                        <th>Tên slider</th>
+                        <th>Mô tả</th>
                         <th>Trạng thái</th>
                         <th>Thao tác</th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    @foreach ($posts as $post)
+                    @foreach ($sliders as $slider)
                         <tr>
+                            <td>{{ $slider->name }}</td>
+                            <td>{{ $slider->desc }}</td>
                             <td>
-                                {{ $post->title }}
+                                <input type="checkbox" class="js-switch" {{ $slider->status == 2 ? 'checked' : '' }}
+                                    data-id={{ $slider->id }}>
                             </td>
                             <td>
-                                @if ($post->is_featured === 1)
-                                    <span class="badge text-bg-primary">Nổi bật</span>
-                                @elseif($post->is_featured === 0)
-                                    <span class="badge text-bg-danger">Không nổi bật</span>
-                                @endif
-                            </td>
-                            <td>
-                                <input type="checkbox" class="js-switch" {{ $post->status == 2 ? 'checked' : '' }}
-                                    data-id={{ $post->id }}>
-                            </td>
-                            <td>
-                                <a href="{{ route('admin.post.edit', $post->id) }}" class="btn btn-sm btn-primary">
+                                <a href="{{ route('admin.slider.item.index', $slider->id) }}"
+                                    class="btn btn-sm btn-primary">
+                                    <i data-feather="image"></i>
+                                </a>
+                                <a href="{{ route('admin.slider.edit', $slider->id) }}" class="btn btn-sm btn-primary">
                                     <i data-feather="edit"></i>
                                 </a>
-
-                                <a href="{{ route('admin.post.delete', $post->id) }}"
+                                <a href="{{ route('admin.slider.delete', $slider->id) }}"
                                     class="btn btn-sm btn-danger delete-item">
                                     <i data-feather="trash"></i>
                                 </a>
@@ -75,15 +71,15 @@
         $(document).ready(function() {
             $('.js-switch').change(function() {
                 let status = $(this).prop('checked') === true ? 2 : 1;
-                let postId = $(this).data('id');
+                let sliderId = $(this).data('id');
 
                 $.ajax({
                     type: "GET",
                     dataType: "json",
-                    url: '{{ route('admin.post.update.status') }}',
+                    url: '{{ route('admin.slider.update.status') }}',
                     data: {
                         status: status,
-                        post_id: postId
+                        slider_id: sliderId
                     },
                     success: function(data) {
                         if (data.status == 'success') {
