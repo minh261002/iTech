@@ -2,6 +2,21 @@
 
 return [
     [
+        'href' => 'sidebarSlider',
+        'title' => 'Sliders',
+        'icon' => '<i data-feather="image"></i>',
+        'sub_menu' => [
+            [
+                'title' => 'Thêm mới',
+                'route' => 'admin.slider.create',
+            ],
+            [
+                'title' => 'Danh sách',
+                'route' => 'admin.slider.index',
+            ],
+        ],
+    ],
+    [
         'href' => 'sidebarCategory',
         'title' => 'Danh mục sản phẩm',
         'icon' => '<i data-feather="grid"></i>',
