@@ -25,6 +25,12 @@
     object-fit: cover;
 }
 
+.custom-img-table {
+    width: 70px !important;
+    height: 70px !important;
+    object-fit: cover;
+}
+
 .chat-box .chat-content {
     background-color: #f9f9f9 !important;
     height: 300px;

@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Quản lý chuyên mục bài viết')
+@section('title', 'Quản lý danh mục sản phẩm')
 
 @section('content')
     <div class="card my-2">
@@ -8,7 +8,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Quản lý chuyên mục bài viết</li>
+                    <li class="breadcrumb-item active" aria-current="page">Quản lý danh mục sản phẩm</li>
                 </ol>
             </nav>
         </div>
@@ -16,10 +16,10 @@
 
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
-            <h2 class="card-title mb-0">Danh sách chuyên mục bài viết</h2>
+            <h2 class="card-title mb-0">Danh sách danh mục sản phẩm</h2>
 
             <div class="card-tools">
-                <a href="{{ route('admin.post.catalogue.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.category.create') }}" class="btn btn-primary">
                     <i class="mdi mdi-plus"></i> Thêm mới
                 </a>
             </div>
@@ -36,29 +36,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($post_catalogues as $catalogue)
+                    @foreach ($categories as $category)
                         <tr>
                             <td style="width: 70px">
-                                @if ($catalogue->image)
-                                    <img src="{{ asset($catalogue->image) }}" alt="{{ $catalogue->name }}"
+                                @if ($category->image)
+                                    <img src="{{ asset($category->image) }}" alt="{{ $category->name }}"
                                         class="custom-img-table">
                                 @else
-                                    <img src="{{ asset('admin/assets/images/not-found.jpg') }}" alt="{{ $catalogue->name }}"
+                                    <img src="{{ asset('admin/assets/images/not-found.jpg') }}" alt="{{ $category->name }}"
                                         class="custom-img-table">
                                 @endif
                             </td>
-                            <td>{{ generate_text_depth_tree($catalogue->depth) . '' . $catalogue->name }}</td>
+                            <td>{{ generate_text_depth_tree($category->depth) . ' ' . $category->name }}</td>
                             <td>
-                                <input type="checkbox" class="js-switch" {{ $catalogue->status == 2 ? 'checked' : '' }}
-                                    data-id={{ $catalogue->id }}>
+                                <input type="checkbox" class="js-switch" {{ $category->status == 2 ? 'checked' : '' }}
+                                    data-id={{ $category->id }}>
                             </td>
                             <td>
-                                <a href="{{ route('admin.post.catalogue.edit', $catalogue->id) }}"
-                                    class="btn btn-sm btn-primary">
+                                <a href="{{ route('admin.category.edit', $category->id) }}" class="btn btn-sm btn-primary">
                                     <i class="mdi mdi-pencil"></i>
                                 </a>
 
-                                <a href="{{ route('admin.post.catalogue.delete', $catalogue->id) }}"
+                                <a href="{{ route('admin.category.delete', $category->id) }}"
                                     class="btn btn-sm btn-danger delete-item">
                                     <i class="mdi mdi-delete"></i>
                                 </a>
@@ -76,15 +75,15 @@
         $(document).ready(function() {
             $('.js-switch').change(function() {
                 let status = $(this).prop('checked') === true ? 2 : 1;
-                let catalogueId = $(this).data('id');
+                let categoryId = $(this).data('id');
 
                 $.ajax({
                     type: "GET",
                     dataType: "json",
-                    url: '{{ route('admin.post.catalogue.update.status') }}',
+                    url: '{{ route('admin.category.update.status') }}',
                     data: {
                         status: status,
-                        catalogue_id: catalogueId
+                        category_id: categoryId
                     },
                     success: function(data) {
                         if (data.status == 'success') {
