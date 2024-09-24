@@ -58,11 +58,11 @@
                             </td>
                             <td>
                                 <a href="{{ route('admin.admin.edit', $admin->id) }}" class="btn btn-sm btn-primary">
-                                    <i class="mdi mdi-pencil"></i>
+                                    <i data-feather="edit"></i>
                                 </a>
                                 <a href="{{ route('admin.admin.delete', $admin->id) }}"
                                     class="btn btn-sm btn-danger delete-item">
-                                    <i class="mdi mdi-delete"></i>
+                                    <i data-feather="trash"></i>
                                 </a>
                             </td>
                         </tr>

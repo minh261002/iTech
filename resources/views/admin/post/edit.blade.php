@@ -179,7 +179,7 @@
                     </div>
                     <div class="card-body">
                         <div class="col-12 mb-3">
-                            <button type="submit" class="w-100 btn btn-primary">Thêm mới</button>
+                            <button type="submit" class="w-100 btn btn-primary">Lưu thay đổi</button>
                         </div>
                     </div>
                 </div>
