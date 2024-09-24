@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->text('link');
             $table->tinyInteger('position');
             $table->text('image');
-            $table->text('mobile_image');
+            $table->text('mobile_image')->nullable();
             $table->timestamps();
             $table->foreign('slider_id')->references('id')->on('sliders')->onDelete('cascade');
         });

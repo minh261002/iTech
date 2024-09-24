@@ -211,6 +211,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::middleware(['permission:editSlider', 'auth:admin'])->group(function () {
                 Route::get('/edit/{id}', [SliderController::class, 'edit'])->name('slider.edit');
                 Route::put('/update', [SliderController::class, 'update'])->name('slider.update');
+                Route::get('/update/status', [SliderController::class, 'updateStatus'])->name('slider.update.status');
             });
 
             Route::middleware(['permission:deleteSlider', 'auth:admin'])->group(function () {
@@ -219,7 +220,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         });
 
         //quản lý slider item
-        Route::prefix('slider/item')->group(function () {
+        Route::prefix('slider/{id}/item')->group(function () {
             Route::middleware(['permission:viewSliderItem', 'auth:admin'])->group(function () {
                 Route::get('/', [SliderController::class, 'indexItem'])->name('slider.item.index');
             });
@@ -228,15 +229,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
                 Route::get('/create', [SliderController::class, 'createItem'])->name('slider.item.create');
                 Route::post('/store', [SliderController::class, 'storeItem'])->name('slider.item.store');
             });
+        });
 
-            Route::middleware(['permission:editSliderItem', 'auth:admin'])->group(function () {
-                Route::get('/edit/{id}', [SliderController::class, 'editItem'])->name('slider.item.edit');
-                Route::put('/update', [SliderController::class, 'updateItem'])->name('slider.item.update');
-            });
+        Route::middleware(['permission:deleteSliderItem', 'auth:admin'])->group(function () {
+            Route::delete('slider-item/delete/{id}', [SliderController::class, 'deleteItem'])->name('slider.item.delete');
+        });
 
-            Route::middleware(['permission:deleteSliderItem', 'auth:admin'])->group(function () {
-                Route::delete('/delete/{id}', [SliderController::class, 'deleteItem'])->name('slider.item.delete');
-            });
+        Route::middleware(['permission:editSliderItem', 'auth:admin'])->group(function () {
+            Route::get('slider-item/edit/{id}', [SliderController::class, 'editItem'])->name('slider.item.edit');
+            Route::put('slider-item/update', [SliderController::class, 'updateItem'])->name('slider.item.update');
         });
     });
 });
