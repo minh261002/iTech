@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Ajax\LocationController;
+use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('ajax')->group(function () {
@@ -240,4 +241,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::put('slider-item/update', [SliderController::class, 'updateItem'])->name('slider.item.update');
         });
     });
+});
+
+
+
+
+Route::group(['as' => 'user.'], function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 });
