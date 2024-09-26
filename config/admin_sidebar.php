@@ -2,6 +2,21 @@
 
 return [
     [
+        'href' => 'sidebarNotification',
+        'title' => 'Thông báo',
+        'icon' => '<i data-feather="bell"></i>',
+        'sub_menu' => [
+            [
+                'title' => 'Thêm mới',
+                'route' => 'admin.notification.create',
+            ],
+            [
+                'title' => 'Danh sách',
+                'route' => 'admin.notification.index',
+            ],
+        ],
+    ],
+    [
         'href' => 'sidebarSlider',
         'title' => 'Sliders',
         'icon' => '<i data-feather="image"></i>',
