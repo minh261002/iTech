@@ -90,7 +90,7 @@
             </div>
 
             <div class="message-text-container">
-                <p class="message-text"></p>
+                <p class="message-text">Bạn có thông báo mới</p>
                 <p class="sub-text"></p>
             </div>
 

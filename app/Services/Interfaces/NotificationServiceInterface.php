@@ -9,4 +9,8 @@ interface NotificationServiceInterface
     public function notification(Request $request);
 
     public function delete($id);
+
+    public function read(Request $request);
+
+    public function readAll(Request $request);
 }

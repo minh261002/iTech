@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('ajax')->group(function () {
     Route::get('/location', [LocationController::class, 'index']);
+    Route::get('/notification', [NotificationController::class, 'get']);
+    Route::put('/notification/read', [NotificationController::class, 'read']);
+    Route::put('/notification/read-all', [NotificationController::class, 'readAll']);
 });
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {

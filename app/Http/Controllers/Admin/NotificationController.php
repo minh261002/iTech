@@ -40,8 +40,9 @@ class NotificationController extends Controller
     {
         $this->notificationService->notification($request);
 
-        notyf()->success('Gửi thông báo thành công');
-        return redirect()->route('admin.notification.index');
+        return response()->json([
+            'status' => 'success',
+        ]);
     }
 
     public function delete($id)
@@ -54,4 +55,28 @@ class NotificationController extends Controller
         ]);
     }
 
+    public function get(Request $request)
+    {
+        $notifications = $this->notificationRepository->getByAdminId($request->admin_id);
+
+        return response()->json([
+            'status' => 'success',
+            'notifications' => $notifications,
+        ]);
+    }
+
+    public function read(Request $request)
+    {
+        $this->notificationService->read($request);
+
+        return response()->json([
+            'status' => 'success',
+            'unreadNotifications' => $this->notificationRepository->countUnreadNotifications($request->admin_id),
+        ]);
+    }
+
+    public function readAll(Request $request)
+    {
+       //
+    }
 }

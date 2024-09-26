@@ -25,7 +25,7 @@
 
 .show-toast-cus {
     display: flex;
-    animation: slideIn 0.5s forwards;
+    animation: slideIn 0.2s forwards;
 }
 
 @keyframes slideIn {

@@ -113,6 +113,33 @@
 
 @push('scripts')
     <script>
+        //submit form bằng ajax
+        $(document).ready(function() {
+            $('form').submit(function(e) {
+                e.preventDefault();
+                var form = $(this);
+                var url = form.attr('action');
+                var type = form.attr('method');
+                var data = form.serialize();
+
+                //loading
+                FuiToast.info('Đang gửi thông báo...');
+
+                setTimeout(function() {
+                    $.ajax({
+                        type: type,
+                        url: url,
+                        data: data,
+                        success: function(response) {
+                            FuiToast.success('Gửi thông báo thành công');
+                            form.trigger('reset');
+                        }
+                    });
+                }, 1000);
+
+            });
+        });
+
         $(document).ready(function() {
             var types = $('#types');
             var user_types = $('#user_types');

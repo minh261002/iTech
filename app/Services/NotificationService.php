@@ -49,6 +49,10 @@ class NotificationService implements NotificationServiceInterface
         }
 
         foreach ($admins as $admin) {
+            $adminId = \Auth::guard('admin')->user()->id;
+            if ($admin->id == $adminId) {
+                continue;
+            }
             $this->sendNotification($data, $admin->id, true);
         }
     }
@@ -72,6 +76,10 @@ class NotificationService implements NotificationServiceInterface
         if ($data['admin_types'] == 1) {
             $admins = Admin::all();
             foreach ($admins as $admin) {
+                $adminId = \Auth::guard('admin')->user()->id;
+                if ($admin->id == $adminId) {
+                    continue;
+                }
                 $this->sendNotification($data, $admin->id, true);
             }
         } else {
@@ -92,16 +100,42 @@ class NotificationService implements NotificationServiceInterface
         }
         $noty = $this->notificationRepository->create($data);
 
-        broadcast(new NotificationEvent(
+        // broadcast(new NotificationEvent(
+        //     $noty->title,
+        //     $noty->content,
+        //     $isAdmin ? $noty->admin_id : $noty->user_id,
+        //     $isAdmin ? 'admin' : 'user'
+        // ))->toOthers();
+        event(new NotificationEvent(
             $noty->title,
             $noty->content,
             $isAdmin ? $noty->admin_id : $noty->user_id,
             $isAdmin ? 'admin' : 'user'
-        ))->toOthers();
+        ));
     }
 
     public function delete($id)
     {
         return $this->notificationRepository->delete($id);
+    }
+
+    public function read($request)
+    {
+        $data = $request->all();
+        $id = $data['id'];
+        $admin_id = $data['admin_id'];
+
+        $noty = $this->notificationRepository->find($id);
+
+        if ($noty->admin_id == $admin_id) {
+            $noty->update(['is_read' => 2]);
+        }
+
+        return $noty;
+    }
+
+    public function readAll($request)
+    {
+        dd($request->all());
     }
 }
