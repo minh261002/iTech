@@ -35,24 +35,28 @@
                 <li class="menu-title">Main</li>
 
                 @foreach (config('admin_sidebar') as $item)
-                    <li>
-                        <a href="#{{ $item['href'] }}" data-bs-toggle="collapse">
-                            {!! $item['icon'] !!}
-                            <span>{{ $item['title'] }}</span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div id="{{ $item['href'] }}" class="collapse">
-                            <ul class="nav-second-level">
-                                @foreach ($item['sub_menu'] as $subItem)
-                                    <li>
-                                        <a href="{{ route($subItem['route']) }}">
-                                            {{ $subItem['title'] }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </li>
+                    @if (auth('admin')->user()->checkPermissions($item['permissions']) || in_array('Root', $item['permissions']))
+                        <li>
+                            <a href="#{{ $item['href'] }}" data-bs-toggle="collapse">
+                                {!! $item['icon'] !!}
+                                <span>{{ $item['title'] }}</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div id="{{ $item['href'] }}" class="collapse">
+                                <ul class="nav-second-level">
+                                    @foreach ($item['sub_menu'] as $subItem)
+                                        @if (auth('admin')->user()->checkPermissions($item['permissions']) || in_array('Root', $item['permissions']))
+                                            <li>
+                                                <a href="{{ route($subItem['route']) }}">
+                                                    {{ $subItem['title'] }}
+                                                </a>
+                                            </li>
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </li>
+                    @endif
                 @endforeach
             </ul>
 
