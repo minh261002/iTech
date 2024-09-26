@@ -38,18 +38,10 @@ class NotificationController extends Controller
 
     public function store(NotificationStoreRequest $request)
     {
-        try {
-            $response = $this->notificationService->notification($request);
-            return response()->json([
-                'message' => 'Notification sent successfully',
-                'data' => $response,
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Failed to send notification',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+        $this->notificationService->notification($request);
+
+        notyf()->success('Gửi thông báo thành công');
+        return redirect()->route('admin.notification.index');
     }
 
     public function delete($id)

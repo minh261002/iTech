@@ -83,7 +83,6 @@ class NotificationService implements NotificationServiceInterface
 
     protected function sendNotification($data, $recipientId, $isAdmin = false)
     {
-        // Thiết lập user_id hoặc admin_id
         if ($isAdmin) {
             $data['admin_id'] = $recipientId;
             $data['user_id'] = null;
@@ -93,12 +92,12 @@ class NotificationService implements NotificationServiceInterface
         }
         $noty = $this->notificationRepository->create($data);
 
-        // broadcast(new NotificationEvent(
-        //     $noty->title,
-        //     $noty->content,
-        //     $isAdmin ? $noty->admin_id : $noty->user_id,
-        //     $isAdmin ? 'admin' : 'user'
-        // ))->toOthers();
+        broadcast(new NotificationEvent(
+            $noty->title,
+            $noty->content,
+            $isAdmin ? $noty->admin_id : $noty->user_id,
+            $isAdmin ? 'admin' : 'user'
+        ))->toOthers();
     }
 
     public function delete($id)

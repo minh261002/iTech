@@ -114,23 +114,6 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            //submit form = ajax và log ra thông báo
-            $('form').on('submit', function(e) {
-                e.preventDefault();
-
-                $.ajax({
-                    url: $(this).attr('action'),
-                    type: 'POST',
-                    data: new FormData(this),
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        console.log(response);
-                    },
-                });
-            });
-        });
-        $(document).ready(function() {
             var types = $('#types');
             var user_types = $('#user_types');
             var admin_types = $('#admin_types');

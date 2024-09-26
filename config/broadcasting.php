@@ -43,6 +43,7 @@ return [
             ],
             'client_options' => [
                 // Guzzle client options: https://docs.guzzlephp.org/en/stable/request-options.html
+                'verify' => false,
             ],
         ],
 
@@ -60,7 +61,7 @@ return [
                 'useTLS' => false,
             ],
             'client_options' => [
-                //
+                'verify' => false,
             ],
         ],
 

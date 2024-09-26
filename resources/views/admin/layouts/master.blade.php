@@ -31,6 +31,8 @@
     <link rel="stylesheet" href="{{ asset('admin/assets/css/switchery.css') }}">
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/css/toast@1.0.1/fuiToast.min.css">
+
+    {{-- @vite(['resources/js/bootstrap.js', 'resources/js/app.js']) --}}
 </head>
 
 <!-- body start -->

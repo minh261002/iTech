@@ -1,33 +1,14 @@
+import Echo from 'laravel-echo';
 
-// import Echo from 'laravel-echo';
-// import axios from 'axios';
+import Pusher from 'pusher-js';
+window.Pusher = Pusher;
 
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: '3cc7a46e532c9e22baf5',
-//     cluster: 'ap1',
-//     forceTLS: false,
-//     authorizer: (channel, options) => {
-//         return {
-//             authorize: (socketId, callback) => {
-//                 axios.post('http://localhost:8000/broadcasting/auth', {
-//                     socket_id: socketId,
-//                     channel_name: channel.name
-//                 })
-//                 .then(response => {
-//                     callback(false, response.data);
-//                 })
-//                 .catch(error => {
-//                     callback(true, error);
-//                 });
-//             }
-//         };
-//     },
-// });
-
-// var adminId = document.querySelector('meta[name="adminId"]').getAttribute('content');
-
-// var channel = window.Echo.private(`App.Models.Admin.${adminId}`);
-// channel.listen('NotificationEvent', function(data) {
-//     alert(JSON.stringify(data));
-// });
+window.Echo = new Echo({
+    broadcaster: 'reverb',
+    key: import.meta.env.VITE_REVERB_APP_KEY,
+    wsHost: import.meta.env.VITE_REVERB_HOST,
+    wsPort: import.meta.env.VITE_REVERB_PORT,
+    wssPort: import.meta.env.VITE_REVERB_PORT,
+    forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? 'https') === 'https',
+    enabledTransports: ['ws', 'wss'],
+});
