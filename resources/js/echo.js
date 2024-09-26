@@ -1,14 +1,33 @@
-import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';
 
-window.Pusher = Pusher;
+// import Echo from 'laravel-echo';
+// import axios from 'axios';
 
-window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: import.meta.env.VITE_PUSHER_APP_KEY,
-    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
-    forceTLS: true,
-    encrypted: true,
-    authEndpoint: import.meta.env.VITE_PUSHER_AUTH_ENDPOINT,
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: '3cc7a46e532c9e22baf5',
+//     cluster: 'ap1',
+//     forceTLS: false,
+//     authorizer: (channel, options) => {
+//         return {
+//             authorize: (socketId, callback) => {
+//                 axios.post('http://localhost:8000/broadcasting/auth', {
+//                     socket_id: socketId,
+//                     channel_name: channel.name
+//                 })
+//                 .then(response => {
+//                     callback(false, response.data);
+//                 })
+//                 .catch(error => {
+//                     callback(true, error);
+//                 });
+//             }
+//         };
+//     },
+// });
 
-});
+// var adminId = document.querySelector('meta[name="adminId"]').getAttribute('content');
+
+// var channel = window.Echo.private(`App.Models.Admin.${adminId}`);
+// channel.listen('NotificationEvent', function(data) {
+//     alert(JSON.stringify(data));
+// });

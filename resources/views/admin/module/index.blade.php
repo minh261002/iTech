@@ -63,7 +63,7 @@
 
                                     <a href="{{ route('admin.module.delete', $module->id) }}"
                                         class="btn btn-sm btn-danger delete-item">
-                                        <i data-feather="trash">
+                                        <i data-feather="trash"> </i>
                                     </a>
                                 </td>
                             </tr>

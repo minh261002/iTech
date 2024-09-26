@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\ModuleController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PostCatalogueController;
 use App\Http\Controllers\Admin\PostController;
@@ -238,6 +239,22 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::middleware(['permission:editSliderItem', 'auth:admin'])->group(function () {
             Route::get('slider-item/edit/{id}', [SliderController::class, 'editItem'])->name('slider.item.edit');
             Route::put('slider-item/update', [SliderController::class, 'updateItem'])->name('slider.item.update');
+        });
+
+        //quản lý thông báo
+        Route::prefix('notification')->group(function () {
+            Route::middleware(['permission:viewNotification', 'auth:admin'])->group(function () {
+                Route::get('/', [NotificationController::class, 'index'])->name('notification.index');
+            });
+
+            Route::middleware(['permission:createNotification', 'auth:admin'])->group(function () {
+                Route::get('/create', [NotificationController::class, 'create'])->name('notification.create');
+                Route::post('/store', [NotificationController::class, 'store'])->name('notification.store');
+            });
+
+            Route::middleware(['permission:deleteNotification', 'auth:admin'])->group(function () {
+                Route::delete('/delete/{id}', [NotificationController::class, 'delete'])->name('notification.delete');
+            });
         });
     });
 });

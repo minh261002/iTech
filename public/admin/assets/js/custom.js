@@ -10,6 +10,13 @@
         })
     }
 
+    //select2
+    ELEMENT.select2 = () => {
+        $('.select2').select2({
+            theme: 'bootstrap-5',
+        });
+    }
+
     ELEMENT.sortui = () => {
         $( "#sortable" ).sortable();
 		$( "#sortable" ).disableSelection();
@@ -53,6 +60,7 @@
 
    $(document).ready(() => {
         ELEMENT.switchery();
-        ELEMENT.changeStatus()
+        ELEMENT.changeStatus();
+        ELEMENT.select2();
     });
 })(jQuery);
