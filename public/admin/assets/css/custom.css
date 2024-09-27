@@ -23,6 +23,12 @@
     gap: 15px;
 }
 
+.custom-meta-value {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+}
+
 .show-toast-cus {
     display: flex;
     animation: slideIn 0.2s forwards;

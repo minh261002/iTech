@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AttributeStoreRequest;
 use App\Http\Requests\Admin\AttributeUpdateRequest;
+use App\Http\Requests\Admin\AttributeVariationStoreRequest;
+use App\Http\Requests\Admin\AttributeVariationUpdateRequest;
 use App\Repositories\Interfaces\AttributeRepositoryInterface;
 use App\Repositories\Interfaces\AttributeVariationRepositoryInterface;
 use App\Services\Interfaces\AttributeServiceInterface;
+use App\Services\Interfaces\AttributeVariationServiceInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -23,10 +26,12 @@ class AttributeController extends Controller
         AttributeRepositoryInterface $attributeRepository,
         AttributeServiceInterface $attributeService,
         AttributeVariationRepositoryInterface $attributeVariationRepository,
+        AttributeVariationServiceInterface $attributeVariationService
     ) {
         $this->attributeRepository = $attributeRepository;
         $this->attributeService = $attributeService;
         $this->attributeVariationRepository = $attributeVariationRepository;
+        $this->attributeVariationService = $attributeVariationService;
     }
 
     public function index(): View
@@ -70,9 +75,44 @@ class AttributeController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    public function variation(): view
+    public function variation($attrId): view
     {
-        $attributes = $this->attributeVariationRepository->findByField();
-        return view('admin.attribute.variation', compact('attributes'));
+        $variations = $this->attributeVariationRepository->getQueryBuilderByColumns('attribute_id', $attrId)->get();
+        return view('admin.attribute.variation.index', compact('variations'));
+    }
+
+    public function createVariation($attrId): view
+    {
+        return view('admin.attribute.variation.create', compact('attrId'));
+    }
+
+    public function storeVariation(AttributeVariationStoreRequest $request)
+    {
+        $this->attributeVariationService->store($request);
+
+        notyf()->success('Thêm biến thể thành công');
+        return redirect()->route('admin.attribute.variation.index', $request->attribute_id);
+    }
+
+    public function editVariation($id): view
+    {
+        $variation = $this->attributeVariationRepository->findOrFail($id);
+        return view('admin.attribute.variation.edit', compact('variation'));
+    }
+
+    public function updateVariation(AttributeVariationUpdateRequest $request)
+    {
+        $this->attributeVariationService->update($request);
+
+        notyf()->success('Cập nhật biến thể thành công');
+        return redirect()->back();
+    }
+
+    public function deleteVariation($id)
+    {
+        $this->attributeVariationService->delete($id);
+
+        notyf()->success('Xóa biến thể thành công');
+        return response()->json(['status' => 'success']);
     }
 }

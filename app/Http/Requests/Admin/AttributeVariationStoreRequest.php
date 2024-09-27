@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AttributeStoreRequest extends FormRequest
+class AttributeVariationStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,10 @@ class AttributeStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'attribute_id' => 'required|exists:attributes,id',
             'name' => 'required',
-            'type' => 'required',
             'position' => 'required',
+            'meta_value' => 'nullable',
             'desc' => 'nullable',
         ];
     }
@@ -34,12 +35,13 @@ class AttributeStoreRequest extends FormRequest
      *
      * @return array<string, string>
      */
+
     public function messages(): array
     {
         return [
-            'name.required' => 'Vui lòng nhập tên thuộc tính',
-            'name.exists' => 'Tên thuộc tính đã tồn tại',
-            'type.required' => 'Vui lòng chọn loại thuộc tính',
+            'attribute_id.required' => 'Vui lòng chọn thuộc tính',
+            'attribute_id.exists' => 'Thuộc tính không tồn tại',
+            'name.required' => 'Vui lòng nhập tên biến thể',
             'position.required' => 'Vui lòng nhập vị trí',
         ];
     }

@@ -43,7 +43,8 @@
                             <td>{{ $attr->type == 1 ? 'Nút' : 'Màu sắc' }}</td>
                             <td>{{ $attr->position }}</td>
                             <td>
-                                <a href="{{ route('admin.attribute.variation.index') }}" class="btn btn-sm btn-primary">
+                                <a href="{{ route('admin.attribute.variation.index', $attr->id) }}"
+                                    class="btn btn-sm btn-primary">
                                     <i data-feather="list"></i>
                                 </a>
                                 <a href="{{ route('admin.attribute.edit', $attr->id) }}" class="btn btn-sm btn-primary">

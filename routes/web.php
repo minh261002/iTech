@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Ajax\LocationController;
 use Illuminate\Support\Facades\Route;
 
+// ----------------- Route for Admin ----------------- //
 Route::prefix('ajax')->group(function () {
     Route::get('/location', [LocationController::class, 'index']);
     Route::get('/notification', [NotificationController::class, 'get']);
@@ -259,5 +261,50 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
                 Route::delete('/delete/{id}', [NotificationController::class, 'delete'])->name('notification.delete');
             });
         });
+
+        //quản lý thuộc tính sản phẩm
+        Route::prefix('attribute')->group(function () {
+            Route::middleware(['permission:viewAttribute', 'auth:admin'])->group(function () {
+                Route::get('/', [AttributeController::class, 'index'])->name('attribute.index');
+            });
+
+            Route::middleware(['permission:createAttribute', 'auth:admin'])->group(function () {
+                Route::get('/create', [AttributeController::class, 'create'])->name('attribute.create');
+                Route::post('/store', [AttributeController::class, 'store'])->name('attribute.store');
+            });
+
+            Route::middleware(['permission:editAttribute', 'auth:admin'])->group(function () {
+                Route::get('/edit/{id}', [AttributeController::class, 'edit'])->name('attribute.edit');
+                Route::put('/update', [AttributeController::class, 'update'])->name('attribute.update');
+            });
+
+            Route::middleware(['permission:deleteAttribute', 'auth:admin'])->group(function () {
+                Route::delete('/delete/{id}', [AttributeController::class, 'delete'])->name('attribute.delete');
+            });
+        });
+
+        //quản lý các biến thể của thuộc tính sản phẩm
+        Route::prefix( 'attribute/{id}/variation')->group(function () {
+            Route::middleware(['permission:viewAttributeVariation', 'auth:admin'])->group(function () {
+                Route::get('/', [AttributeController::class, 'variation'])->name('attribute.variation.index');
+            });
+
+            Route::middleware(['permission:createAttributeVariation', 'auth:admin'])->group(function () {
+                Route::get('/create', [AttributeController::class, 'createVariation'])->name('attribute.variation.create');
+                Route::post('/store', [AttributeController::class, 'storeVariation'])->name('attribute.variation.store');
+            });
+        });
+
+        Route::middleware(['permission:deleteAttributeVariation', 'auth:admin'])->group(function () {
+            Route::delete('attribute-variation/delete/{id}', [AttributeController::class, 'deleteVariation'])->name('attribute.variation.delete');
+        });
+
+        Route::middleware(['permission:editAttributeVariation', 'auth:admin'])->group(function () {
+            Route::get('attribute-variation/edit/{id}', [AttributeController::class, 'editVariation'])->name('attribute.variation.edit');
+            Route::put('attribute-variation/update', [AttributeController::class, 'updateVariation'])->name('attribute.variation.update');
+        });
     });
+
+    // ----------------- End Route for Admin ----------------- //
+
 });

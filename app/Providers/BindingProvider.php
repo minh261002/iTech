@@ -34,6 +34,7 @@ class BindingProvider extends ServiceProvider
         'App\Services\Interfaces\SliderItemServiceInterface' => 'App\Services\SliderItemService',
         'App\Services\Interfaces\NotificationServiceInterface' => 'App\Services\NotificationService',
         'App\Services\Interfaces\AttributeServiceInterface' => 'App\Services\AttributeService',
+        'App\Services\Interfaces\AttributeVariationServiceInterface' => 'App\Services\AttributeVariationService',
     ];
     /**
      * Register services.
