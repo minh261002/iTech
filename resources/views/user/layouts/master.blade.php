@@ -17,6 +17,7 @@
 
     <!-- Icons -->
     <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!--select2 css-->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -32,6 +33,9 @@
 
     <!-- User css  -->
     <link href="{{ asset('user/assets/css/main.css') }}" rel="stylesheet" type="text/css" id="app-style" />
+    <!-- Carousel -->
+    <link href="{{ asset('user/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('user/owlcarousel//assets/owl.theme.default.min.css') }}" rel="stylesheet" />
 
 </head>
 
@@ -87,6 +91,7 @@
     <script src="{{ asset('admin/assets/libs/jquery.counterup/jquery.counterup.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/feather-icons/feather.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/custom.js') }}"></script>
+    <script src="{{ asset('user/assets/js/main.js') }}"></script>
     <!--Select2 js-->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
@@ -109,6 +114,12 @@
 
     <script src="{{ asset('admin/assets/js/pages/form-picker.js') }}"></script>
     <script src="{{ asset('admin/assets/js/switchery.js') }}"></script>
+
+
+    <!-- Carousel -->
+    <script src="{{ asset('user/owlcarousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('user/assets/js/carousel-custom.js') }}"></script>
+
 
 </body>
 

@@ -5,10 +5,10 @@
             <div class="row">
                 <div class="col-2 d-flex align-items-center justify-content-center">
                     <div class="logo">
-                        <img src="{{asset('admin/assets/images/logo.svg')}}" alt="">
+                        <img src="{{asset('admin/assets/images/logo-1.svg')}}" alt="">
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-3 m-auto">
                     <div class="box-search py-2 px-3 border border-2 rounded-4">
                         <div class="row">
                             <div class="col-10">

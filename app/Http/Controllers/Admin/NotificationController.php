@@ -77,6 +77,6 @@ class NotificationController extends Controller
 
     public function readAll(Request $request)
     {
-       //
+        //
     }
 }
