@@ -38,6 +38,20 @@ return [
         ],
     ],
     [
+        'href' => 'sidebarProduct',
+        'title' => 'Sản phẩm',
+        'icon' => '<i data-feather="shopping-bag"></i>',
+        'permissions' => ['viewAttribute', 'createAttribute', 'editAttribute', 'deleteAttribute'],
+        'sub_menu' => [
+            [
+                'title' => 'Các thuộc tính',
+                'route' => 'admin.attribute.index',
+                'permissions' => ['viewAttribute'],
+            ],
+
+        ],
+    ],
+    [
         'href' => 'sidebarCategory',
         'title' => 'Danh mục sản phẩm',
         'icon' => '<i data-feather="grid"></i>',

@@ -18,6 +18,8 @@ class BindingProvider extends ServiceProvider
         'App\Repositories\Interfaces\SliderRepositoryInterface' => 'App\Repositories\SliderRepository',
         'App\Repositories\Interfaces\SliderItemRepositoryInterface' => 'App\Repositories\SliderItemRepository',
         'App\Repositories\Interfaces\NotificationRepositoryInterface' => 'App\Repositories\NotificationRepository',
+        'App\Repositories\Interfaces\AttributeRepositoryInterface' => 'App\Repositories\AttributeRepository',
+        'App\Repositories\Interfaces\AttributeVariationRepositoryInterface' => 'App\Repositories\AttributeVariationRepository',
     ];
 
     protected $services = [
@@ -31,6 +33,7 @@ class BindingProvider extends ServiceProvider
         'App\Services\Interfaces\SliderServiceInterface' => 'App\Services\SliderService',
         'App\Services\Interfaces\SliderItemServiceInterface' => 'App\Services\SliderItemService',
         'App\Services\Interfaces\NotificationServiceInterface' => 'App\Services\NotificationService',
+        'App\Services\Interfaces\AttributeServiceInterface' => 'App\Services\AttributeService',
     ];
     /**
      * Register services.
