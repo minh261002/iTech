@@ -85,7 +85,7 @@
 
                         <div class="col-12 form-group mb-3">
                             <label for="content">Nội dung</label>
-                            <textarea class="form-control" name="content" id="content" rows="5" placeholder="Nhập nội dung"></textarea>
+                            <textarea class="form-control ck-editor" name="content" id="content" rows="5" placeholder="Nhập nội dung"></textarea>
                             @error('content')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -113,32 +113,34 @@
 
 @push('scripts')
     <script>
-        //submit form bằng ajax
-        $(document).ready(function() {
-            $('form').submit(function(e) {
-                e.preventDefault();
-                var form = $(this);
-                var url = form.attr('action');
-                var type = form.attr('method');
-                var data = form.serialize();
+        // //submit form bằng ajax
+        // $(document).ready(function() {
+        //     $('form').submit(function(e) {
+        //         e.preventDefault();
+        //         var form = $(this);
+        //         var url = form.attr('action');
+        //         var type = form.attr('method');
+        //         var data = form.serialize();
 
-                //loading
-                FuiToast.info('Đang gửi thông báo...');
+        //         //loading
+        //         FuiToast.info('Đang gửi thông báo...');
 
-                setTimeout(function() {
-                    $.ajax({
-                        type: type,
-                        url: url,
-                        data: data,
-                        success: function(response) {
-                            FuiToast.success('Gửi thông báo thành công');
-                            form.trigger('reset');
-                        }
-                    });
-                }, 1000);
+        //         setTimeout(function() {
+        //             $.ajax({
+        //                 type: type,
+        //                 url: url,
+        //                 contentType: 'application/json;',
+        //                 data: data,
+        //                 success: function(response) {
+        //                     setTimeout(function() {
+        //                         location.reload();
+        //                     }, 1000);
+        //                 }
+        //             });
+        //         }, 1000);
 
-            });
-        });
+        //     });
+        // });
 
         $(document).ready(function() {
             var types = $('#types');

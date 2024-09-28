@@ -37,6 +37,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('/reset-password', [AuthController::class, 'updatePassword'])->name('password.update');
     });
 
+    Route::get('/my-notification', [NotificationController::class, 'myNotification'])->name('myNotification');
+
     Route::middleware(['admin.auth'])->group(function () {
         //dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -284,7 +286,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         });
 
         //quản lý các biến thể của thuộc tính sản phẩm
-        Route::prefix( 'attribute/{id}/variation')->group(function () {
+        Route::prefix('attribute/{id}/variation')->group(function () {
             Route::middleware(['permission:viewAttributeVariation', 'auth:admin'])->group(function () {
                 Route::get('/', [AttributeController::class, 'variation'])->name('attribute.variation.index');
             });

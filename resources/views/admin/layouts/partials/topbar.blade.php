@@ -47,16 +47,15 @@
                         </div>
 
                         <div class="noti-scroll" data-simplebar>
-
                             @forelse ($notifications as $notification)
-                                <div class="dropdown-item notify-item text-muted link-primary {{ $notification->is_read == 1 ? 'active' : '' }}"
-                                    style="cursor: pointer" data-notyId = "{{ $notification->id }}">
+                                <a href="{{ route('admin.myNotification', ['id' => $notification->id]) }}"
+                                    class="dropdown-item notify-item text-muted link-primary {{ $notification->is_read == 1 ? 'active' : '' }}">
                                     <div class="notify-icon">
                                         <i data-feather="bell" class="text-success"></i>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between">
                                         <p class="notify-details">
-                                            {{ $notification->title }}
+                                            Thông báo
                                         </p>
                                         <small class="text-muted">
                                             {{ format_datetime($notification->created_at) }}
@@ -64,16 +63,14 @@
                                     </div>
                                     <p class="mb-0 user-msg">
                                         <small class="fs-14">
-                                            {{ $notification->content }}
+                                            {!! $notification->content !!}
                                         </small>
                                     </p>
-                                </div>
+                                </a>
                             @empty
                                 <div class="dropdown-item notify-item text-muted link-primary">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <p class="notify-details">
-                                            Không có thông báo mới
-                                        </p>
+                                    <div class="d-flex align-items-center justify-content-center notify-details">
+                                        Không có thông báo mới
                                     </div>
                                 </div>
                             @endforelse
@@ -81,12 +78,11 @@
                         </div>
 
                         <!-- All-->
-                        @if (count($unreadNotifications) > 0)
-                            <div class="dropdown-item text-center text-primary notify-item notify-all">
-                                Xem tất cả
-                                <i class="fe-arrow-right"></i>
-                            </div>
-                        @endif
+                        <a href="{{ route('admin.myNotification') }}"
+                            class="dropdown-item text-center text-primary notify-item notify-all">
+                            Xem tất cả
+                            <i class="fe-arrow-right"></i>
+                        </a>
 
                     </div>
                 </li>
@@ -139,97 +135,4 @@
 </div>
 
 @push('scripts')
-    <script>
-        $(document).ready(function() {
-
-            $('.notify-item').click(function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                $.ajax({
-                    url: "/ajax/notification/read",
-                    type: "PUT",
-                    data: {
-                        id: $(this).data('notyid'),
-                        is_read: 2,
-                        admin_id: "{{ Auth::guard('admin')->user()->id }}",
-                        _token: "{{ csrf_token() }}",
-                    },
-                    success: function(response) {
-                        if (response.status == 'success') {
-                            // $('.notify-item').removeClass('active');
-                            $(e.currentTarget).removeClass('active');
-                            $('#countUnreadNotification').text(response
-                                .unreadNotifications);
-                        }
-                    }
-                })
-            });
-
-            $('.noty-all').click(function(e) {
-                $.ajax({
-                    url: "/ajax/notification/read-all",
-                    type: "PUT",
-                    data: {
-                        admin_id: "{{ Auth::guard('admin')->user()->id }}",
-                        is_read: 2,
-                        _token: "{{ csrf_token() }}",
-                    },
-                    success: function(response) {
-                        if (response.status == 'success') {
-                            $('.notify-item').removeClass('active');
-                            $('#countUnreadNotification').text(0);
-                            $('.notify-all').remove();
-                        }
-                    }
-                })
-            })
-
-            // function getNotification() {
-            //     $.ajax({
-            //         url: "/ajax/notification",
-            //         type: "GET",
-            //         data: {
-            //             admin_id: "{{ Auth::guard('admin')->user()->id }}",
-            //         },
-            //         success: function(response) {
-            //             if (response.status == 'success') {
-            //                 $('.noti-scroll').append(renderHtml(response
-            //                     .notifications));
-            //             }
-            //         }
-            //     })
-            // }
-
-            // function renderHtml(notification) {
-            //     //lặp qua mảng thông báo
-            //     var html = '';
-            //     $.each(notification, function(index, value) {
-            //         html += `
-        //         <div class="dropdown-item notify-item text-muted link-primary ${value.is_read == 1 ? 'active' : ''}" style="cursor: pointer" data-notyId = "${value.id}">
-        //             <div class="notify-icon">
-        //                 <i data-feather="bell" class="text-success"></i>
-        //             </div>
-        //             <div class="d-flex align-items-center justify-content-between">
-        //                 <p class="notify-details">
-        //                     ${value.title}
-        //                 </p>
-        //                 <small class="text-muted">
-        //                     ${value.created_at}
-        //                 </small>
-        //             </div>
-        //             <p class="mb-0 user-msg">
-        //                 <small class="fs-14">
-        //                     ${value.content}
-        //                 </small>
-        //             </p>
-        //         </div>`;
-            //     });
-
-            //     return html;
-            // }
-
-            // getNotification();
-        })
-    </script>
 @endpush
