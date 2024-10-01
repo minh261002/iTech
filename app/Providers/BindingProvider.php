@@ -21,6 +21,7 @@ class BindingProvider extends ServiceProvider
         'App\Repositories\Interfaces\AttributeRepositoryInterface' => 'App\Repositories\AttributeRepository',
         'App\Repositories\Interfaces\AttributeVariationRepositoryInterface' => 'App\Repositories\AttributeVariationRepository',
         'App\Repositories\Interfaces\ProductRepositoryInterface' => 'App\Repositories\ProductRepository',
+        'App\Repositories\Interfaces\DiscountRepositoryInterface' => 'App\Repositories\DiscountRepository',
     ];
 
     protected $services = [
@@ -37,6 +38,7 @@ class BindingProvider extends ServiceProvider
         'App\Services\Interfaces\AttributeServiceInterface' => 'App\Services\AttributeService',
         'App\Services\Interfaces\AttributeVariationServiceInterface' => 'App\Services\AttributeVariationService',
         'App\Services\Interfaces\ProductServiceInterface' => 'App\Services\ProductService',
+        'App\Services\Interfaces\DiscountServiceInterface' => 'App\Services\DiscountService',
     ];
     /**
      * Register services.

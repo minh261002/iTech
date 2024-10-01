@@ -13,9 +13,9 @@ return new class extends Migration {
         Schema::create('discount_applications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('discount_id')->constrained('discounts')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->foreignId('product_variation_id')->constrained('product_variations')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->foreignId('product_id')->nullable()->constrained('products')->onDelete('cascade');
+            $table->foreignId('product_variation_id')->nullable()->constrained('product_variations')->onDelete('cascade');
             $table->timestamps();
         });
     }

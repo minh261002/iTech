@@ -80,6 +80,60 @@ return [
         ],
     ],
     [
+        'href' => 'sidebarDiscount',
+        'title' => 'Mã giảm giá',
+        'icon' => '<i data-feather="bookmark"></i>',
+        'permissions' => ['viewDiscount', 'createDiscount', 'editDiscount', 'deleteDiscount'],
+        'sub_menu' => [
+            [
+                'title' => 'Thêm mới',
+                'route' => 'admin.discount.create',
+                'permissions' => ['createDiscount'],
+            ],
+            [
+                'title' => 'Danh sách',
+                'route' => 'admin.discount.index',
+                'permissions' => ['viewDiscount'],
+            ],
+        ],
+    ],
+    [
+        'href' => 'sidebarPromotion',
+        'title' => 'Khuyến mãi',
+        'icon' => '<i data-feather="gift"></i>',
+        'permissions' => ['viewDiscount', 'createDiscount', 'editDiscount', 'deleteDiscount'],
+        'sub_menu' => [
+            [
+                'title' => 'Thêm mới',
+                'route' => 'admin.discount.create',
+                'permissions' => ['createDiscount'],
+            ],
+            [
+                'title' => 'Danh sách',
+                'route' => 'admin.discount.index',
+                'permissions' => ['viewDiscount'],
+            ],
+        ],
+    ],
+    [
+        'href' => 'sidebarReview',
+        'title' => 'Đánh giá',
+        'icon' => '<i data-feather="star"></i>',
+        'permissions' => ['viewDiscount', 'createDiscount', 'editDiscount', 'deleteDiscount'],
+        'sub_menu' => [
+            [
+                'title' => 'Thêm mới',
+                'route' => 'admin.discount.create',
+                'permissions' => ['createDiscount'],
+            ],
+            [
+                'title' => 'Danh sách',
+                'route' => 'admin.discount.index',
+                'permissions' => ['viewDiscount'],
+            ],
+        ],
+    ],
+    [
         'href' => 'sidebarPost',
         'title' => 'Bài viết',
         'icon' => '<i data-feather="file-text"></i>',
@@ -149,6 +203,24 @@ return [
                 'title' => 'Danh sách',
                 'route' => 'admin.admin.index',
                 'permission' => ['viewAdmin'],
+            ],
+        ],
+    ],
+    [
+        'href' => 'sidebarSetting',
+        'title' => 'Cài đặt',
+        'icon' => '<i data-feather="settings"></i>',
+        'permissions' => ['viewRole', 'createRole', 'editRole', 'deleteRole'],
+        'sub_menu' => [
+            [
+                'title' => 'Thêm mới',
+                'route' => 'admin.role.create',
+                'permissions' => ['createRole'],
+            ],
+            [
+                'title' => 'Danh sách',
+                'route' => 'admin.role.index',
+                'permissions' => ['viewRole'],
             ],
         ],
     ],

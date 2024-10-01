@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\ModuleController;
 use App\Http\Controllers\Admin\NotificationController;
@@ -332,6 +333,28 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
             Route::middleware(['permission:deleteProduct', 'auth:admin'])->group(function () {
                 Route::delete('/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
+            });
+        });
+
+        //quản lý mã giảm giá
+        Route::prefix('discount')->group(function () {
+            Route::middleware(['permission:viewDiscount', 'auth:admin'])->group(function () {
+                Route::get('/', [DiscountController::class, 'index'])->name('discount.index');
+            });
+
+            Route::middleware(['permission:createDiscount', 'auth:admin'])->group(function () {
+                Route::get('/create', [DiscountController::class, 'create'])->name('discount.create');
+                Route::post('/store', [DiscountController::class, 'store'])->name('discount.store');
+            });
+
+            Route::middleware(['permission:editDiscount', 'auth:admin'])->group(function () {
+                Route::get('/edit/{id}', [DiscountController::class, 'edit'])->name('discount.edit');
+                Route::put('/update', [DiscountController::class, 'update'])->name('discount.update');
+                Route::get('/update/status', [DiscountController::class, 'updateStatus'])->name('discount.update.status');
+            });
+
+            Route::middleware(['permission:deleteDiscount', 'auth:admin'])->group(function () {
+                Route::delete('/delete/{id}', [DiscountController::class, 'delete'])->name('discount.delete');
             });
         });
     });
