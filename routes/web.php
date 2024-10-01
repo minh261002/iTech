@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Ajax\LocationController;
+use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
 
 // ----------------- Route for Admin ----------------- //
@@ -358,7 +359,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             });
         });
     });
+});
 
-    // ----------------- End Route for Admin ----------------- //
 
+
+
+Route::group(['as' => 'user.'], function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 });
