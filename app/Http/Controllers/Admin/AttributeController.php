@@ -115,4 +115,10 @@ class AttributeController extends Controller
         notyf()->success('Xóa biến thể thành công');
         return response()->json(['status' => 'success']);
     }
+
+    public function getVariationByAttributeId(Request $request)
+    {
+        $variations = $this->attributeVariationRepository->getQueryBuilderByColumns('attribute_id', $request->attribute_id)->get();
+        return response()->json(['variations' => $variations]);
+    }
 }

@@ -44,6 +44,16 @@ return [
         'permissions' => ['viewAttribute', 'createAttribute', 'editAttribute', 'deleteAttribute'],
         'sub_menu' => [
             [
+                'title' => 'Thêm mới',
+                'route' => 'admin.product.create',
+                'permissions' => ['createAttribute'],
+            ],
+            [
+                'title' => 'Danh sách',
+                'route' => 'admin.product.index',
+                'permissions' => ['viewAttribute'],
+            ],
+            [
                 'title' => 'Các thuộc tính',
                 'route' => 'admin.attribute.index',
                 'permissions' => ['viewAttribute'],

@@ -4,12 +4,27 @@ namespace App\Repositories;
 
 use App\Models\AttributeVariation;
 use App\Repositories\Interfaces\AttributeVariationRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class AttributeVariationRepository extends EloquentRepository implements AttributeVariationRepositoryInterface
 {
     public function getModel()
     {
         return AttributeVariation::class;
+    }
+
+    public function getOrderByFollow(array $arrayId)
+    {
+        $array = [];
+        $this->instance = $this->model;
+        foreach ($arrayId as $ids) {
+            // $qs = array_fill(0,count($ids),'?');
+            $array[] = $this->instance->whereIn('id', $ids)
+                ->orderByRaw(DB::raw("FIELD(id, " . implode(',', $ids) . ")"))
+                // ->orderByRaw(DB::raw("FIELD(id,". implode(',', $qs).")"),$ids)
+                ->pluck('name', 'id');
+        }
+        return $array;
     }
 
     public function findOrFailWithRelations($id, $relations = ['attribute'])

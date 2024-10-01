@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PostCatalogueController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Ajax\LocationController;
@@ -283,6 +284,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::middleware(['permission:deleteAttribute', 'auth:admin'])->group(function () {
                 Route::delete('/delete/{id}', [AttributeController::class, 'delete'])->name('attribute.delete');
             });
+
+            Route::get('/get-variation', [AttributeController::class, 'getVariationByAttributeId']);
         });
 
         //quản lý các biến thể của thuộc tính sản phẩm
@@ -304,6 +307,32 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::middleware(['permission:editAttributeVariation', 'auth:admin'])->group(function () {
             Route::get('attribute-variation/edit/{id}', [AttributeController::class, 'editVariation'])->name('attribute.variation.edit');
             Route::put('attribute-variation/update', [AttributeController::class, 'updateVariation'])->name('attribute.variation.update');
+        });
+
+        //quản lý sản phẩm
+        Route::prefix('product')->group(function () {
+            Route::middleware(['permission:viewProduct', 'auth:admin'])->group(function () {
+                Route::get('/', [ProductController::class, 'index'])->name('product.index');
+
+                Route::get('/attributes', [ProductController::class, 'getAttribute'])->name('product.get.attribute');
+                Route::get('/variations/check', [ProductController::class, 'checkAttribute'])->name('product.variation.check');
+                Route::get('/variations/create', [ProductController::class, 'createVariation'])->name('product.variation.create');
+            });
+
+            Route::middleware(['permission:createProduct', 'auth:admin'])->group(function () {
+                Route::get('/create', [ProductController::class, 'create'])->name('product.create');
+                Route::post('/store', [ProductController::class, 'store'])->name('product.store');
+            });
+
+            Route::middleware(['permission:editProduct', 'auth:admin'])->group(function () {
+                Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
+                Route::put('/update', [ProductController::class, 'update'])->name('product.update');
+                Route::get('/update/status', [ProductController::class, 'updateStatus'])->name('product.update.status');
+            });
+
+            Route::middleware(['permission:deleteProduct', 'auth:admin'])->group(function () {
+                Route::delete('/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
+            });
         });
     });
 

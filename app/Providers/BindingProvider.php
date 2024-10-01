@@ -20,6 +20,7 @@ class BindingProvider extends ServiceProvider
         'App\Repositories\Interfaces\NotificationRepositoryInterface' => 'App\Repositories\NotificationRepository',
         'App\Repositories\Interfaces\AttributeRepositoryInterface' => 'App\Repositories\AttributeRepository',
         'App\Repositories\Interfaces\AttributeVariationRepositoryInterface' => 'App\Repositories\AttributeVariationRepository',
+        'App\Repositories\Interfaces\ProductRepositoryInterface' => 'App\Repositories\ProductRepository',
     ];
 
     protected $services = [
@@ -35,6 +36,7 @@ class BindingProvider extends ServiceProvider
         'App\Services\Interfaces\NotificationServiceInterface' => 'App\Services\NotificationService',
         'App\Services\Interfaces\AttributeServiceInterface' => 'App\Services\AttributeService',
         'App\Services\Interfaces\AttributeVariationServiceInterface' => 'App\Services\AttributeVariationService',
+        'App\Services\Interfaces\ProductServiceInterface' => 'App\Services\ProductService',
     ];
     /**
      * Register services.

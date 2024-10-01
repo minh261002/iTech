@@ -31,6 +31,9 @@
     <link rel="stylesheet" href="{{ asset('admin/assets/css/switchery.css') }}">
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/css/toast@1.0.1/fuiToast.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/jquery-ui.min.css') }}">
 
     {{-- @vite(['resources/js/bootstrap.js', 'resources/js/app.js']) --}}
 </head>
@@ -77,6 +80,7 @@
 
     <!-- Vendor -->
     <script src="{{ asset('admin/assets/libs/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/simplebar/simplebar.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/node-waves/waves.min.js') }}"></script>
@@ -148,6 +152,7 @@
                     }
                 });
             })
+
         });
     </script>
 

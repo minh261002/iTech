@@ -62,5 +62,6 @@
         ELEMENT.switchery();
         ELEMENT.changeStatus();
         ELEMENT.select2();
+        ELEMENT.sortui();
     });
 })(jQuery);
