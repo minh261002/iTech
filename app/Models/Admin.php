@@ -79,10 +79,10 @@ class Admin extends Authenticatable
         return $this->belongsTo(Ward::class, 'ward_id', 'code');
     }
 
-    public function rolesIn(array $roles)
+    public function checkPermissions($permissionsArr)
     {
-        foreach ($roles as $item) {
-            if ($this->roles == $item) {
+        foreach ($permissionsArr as $permission) {
+            if ($this->can($permission)) {
                 return true;
             }
         }

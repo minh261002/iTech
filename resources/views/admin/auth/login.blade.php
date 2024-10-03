@@ -34,8 +34,8 @@
                                             <div class="text-center">
                                                 <div class="mb-4">
                                                     <a href="#" class="auth-logo">
-                                                        <img src="{{ asset('admin/assets/images/logo-1.svg') }}"
-                                                            alt="logo-dark" class="mx-auto" height="28" />
+                                                        <img src="{{ asset('admin/assets/images/logo.png') }}"
+                                                            alt="logo-dark" class="mx-auto" height="60" />
                                                     </a>
                                                 </div>
 

@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Models\User;
 use App\Repositories\Interfaces\NotificationRepositoryInterface;
 use App\Services\Interfaces\NotificationServiceInterface;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -40,9 +41,8 @@ class NotificationController extends Controller
     {
         $this->notificationService->notification($request);
 
-        return response()->json([
-            'status' => 'success',
-        ]);
+        notyf()->success('Gửi thông báo thành công');
+        return redirect()->back();
     }
 
     public function delete($id)
@@ -78,5 +78,20 @@ class NotificationController extends Controller
     public function readAll(Request $request)
     {
         //
+    }
+
+    public function myNotification(): View
+    {
+
+        $notifications = $this->notificationRepository->getByAdminId(auth('admin')->user()->id);
+
+        $notification = null;
+        if (request()->has('id')) {
+            $notification = $this->notificationRepository->find(request()->id);
+            $notification->update(['is_read' => 2]);
+        }
+
+        return view('admin.notification.my', compact('notifications', 'notification'));
+
     }
 }
