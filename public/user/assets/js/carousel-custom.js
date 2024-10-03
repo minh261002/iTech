@@ -34,7 +34,7 @@ owl_carousel_image_customers.owlCarousel({
             items: 2
         },
         600: {
-            items: 2
+            items: 3
         },
         960: {
             items: 4
@@ -63,7 +63,7 @@ owl_product_new.owlCarousel({
             items: 2
         },
         600: {
-            items: 2
+            items: 3
         },
         960: {
             items: 4

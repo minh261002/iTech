@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="{{ asset('admin/assets/css/jquery-ui.min.css') }}">
 
     <script>
-        var BASE_URL = '{{ env("APP_URL") }}'
+        var BASE_URL = "{{ env('APP_URL') }}";
     </script>
 </head>
 

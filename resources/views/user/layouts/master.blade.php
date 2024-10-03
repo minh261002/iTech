@@ -54,9 +54,6 @@
         @include('user.partials.header')
         <!-- end Header -->
 
-        <!-- Slider Start -->
-        @include('user.partials.slider')
-        <!-- end Slider-->
 
         <!-- ============================================================== -->
         <!-- Start Page Content here -->
@@ -72,6 +69,7 @@
 
 
         <!-- Footer Start -->
+        @include('user.partials.footer')
         <!-- end Footer -->
 
 

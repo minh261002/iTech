@@ -314,6 +314,7 @@ html {
     padding: 28px;
     background-color: #fff;
     min-height: 388px;
+    position: relative;
 }
 
 .img-product {
@@ -343,6 +344,7 @@ html {
     font-size: 12px;
     font-weight: normal;
 }
+
 
 .list-new-product .price-product a {
     text-decoration: none;
@@ -493,11 +495,34 @@ html {
     padding: 0.8rem 1rem;
 }
 
+@media screen and (max-width: 1023.98px) {
+    .list-product-cate .product-item {
+        max-width: calc(33.33% - 0.8rem);
+        background-color: #fff;
+        position: relative;
+        border: 1px solid #ccc;
+    }
+}
+
+@media screen and (max-width: 767.98px) {
+    .list-product-cate .product-item {
+        max-width: calc(50% - 0.6rem);
+        background-color: #fff;
+        position: relative;
+        border: 1px solid #ccc;
+    }
+
+    .products-by-category .price-product del {
+        color: var(--secondary);
+        font-weight: normal;
+        padding-left: 0.5rem;
+    }
+}
 
 
 /* ACCESSORIES */
 
-.title-accessories-container {
+.title-container {
     font-size: 1.625rem;
     font-weight: bold;
     color: var(--primary);
@@ -524,16 +549,172 @@ html {
 }
 
 /* NEWS */
-.title-news-container {
-    font-size: 1.625rem;
-    font-weight: bold;
-    color: var(--primary);
-}
-
 .title-news h3 {
     overflow: hidden;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     display: -webkit-box;
     text-decoration: none;
+}
+
+/* Footer */
+.title-component-footer {
+    font-size: 1.125rem;
+    font-weight: bold;
+    color: var(--secondary);
+}
+
+.footer-ul li {
+    position: relative;
+    background: url(../images/icon-send-right.png) no-repeat left 4px;
+    background-size: 10px auto;
+    padding-left: 18px;
+    clear: both;
+    display: block;
+    margin-bottom: 8px;
+    vertical-align: middle;
+    text-transform: capitalize;
+    color: var(--secondary);
+}
+
+.footer-ul li a {
+    color: var(--secondary);
+}
+
+.social-footer a {
+    display: inline-block;
+    text-align: center;
+    color: #FFF !important;
+    width: 32px;
+    height: 32px;
+    line-height: 30px;
+    border-radius: 4px;
+    transition: all .3s ease-out;
+    -moz-transition: all .3s ease-out;
+    -webkit-transition: all .3s ease-out;
+    vertical-align: middle;
+}
+
+.bg-facebook {
+    background: #5d72a4;
+}
+
+.bg-youtube {
+    background: #F00;
+}
+
+.bg-instagram {
+    background: rgb(38, 38, 38);
+}
+
+.bg-tiktok {
+    background: #000;
+}
+
+
+
+
+/* PAGE PRODUCTS */
+.progroup-bestseller {
+    background-color: var(--primary);
+    color: #fff;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border-radius: .35rem;
+}
+
+.boxproduct__title {
+    position: relative;
+    display: block;
+    margin: 0;
+    margin-bottom: 0px;
+    font-family: var(--ftitle);
+    font-weight: bold;
+    font-size: 1.25rem;
+    line-height: 1.2;
+}
+
+.profilter_header_item {
+    color: var(--secondary);
+}
+
+.filterbox_group_container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -.35rem;
+    margin-right: -.35rem;
+    flex-direction: row;
+}
+
+.filterbox_ulgroup_item {
+    flex: 0 0 auto;
+    width: auto;
+    padding-left: .35rem;
+    padding-right: .35rem;
+}
+
+.filterbox_dropdown_label {
+    display: block;
+    border: 1px solid #ccc;
+    border-top-color: rgb(204, 204, 204);
+    border-right-color: rgb(204, 204, 204);
+    border-bottom-color: rgb(204, 204, 204);
+    border-left-color: rgb(204, 204, 204);
+    background-color: #eee;
+    padding: .35rem .75rem;
+    color: rgb(17, 17, 17);
+    text-transform: capitalize;
+    font-size: 11px;
+    line-height: 18px;
+    font-weight: bold;
+    border-radius: .25rem;
+    transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+}
+
+.dropdown-toggle::after {
+    display: inline-block;
+    margin-left: .255em;
+    vertical-align: .255em;
+    content: "";
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+}
+
+.rightbox__filteritem_runfilter {
+    font-size: 11px;
+    font-weight: 500;
+    padding: .375rem .5rem;
+    text-align: center;
+    background-color: var(--primary);
+    color: #fff;
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+}
+
+.filterbox_dropdown_label:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.boxcomment-title {
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: var(--secondary);
+    margin: 0 0 .75rem;
+}
+
+.comment-input-group textarea {
+    resize: none;
+    background-color: var(--bs-light);
+    font-size: 14px;
+    line-height: 20px;
+    transition: height .3s ease;
 }

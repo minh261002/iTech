@@ -4,6 +4,11 @@
 
 
 @section('content')
+
+<!-- Slider Start -->
+@include('user.partials.slider')
+<!-- end Slider-->
+
 <!-- LIST BOX PRODUCTS -->
 <section class="homebox-product mt-4">
     <div class="container-xxl">
@@ -657,7 +662,7 @@
 <!-- ACCESSORIES -->
 <section class="accessories-container my-3">
     <div class="container-xxl">
-        <h2 class="title-accessories-container mb-3">Danh mục phụ kiện :</h2>
+        <h2 class="title-container mb-3">Danh mục phụ kiện :</h2>
         <div class="accessories-list">
             <div class="row row-cols-lg-6">
                 <div class="access-item col mb-3">
@@ -753,80 +758,16 @@
 
 
 <!-- NEWS -->
-<div class="news-container">
-    <div class="container-xxl">
-        <div class="title-news-container mb-3">
-            <h2>Tin tức: </h2>
-        </div>
-        <div class="news-list">
-            <div class="row">
-                <div class="news-item col-6 col-lg-4 col-md-4 mb-3">
-                    <div class="d-flex gap-2 flex-column flex-lg-row">
-                        <div class="image-news text-center">
-                            <img src="{{asset('user/assets/images/news/news1.png')}}" alt="">
-                        </div>
-                        <div class="title-news">
-                            <h3 class="title-new pt-lg-2 pt-0">Apple Intelligence: Cần bao
-                                nhiêu bộ nhớ để trải nghiệm?</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="news-item col-6 col-lg-4 col-md-4 mb-3">
-                    <div class="d-flex gap-2 flex-column flex-lg-row">
-                        <div class="image-news text-center">
-                            <img src="{{asset('user/assets/images/news/news1.png')}}" alt="">
-                        </div>
-                        <div class="title-news">
-                            <h3 class="title-new pt-lg-2 pt-0">Apple Intelligence: Cần bao
-                                nhiêu bộ nhớ để trải nghiệm?</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="news-item col-6 col-lg-4 col-md-4 mb-3">
-                    <div class="d-flex gap-2 flex-column flex-lg-row">
-                        <div class="image-news text-center">
-                            <img src="{{asset('user/assets/images/news/news1.png')}}" alt="">
-                        </div>
-                        <div class="title-news">
-                            <h3 class="title-new pt-lg-2 pt-0">Apple Intelligence: Cần bao
-                                nhiêu bộ nhớ để trải nghiệm?</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="news-item col-6 col-lg-4 col-md-4 mb-3">
-                    <div class="d-flex gap-2 flex-column flex-lg-row">
-                        <div class="image-news text-center">
-                            <img src="{{asset('user/assets/images/news/news1.png')}}" alt="">
-                        </div>
-                        <div class="title-news">
-                            <h3 class="title-new pt-lg-2 pt-0">Apple Intelligence: Cần bao
-                                nhiêu bộ nhớ để trải nghiệm?</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="news-item col-6 col-lg-4 col-md-4 mb-3">
-                    <div class="d-flex gap-2 flex-column flex-lg-row">
-                        <div class="image-news text-center">
-                            <img src="{{asset('user/assets/images/news/news1.png')}}" alt="">
-                        </div>
-                        <div class="title-news">
-                            <h3 class="title-new pt-lg-2 pt-0">Apple Intelligence: Cần bao
-                                nhiêu bộ nhớ để trải nghiệm?</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@include('user.partials.news')
 
 
-<div class="shop-news-container">
+
+<div class="shop-news-container mt-3">
     <div class="container-xxl">
-        <div class="title-shop-news-container">
+        <div class="title-container">
             <h2>Báo chí nói gì về Shop:</h2>
         </div>
-        <div class="shop-news-list">
+        <div class="shop-news-list mt-3">
             <div class="d-flex flex-wrap justify-content-center gap-3">
                 <div class="logo-brand-news p-3 border border-1 border-dark-subtle rounded-2 shadow">
                     <a href="#">

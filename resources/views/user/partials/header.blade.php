@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-2 d-flex align-items-center justify-content-center">
                     <div class="logo">
-                        <img src="{{asset('admin/assets/images/logo-1.svg')}}" alt="">
+                        <img height="45" src="{{asset('admin/assets/images/logo.png')}}" alt="">
                     </div>
                 </div>
                 <div class="col-3 m-auto">
