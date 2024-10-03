@@ -510,15 +510,30 @@ html {
 }
 
 .accessories-list .access-item {
-    transition: margin-top 0.5s ease;
+    transition: transform 0.5s ease;
 }
 
 .accessories-list .access-item:hover {
-    margin-top: -5px;
+    transform: translateY(-5px);
     transition: 0.5s;
 }
 
 .accessories-list .access-item:hover .title-access {
     color: var(--primary);
     transition: 0.5s;
+}
+
+/* NEWS */
+.title-news-container {
+    font-size: 1.625rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.title-news h3 {
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    text-decoration: none;
 }
