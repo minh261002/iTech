@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\ModuleController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PostCatalogueController;
 use App\Http\Controllers\Admin\PostController;
@@ -356,6 +357,24 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
             Route::middleware(['permission:deleteDiscount', 'auth:admin'])->group(function () {
                 Route::delete('/delete/{id}', [DiscountController::class, 'delete'])->name('discount.delete');
+            });
+        });
+
+        //quản lý đơn hàng
+        Route::prefix('order')->group(function () {
+            Route::middleware(['permission:viewOrder', 'auth:admin'])->group(function () {
+                Route::get('/', [OrderController::class, 'index'])->name('order.index');
+                Route::get('/userInfo', [OrderController::class, 'getUserInfo']);
+            });
+
+            Route::middleware(['permission:createOrder', 'auth:admin'])->group(function () {
+                Route::get('/create', [OrderController::class, 'create'])->name('order.create');
+                Route::put('/store', [OrderController::class, 'store'])->name('order.store');
+            });
+
+            Route::middleware(['permission:editOrder', 'auth:admin'])->group(function () {
+                Route::get('/edit/{id}', [OrderController::class, 'edit'])->name('order.edit');
+                Route::put('/update', [OrderController::class, 'update'])->name('order.update');
             });
         });
     });

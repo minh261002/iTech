@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.png') }}">
 
     <!-- App css -->
     <link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
@@ -35,7 +35,9 @@
 
     <link rel="stylesheet" href="{{ asset('admin/assets/css/jquery-ui.min.css') }}">
 
-    {{-- @vite(['resources/js/bootstrap.js', 'resources/js/app.js']) --}}
+    <script>
+        var BASE_URL = '{{ env('APP_URL') }}';
+    </script>
 </head>
 
 <!-- body start -->
@@ -73,8 +75,10 @@
         <!-- End Page content -->
         <!-- ============================================================== -->
     </div>
+    {{-- <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script> --}}
 
-    <script src="{{ asset('admin/assets/libs/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('plugins/ckeditor/ckeditor.js') }}"></script>
+
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/js/toast@1.0.1/fuiToast.min.js"></script>
 
@@ -103,7 +107,9 @@
     <!-- Data table js -->
     <script src="{{ asset('admin/assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/libs/ckfinder_2/ckfinder.js') }}"></script>
+    {{-- <script src="{{ asset('admin/assets/libs/ckfinder_2/ckfinder.js') }}"></script> --}}
+
+    <script src="{{ asset('plugins/ckfinder/ckfinder.js') }}"></script>
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <!-- Flatpickr Timepicker Plugin js -->
     <script src="{{ asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>

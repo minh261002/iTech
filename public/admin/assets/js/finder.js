@@ -40,6 +40,7 @@
         if (typeof (elementHeight) == 'undefined') {
             elementHeight = 500;
         }
+
         CKEDITOR.replace(elementId, {
             height: elementHeight,
             removeButtons: '',
@@ -62,11 +63,12 @@
         });
     }
 
+    // Hàm để mở CKFinder và cập nhật đường dẫn vào input
     ELEMENT.uploadImageToInput = () => {
         $('.upload-image').click(function () {
             let input = $(this)
             let type = input.attr('data-type')
-            ELEMENT.setupCkFinder2(input, type);
+            ELEMENT.setupCkFinder3(input, type);
         })
     }
 
@@ -78,90 +80,112 @@
         })
     }
 
-    ELEMENT.setupCkFinder2 = (object, type) => {
-        if (typeof (type) == 'undefined') {
+    // Hàm cài đặt CKFinder
+    ELEMENT.setupCkFinder3 = (object, type) => {
+        if (typeof(type) == 'undefined') {
             type = 'Images';
         }
-        var finder = new CKFinder();
-        finder.resourceType = type;
-        finder.selectActionFunction = function (fileUrl, data) {
-            object.val(fileUrl)
-        }
-        finder.popup();
-    }
 
-    ELEMENT.browseServerVideo = (type) => {
-        if (typeof (type) == 'undefined') {
-            type = 'Flash';
-        }
-        var finder = new CKFinder();
-        finder.resourceType = type;
-        finder.selectActionFunction = function (fileUrl, data) {
-            $('.video-target').val(fileUrl)
-        }
-        finder.popup();
-    }
+        CKFinder.popup({
+            chooseFiles: true,
+            resourceType: type,
+            onInit: function(finder) {
+                finder.on('files:choose', function(evt) {
+                    var file = evt.data.files.first();
+                    object.val(file.getUrl()); // Cập nhật giá trị cho input
+                });
 
-    ELEMENT.browseServerAvatar = (object, type) => {
-        if (typeof (type) == 'undefined') {
-            type = 'Images';
-        }
-        var finder = new CKFinder();
-        finder.resourceType = type;
-        finder.selectActionFunction = function (fileUrl, data) {
-            object.find('img').attr('src', fileUrl)
-            object.siblings('input').val(fileUrl)
-        }
-        finder.popup();
-    }
-
-    ELEMENT.browseServerCkeditor = (object, type, target) => {
-        if (typeof (type) == 'undefined') {
-            type = 'Images';
-        }
-        var finder = new CKFinder();
-
-        finder.resourceType = type;
-        finder.selectActionFunction = function (fileUrl, data, allFiles) {
-            let html = '';
-            for (var i = 0; i < allFiles.length; i++) {
-                var image = allFiles[i].url
-                html += '<div class="image-content"><figure>'
-                html += '<img src="' + image + '" alt="' + image + '">'
-                html += '<figcaption>Nhập vào mô tả cho ảnh</figcaption>'
-                html += '</figure></div>';
+                finder.on('file:choose:resizedImage', function(evt) {
+                    object.val(evt.data.resizedUrl); // Cập nhật nếu file đã được resize
+                });
             }
-            CKEDITOR.instances[target].insertHtml(html)
-        }
-        finder.popup();
+        });
     }
 
+    // Hàm mở CKFinder và cập nhật ảnh Avatar
+    ELEMENT.browseServerAvatar = (object, type) => {
+        if (typeof(type) == 'undefined') {
+            type = 'Images';
+        }
+
+        CKFinder.popup({
+            chooseFiles: true,
+            resourceType: type,
+            onInit: function(finder) {
+                finder.on('files:choose', function(evt) {
+                    var file = evt.data.files.first();
+                    object.find('img').attr('src', file.getUrl());
+                    object.siblings('input').val(file.getUrl());
+                });
+
+                finder.on('file:choose:resizedImage', function(evt) {
+                    object.find('img').attr('src', evt.data.resizedUrl);
+                    object.siblings('input').val(evt.data.resizedUrl);
+                });
+            }
+        });
+    }
+
+    // Hàm cho CKEditor
+    ELEMENT.browseServerCkeditor = (object, type, target) => {
+        if (typeof(type) == 'undefined') {
+            type = 'Images';
+        }
+
+        CKFinder.popup({
+            chooseFiles: true,
+            resourceType: type,
+            onInit: function(finder) {
+                finder.on('files:choose', function(evt) {
+                    var allFiles = evt.data.files.models;
+                    let html = '';
+                    for (var i = 0; i < allFiles.length; i++) {
+                        var image = allFiles[i].getUrl();
+                        html += '<div class="image-content"><figure>';
+                        html += '<img src="' + image + '" alt="' + image + '">';
+                        html += '<figcaption>Nhập vào mô tả cho ảnh</figcaption>';
+                        html += '</figure></div>';
+                    }
+
+                    CKEDITOR.instances[target].insertHtml(html);
+                });
+            }
+
+        });
+    }
+
+    // Hàm mở CKFinder cho album
     ELEMENT.browseServerAlbum = () => {
         var type = 'Images';
-        var finder = new CKFinder();
 
-        finder.resourceType = type;
-        finder.selectActionFunction = function (fileUrl, data, allFiles) {
-            let html = '';
-            for (var i = 0; i < allFiles.length; i++) {
-                var image = allFiles[i].url
-                html += '<li class="ui-state-default">'
-                html += ' <div class="thumb">'
-                html += ' <span class="span image img-scaledown">'
-                html += '<img src="' + image + '" alt="' + image + '">'
-                html += '<input type="hidden" name="gallery[]" value="' + image + '">'
-                html += '</span>'
-                html += '<button class="delete-image"><i class="fa-solid fa-trash"></i></button>'
-                html += '</div>'
-                html += '</li>'
+        CKFinder.popup({
+            chooseFiles: true,
+            resourceType: type,
+            onInit: function(finder) {
+                finder.on('files:choose', function(evt) {
+                    var allFiles = evt.data.files.models;
+                    let html = '';
+                    for (var i = 0; i < allFiles.length; i++) {
+                        var image = allFiles[i].getUrl();
+                        html += '<li class="ui-state-default">';
+                        html += '<div class="thumb">';
+                        html += '<span class="span image img-scaledown">';
+                        html += '<img src="' + image + '" alt="' + image + '">';
+                        html += '<input type="hidden" name="gallery[]" value="' + image + '">';
+                        html += '</span>';
+                        html += '<button class="delete-image"><i class="fa-solid fa-trash"></i></button>';
+                        html += '</div>';
+                        html += '</li>';
+                    }
+
+                    $('.click-to-upload').addClass('hidden');
+                    $('#sortable').append(html);
+                    $('.upload-list').removeClass('hidden');
+                });
             }
-
-            $('.click-to-upload').addClass('hidden')
-            $('#sortable').append(html)
-            $('.upload-list').removeClass('hidden')
-        }
-        finder.popup();
+        });
     }
+
 
     ELEMENT.deletePicture = () => {
         $(document).on('click', '.delete-image', function () {

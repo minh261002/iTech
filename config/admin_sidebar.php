@@ -116,6 +116,24 @@ return [
         ],
     ],
     [
+        'href' => 'sidebarOrder',
+        'title' => 'Đơn hàng',
+        'icon' => '<i data-feather="shopping-cart"></i>',
+        'permissions' => ['viewOrder', 'editOrder', 'deleteOrder'],
+        'sub_menu' => [
+            [
+                'title' => 'Thêm mới',
+                'route' => 'admin.order.create',
+                'permissions' => ['createOrder'],
+            ],
+            [
+                'title' => 'Danh sách',
+                'route' => 'admin.order.index',
+                'permissions' => ['viewOrder'],
+            ],
+        ],
+    ],
+    [
         'href' => 'sidebarReview',
         'title' => 'Đánh giá',
         'icon' => '<i data-feather="star"></i>',
