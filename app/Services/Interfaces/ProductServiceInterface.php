@@ -10,5 +10,5 @@ interface ProductServiceInterface
 
     public function updateStatus(Request $request);
 
-    public function createProductVariations(Request $request, array $view);
+    public function createProductVariations(Request $request);
 }

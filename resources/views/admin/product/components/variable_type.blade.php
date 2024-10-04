@@ -39,7 +39,7 @@
                     <i class="mdi mdi-alert"></i> Bạn cần lưu thuộc tính trước khi tạo các biến thể của sản phẩm
                 </div>
 
-                <div id="variation_result"></div>
+                <div class="variation_result accordion" id="accordion"></div>
             </div>
         </div>
     </div>
@@ -72,7 +72,7 @@
                 return FuiToast.error('Vui lòng chọn thuộc tính');
             }
 
-            let url = "/admin/product/attributes"
+            let url = "/admin/product/attributes/get";
             $.ajax({
                 url: url,
                 type: 'GET',
@@ -96,6 +96,7 @@
 
             let attributes = [];
 
+
             $('.box-attributes').each(function() {
                 let attributeId = $(this).attr('id').replace('check-attribute-', '');
                 let variationIds = $(this).find('select.select2').val();
@@ -103,7 +104,7 @@
                 if (variationIds && variationIds.length > 0) {
                     attributes.push({
                         attribute_id: attributeId,
-                        attribute_variation_ids: variationIds
+                        attribute_variation_id: variationIds // Đảm bảo tên trường đúng
                     });
                 }
             });
@@ -116,13 +117,13 @@
                 url: "/admin/product/variations/check",
                 type: 'GET',
                 data: {
-                    attributes: attributes
+                    product_attribute: attributes,
                 },
                 success: function(response) {
                     FuiToast.success('Lưu thuộc tính thành công');
                     $('#v-pills-variation-tab-variable').tab('show');
                     $('#alert_error').remove();
-                    $('#variation_result').html(response);
+                    $('.variation_result').append(response);
                 },
                 error: function(xhr) {
                     FuiToast.error('Có lỗi xảy ra trong quá trình xử lý');
@@ -132,39 +133,75 @@
         });
 
         $(document).on('click', '#btn_variation_action', function() {
-            var type = $('#variation_action').val();
-            var attributeId = $('#attribute_id').val();
-            var attributeVariationIds = [];
+            var productAttributes = {
+                attribute_id: [],
+                attribute_variation_id: []
+            };
 
-            $('.box-attributes').each(function() {
-                let variationIds = $(this).find('select.select2').val();
-                if (variationIds && variationIds.length > 0) {
-                    attributeVariationIds.push(...variationIds);
+            $('#attributes_result').find('.box-attributes').each(function() {
+                var attributeId = parseInt($(this).attr('id').replace('check-attribute-', ''));
+                var variationIds = $(this).find('select.select2').val() || [];
+
+                if (variationIds.length > 0) {
+                    productAttributes.attribute_id.push(attributeId);
+
+                    productAttributes.attribute_variation_id.push(variationIds.map(Number));
                 }
             });
 
-
-            if (!type || !attributeId || attributeVariationIds.length === 0) {
-                return FuiToast.error('Vui lòng nhập đầy đủ thông tin');
-            }
+            var payload = {
+                product_attribute: productAttributes,
+                variation_action: parseInt($('#variation_action').val())
+            };
 
             $.ajax({
                 url: "/admin/product/variations/create",
                 type: 'GET',
-                data: {
-                    type: type,
-                    attribute_id: attributeId,
-                    attribute_variation_ids: attributeVariationIds
-                },
+                contentType: 'application/json',
+                data: payload,
                 success: function(response) {
-                    console.log(response);
                     FuiToast.success('Tạo biến thể thành công');
+                    $('.variation_result').append(response);
                 },
                 error: function(xhr) {
                     FuiToast.error('Có lỗi xảy ra trong quá trình tạo biến thể');
                     console.error(xhr.responseText);
                 }
             });
+        });
+
+        $(document).on('click', '.btn-ckfinder', function() {
+            var inputId = $(this).data('input-id'); // Lấy id của input ẩn
+            var imgTag = $(this).find('img'); // Lấy thẻ img bên trong span để cập nhật ảnh
+
+            CKFinder.popup({
+                chooseFiles: true,
+                width: 800,
+                height: 600,
+                onInit: function(finder) {
+                    finder.on('files:choose', function(evt) {
+                        var file = evt.data.files.first();
+                        $(`#${inputId}`).val(file.getUrl()); // Cập nhật URL vào input ẩn
+                        imgTag.attr('src', file.getUrl()); // Cập nhật hình ảnh hiển thị
+
+                        console.log($(this).data('input-id'));
+                    });
+
+                    finder.on('file:choose:resizedImage', function(evt) {
+                        var file = evt.data.resizedUrl;
+                        $(`#${inputId}`).val(file); // Cập nhật URL resized vào input ẩn
+                        imgTag.attr('src', file); // Cập nhật hình ảnh resized hiển thị
+                    });
+                }
+            });
+        });
+
+        $(document).on('click', '.remove-attribute', function() {
+            $(this).closest('.box-attributes').remove();
+        });
+
+        $(document).on('click', '.remove-product-variation-item', function() {
+            $(this).closest('.wrap-item-product-variation').remove();
         });
     </script>
 @endpush

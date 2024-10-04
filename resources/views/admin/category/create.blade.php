@@ -49,7 +49,7 @@
 
                             <div class="col-md-6 mb-3">
                                 <label for="status" class="form-label">Danh mục cha</label>
-                                <select class="form-select" name="parent_id" id="parent_id">
+                                <select class="form-control select2" name="parent_id" id="parent_id">
                                     <option value="">-- Chọn danh mục cha --</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">

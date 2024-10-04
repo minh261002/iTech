@@ -28,6 +28,32 @@ class CategoryController extends Controller
         return view('admin.category.index', compact('categories'));
     }
 
+    public function get()
+    {
+        $offset = request()->get('offset', 0);
+        $limit = 10;
+
+        $categories = $this->categoryRepository->getFlatTree();
+        $categoriesArray = $categories->toArray();
+
+        if (request()->has('search')) {
+            $search = request()->get('search');
+            $categoriesArray = array_filter($categoriesArray, function ($category) use ($search) {
+                return strpos($category['name'], $search) !== false;
+            });
+        }
+
+        $total = count($categoriesArray);
+
+        $categoriesArray = array_slice($categoriesArray, $offset, $limit);
+
+        return response()->json([
+            'categories' => $categoriesArray,
+            'total' => $total
+        ]);
+    }
+
+
     public function create()
     {
         $categories = $this->categoryRepository->getFlatTree();

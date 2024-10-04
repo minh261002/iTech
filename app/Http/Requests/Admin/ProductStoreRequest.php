@@ -21,22 +21,51 @@ class ProductStoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'type' => 'required',
-            'name' => 'required',
-            'sku' => 'required',
-            'desc' => 'nullable',
-            'price' => 'required',
-            'sale_price' => 'nullable',
+        $this->validate = [
+            'product.type' => 'required', // Xác thực kiểu sản phẩm
+            'product.name' => 'required|string|max:255', // Tên sản phẩm
+            'product.sku' => 'required|string|max:100', // SKU
+            'product.desc' => 'nullable|string', // Mô tả
+            'product.price' => 'nullable', // Giá gốc
+            'product.sale_price' => 'nullable', // Giá khuyến mãi
             'category_id' => 'required|array',
-            'category_id.*' => 'integer|exists:categories,id',
-            'image' => 'nullable',
-            'gallery' => 'nullable|array',
-            'qty' => 'required',
-            'meta_title' => 'nullable',
-            'meta_desc' => 'nullable',
-            'meta_keywords' => 'nullable',
+            'category_id.*' => 'required|integer|exists:categories,id', // Danh mục sản phẩm
+            'product.image' => 'nullable', // Hình ảnh chính
+            'product.gallery' => 'nullable|array', // Thư viện hình ảnh
+            'product.qty' => 'nullable', // Số lượng sản phẩm
+            'product.meta_title' => 'nullable|string|max:255', // Tiêu đề meta
+            'product.meta_desc' => 'nullable|string', // Mô tả meta
+            'product.meta_keywords' => 'nullable|string', // Từ khóa meta
+            'product.status' => 'nullable', // Trạng thái
         ];
+
+        if ($this->input('product.type') == 1) {
+            // Quy tắc cho sản phẩm đơn giản
+            $this->validate['product.price'] = 'required|numeric|min:0';
+        } elseif ($this->input('product.type') == 2) {
+            $this->validate['product_attribute.attribute_id'] = ['required', 'array'];
+            $this->validate['product_attribute.attribute_id.*'] = ['required', 'exists:App\Models\Attribute,id'];
+            $this->validate['product_attribute.attribute_variation_id'] = ['required', 'array'];
+            $this->validate['product_attribute.attribute_variation_id.*'] = ['required', 'array'];
+            $this->validate['product_attribute.attribute_variation_id.*.*'] = ['required', 'exists:App\Models\AttributeVariation,id'];
+            $this->validate['products_variations.attribute_variation_id'] = ['nullable', 'array'];
+            if ($this->input('products_variations.attribute_variation_id') && count($this->input('products_variations.attribute_variation_id')) > 0) {
+                $this->validate['products_variations.id'] = ['required', 'array'];
+                $this->validate['products_variations.id.*'] = ['required', 'integer'];
+                $this->validate['products_variations.attribute_variation_id'] = ['nullable', 'array'];
+                $this->validate['products_variations.attribute_variation_id.*'] = ['required', 'array'];
+                $this->validate['products_variations.attribute_variation_id.*.*'] = ['required', 'exists:App\Models\AttributeVariation,id'];
+                $this->validate['products_variations.image'] = ['required', 'array'];
+                $this->validate['products_variations.price'] = ['required', 'array'];
+                $this->validate['products_variations.price.*'] = ['required', 'numeric'];
+                $this->validate['products_variations.sale_price'] = ['nullable', 'array'];
+                $this->validate['products_variations.sale_price.*'] = ['nullable', 'numeric'];
+                $this->validate['products_variations.qty'] = ['required', 'array'];
+                $this->validate['products_variations.qty.*'] = ['required', 'integer'];
+            }
+        }
+
+        return $this->validate;
     }
 
     /**
@@ -50,7 +79,6 @@ class ProductStoreRequest extends FormRequest
             'type.required' => 'Vui lòng chọn loại sản phẩm',
             'name.required' => 'Vui lòng nhập tên sản phẩm',
             'sku.required' => 'Vui lòng nhập mã sản phẩm',
-            'price.required' => 'Vui lòng nhập giá sản phẩm',
             'category_id.required' => 'Vui lòng chọn danh mục sản phẩm',
             'category_id.*.integer' => 'Danh mục sản phẩm không hợp lệ',
             'category_id.*.exists' => 'Danh mục sản phẩm không tồn tại',

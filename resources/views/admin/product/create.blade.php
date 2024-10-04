@@ -15,7 +15,15 @@
                 </nav>
             </div>
         </div>
-
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="{{ route('admin.product.store') }}" class="row" method="POST">
             @csrf
 
@@ -29,26 +37,26 @@
                         <div class="row">
                             <div class="col-md-6 form-group mb-3">
                                 <label for="name" class="form-label">Tên sản phẩm</label>
-                                <input type="text" class="form-control" id="name" name="name"
-                                    value="{{ old('name') }}">
-                                @error('name')
+                                <input type="text" class="form-control" id="name" name="product[name]"
+                                    value="{{ old('product[name]') }}">
+                                @error('product[name]')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
                                 <label for="sku" class="form-label">SKU</label>
-                                <input type="text" class="form-control" id="sku" name="sku"
-                                    value="{{ old('sku') ? old('sku') : 'IT' . '_' . rand(10000, 99999) }}">
-                                @error('sku')
+                                <input type="text" class="form-control" id="sku" name="product[sku]"
+                                    value="{{ old('product[sku]') ? old('product[sku]') : 'IT' . '_' . rand(10000, 99999) }}">
+                                @error('product[sku]')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
                             <div class="col-12 mb-3">
                                 <label for="desc" class="form-label">Mô tả</label>
-                                <textarea class="form-control ck-editor" id="desc" name="desc" rows="5">{{ old('desc') }}</textarea>
-                                @error('desc')
+                                <textarea class="form-control ck-editor" id="desc" name="product[desc]" rows="5">{{ old('product[desc]') }}</textarea>
+                                @error('product[desc]')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -90,7 +98,8 @@
                                                 <div class="thumb">
                                                     <span class="span image img-scaledown">
                                                         <img src="{{ $val }}" alt="{{ $val }}">
-                                                        <input type="hidden" name="gallery[]" value="{{ $val }}">
+                                                        <input type="hidden" name="product[gallery[]]"
+                                                            value="{{ $val }}">
                                                     </span>
                                                     <button class="delete-image">
                                                         <i class="fa-solid fa-trash"></i>
@@ -112,7 +121,7 @@
                             Loại sản phẩm
                         </h2>
                         <span>----</span>
-                        <select name="type" id="type" class="form-select w-25">
+                        <select name="product[type]" id="type" class="form-select w-25">
                             <option value="1" {{ request()->type == 1 || !request()->type ? 'selected' : '' }}>Sản
                                 phẩm
                                 đơn giản</option>
@@ -151,19 +160,19 @@
 
                         <div class="form-group mb-3">
                             <label for="meta_title" class="form-label">Tiêu đề SEO</label>
-                            <input type="text" class="form-control" id="meta_title" name="meta_title"
-                                value="{{ old('meta_title') }}">
+                            <input type="text" class="form-control" id="meta_title" name="product[meta_title]"
+                                value="{{ old('product[meta_title]') }}">
                             <span class="error-title text-danger"></span>
-                            @error('meta_title')
+                            @error('product[meta_title]')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="meta_description" class="form-label">Mô tả SEO</label>
-                            <textarea name="meta_desc" class="form-control" id="meta_description">{{ old('meta_description') }}</textarea>
+                            <textarea name="product[meta_desc]" class="form-control" id="meta_description">{{ old('product[meta_desc]') }}</textarea>
                             <span class="error-desc text-danger"></span>
-                            @error('meta_description')
+                            @error('product[meta_desc]')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -172,9 +181,9 @@
                             <label for="meta_keywords" class="form-label">Từ khóa SEO
                                 (Phân cách bằng dấu phẩy)
                             </label>
-                            <input type="text" class="form-control" id="meta_keywords" name="meta_keywords"
-                                value="{{ old('meta_keywords') }}">
-                            @error('meta_keywords')
+                            <input type="text" class="form-control" id="meta_keywords" name="product[meta_keywords]"
+                                value="{{ old('product[meta_keywords]') }}">
+                            @error('product[meta_keywords]')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -190,11 +199,11 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <select name="status" id="status" class="form-select">
-                                <option value="2">Đã xuất bản</option>
+                            <select name="product[status]" id="status" class="form-select">
                                 <option value="1">Bản nháp</option>
+                                <option value="2">Đã xuất bản</option>
                             </select>
-                            @error('status')
+                            @error('product[status]')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -202,24 +211,22 @@
                 </div>
 
                 <div class="card">
-                    <div class="card-header d-flex align-items-center justify-content-between">
+                    <div class="card-header ">
                         <h2 class="card-title">Danh mục sản phẩm</h2>
+
+                        <input type="text" class="form-control" id="search_category" placeholder="Tìm kiếm danh mục">
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            @foreach ($categories as $category)
-                                <div class="form-check" style="margin-left: {{ $category->depth * 20 }}px;">
-                                    <input class="form-check-input" type="checkbox" value="{{ $category->id }}"
-                                        name="category_id[]" id="category_id-{{ $category->id }}">
-                                    <label class="form-check-label" for="category_id-{{ $category->id }}">
-                                        {{ $category->name }}
-                                    </label>
-                                </div>
-                            @endforeach
+                        <div class="form-group" id="categories_result">
 
                             @error('category_id')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <p id="loadMoreCategory" style="cursor:pointer">Xem thêm</p>
+                            <p id="hideCategory" class="hidden" style="cursor:pointer">Ẩn bớt</p>
                         </div>
                     </div>
                 </div>
@@ -233,9 +240,9 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <span class="image img-cover image-target"><img class="w-100"
-                                        src="{{ old('image', $product->image ?? '') ? old('image', $product->image ?? '') : asset('admin/assets/images/not-found.jpg') }}"
-                                        alt=""></span>
-                                <input type="hidden" name="image" value="{{ old('image', $product->image ?? '') }}">
+                                        src="{{ asset('admin/assets/images/not-found.jpg') }}" alt=""></span>
+                                <input type="hidden" name="product[image]"
+                                    value="{{ old('image', $product->image ?? '') }}">
                             </div>
                         </div>
                     </div>
@@ -341,6 +348,117 @@
                     $('.product-simple').removeClass('d-none');
                 }
             });
+        });
+
+        // Load more category
+        $(document).ready(function() {
+            let offset = 0;
+            let totalCategories = 0;
+            const limit = 10;
+            let keyword = '';
+
+            function getCategories(hidePrevious = false) {
+                let url = "{{ route('admin.category.get') }}";
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    data: {
+                        offset: offset,
+                        search: keyword
+                    },
+                    beforeSend: function() {
+                        $('#categories_result').append(
+                            '<div class="d-flex align-items-center justify-content-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+                        );
+                    },
+                    success: function(response) {
+                        let categories = response.categories;
+                        totalCategories = response.total;
+                        let html = '';
+
+                        categories.forEach(category => {
+                            html += `
+                                <div class="form-check" style="margin-left: ${category.depth * 20}px;">
+                                    <input class="form-check-input" type="checkbox" value="${category.id}" name="category_id[]" data-lft="${category._lft}" data-rgt="${category._rgt}"
+                                        id="category_id-${category.id}">
+                                    <label class="form-check-label" for="category_id-${category.id}">
+                                        ${category.name}
+                                    </label>
+                                </div>
+                            `;
+                        });
+
+                        if (hidePrevious) {
+                            $('#categories_result').html(html);
+                        } else {
+                            $('#categories_result').append(html);
+                        }
+
+                        if (offset + categories.length >= totalCategories) {
+                            $('#loadMoreCategory').hide();
+                        } else {
+                            $('#loadMoreCategory').show();
+                        }
+
+                        if (offset > 0) {
+                            $('#hideCategory').show();
+                        } else {
+                            $('#hideCategory').hide();
+                        }
+                    },
+                    complete: function() {
+                        $('#categories_result').find('.spinner-border').remove();
+                    }
+                });
+            }
+
+            $('#loadMoreCategory').click(function() {
+                offset += limit;
+                getCategories();
+            });
+
+            $('#hideCategory').click(function() {
+                offset = 0;
+                getCategories(true);
+            });
+
+            $('#search_category').on('input', function() {
+                clearTimeout($.data(this, 'timer'));
+                let search = $(this).val();
+                $(this).data('timer', setTimeout(function() {
+                    keyword = search;
+                    offset = 0;
+                    getCategories(true);
+                }, 500));
+            });
+
+            getCategories();
         })
+
+        $(document).on('change', 'input[type="checkbox"]', function() {
+            let lft = $(this).data('lft');
+            let rgt = $(this).data('rgt');
+            let checked = $(this).prop('checked');
+
+            if (checked) {
+                $('input[type="checkbox"]').each(function() {
+                    let parentLft = $(this).data('lft');
+                    let parentRgt = $(this).data('rgt');
+
+                    if (parentLft < lft && parentRgt > rgt) {
+                        $(this).prop('checked', true);
+                    }
+                });
+            } else {
+                $('input[type="checkbox"]').each(function() {
+                    let parentLft = $(this).data('lft');
+                    let parentRgt = $(this).data('rgt');
+
+                    if (parentLft < lft && parentRgt > rgt) {
+                        $(this).prop('checked', false);
+                    }
+                });
+            }
+        });
     </script>
 @endpush

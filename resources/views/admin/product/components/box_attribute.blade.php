@@ -6,15 +6,19 @@
             {{ $response->name }}
         </a>
 
-        <button class="btn btn-sm btn-danger position-absolute top-50 end-0 translate-middle-y me-2">
+        <button type="button"
+            class="btn btn-sm btn-danger position-absolute top-50 end-0 translate-middle-y me-2 remove-attribute">
             <i class="mdi mdi-close"></i>
         </button>
     </div>
 
-    <div class="collapse mt-2" id="collapse-{{ $response->id }}">
+    <div class="collapse mt-2 show" id="collapse-{{ $response->id }}">
         <div class="card card-body mb-0">
-            <select name="variation_id_{{ $response->id }}" id="variation_id_{{ $response->id }}"
-                class="form-select select2" multiple>
+            <input type="hidden" class="input-product-attribute-id" name="product_attribute[attribute_id][]"
+                value="{{ $response->id }}" />
+            <select id="variation_id_{{ $response->id }}"
+                name="product_attribute[attribute_variation_id][{{ $response->id }}][]" class="form-select select2"
+                multiple>
                 @foreach ($response->variations as $value)
                     <option value="{{ $value->id }}">{{ $value->name }}</option>
                 @endforeach

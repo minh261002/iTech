@@ -13,7 +13,9 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PostCatalogueController;
 use App\Http\Controllers\Admin\PostController;
-use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\Product\ProductAttributeController;
+use App\Http\Controllers\Admin\Product\ProductController;
+use App\Http\Controllers\Admin\Product\ProductVariationController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Ajax\LocationController;
@@ -191,6 +193,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::prefix('category')->group(function () {
             Route::middleware(['permission:viewCategory', 'auth:admin'])->group(function () {
                 Route::get('/', [CategoryController::class, 'index'])->name('category.index');
+                Route::get('/get', [CategoryController::class, 'get'])->name('category.get');
             });
 
             Route::middleware(['permission:createCategory', 'auth:admin'])->group(function () {
@@ -317,9 +320,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::middleware(['permission:viewProduct', 'auth:admin'])->group(function () {
                 Route::get('/', [ProductController::class, 'index'])->name('product.index');
 
-                Route::get('/attributes', [ProductController::class, 'getAttribute'])->name('product.get.attribute');
-                Route::get('/variations/check', [ProductController::class, 'checkAttribute'])->name('product.variation.check');
-                Route::get('/variations/create', [ProductController::class, 'createVariation'])->name('product.variation.create');
+                Route::prefix('attributes')->group(function () {
+                    Route::get('/get', [ProductAttributeController::class, 'create'])->name('product.attributes.get');
+                });
+
+                Route::prefix('variations')->group(function () {
+                    Route::get('/check', [ProductVariationController::class, 'check'])->name('product.variations.check');
+                    Route::get('/create', [ProductVariationController::class, 'create'])->name('product.variations.create');
+                    Route::get('/delete/{id}', [ProductVariationController::class, 'delete'])->name('product.variations.delete');
+                });
             });
 
             Route::middleware(['permission:createProduct', 'auth:admin'])->group(function () {

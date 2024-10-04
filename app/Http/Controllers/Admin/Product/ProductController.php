@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Repositories\Interfaces\AttributeRepositoryInterface;
 use App\Repositories\Interfaces\AttributeVariationRepositoryInterface;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
-use App\Repositories\Interfaces\ProductRepositoryInterface;
+use App\Repositories\Interfaces\Product\ProductRepositoryInterface;
 use App\Services\Interfaces\ProductServiceInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -85,8 +85,7 @@ class ProductController extends Controller
     public function createVariation(Request $request)
     {
         $instance = $this->productService->createProductVariations(
-            $request,
-            $this->view()
+            $request
         );
 
         return $instance;
