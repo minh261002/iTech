@@ -63,6 +63,44 @@ class ProductService implements ProductServiceInterface
         }
     }
 
+    public function update(Request $request)
+    {
+        DB::beginTransaction();
+        $this->data = $request->validated();
+        try {
+            $productId = $this->data['product']['id'];
+            $categories = $this->data['category_id'];
+            unset($this->data['category_id']);
+
+            if (isset($this->data['gallery'])) {
+                $this->data['gallery'] = json_encode($this->data['gallery']);
+            }
+
+            isset($this->data['gallery']) && $this->data['product']['gallery'] = $this->data['gallery'];
+            $product = $this->repository->update($productId, $this->data['product']);
+            $product->categories()->sync($categories);
+
+            if ($product->type == 2 && isset($this->data['product_attribute']) && $this->data['product_attribute']) {
+                $this->repositoryProductAttribute->createOrUpdateWithVariation($product->id, $this->data['product_attribute']);
+                $this->storeOrUpdateProductVariations($product->id);
+                $this->repository->update($productId, [
+                    'price' => null,
+                    'sale_price' => null,
+                    'qty' => null
+                ]);
+            } else {
+                $this->repository->deleteProductAttributes($product);
+                $this->repository->deleteProductVariations($product);
+            }
+
+            DB::commit();
+            return $product;
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+    }
+
     public function updateStatus($request)
     {
         $this->data = $request->all();
@@ -129,4 +167,8 @@ class ProductService implements ProductServiceInterface
         return $response;
     }
 
+    public function delete($id)
+    {
+        return $this->repository->delete($id);
+    }
 }

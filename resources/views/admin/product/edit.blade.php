@@ -20,6 +20,7 @@
             @csrf
             @method('PUT')
 
+            <input type="hidden" name="product[id]" value="{{ $product->id }}">
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
@@ -93,7 +94,8 @@
                                                 <div class="thumb">
                                                     <span class="span image img-scaledown">
                                                         <img src="{{ $val }}" alt="{{ $val }}">
-                                                        <input type="hidden" name="gallery[]" value="{{ $val }}">
+                                                        <input type="hidden" name="product[gallery][]"
+                                                            value="{{ $val }}">
                                                     </span>
                                                     <button class="delete-image">
                                                         <i class="fa-solid fa-trash"></i>
@@ -124,16 +126,26 @@
 
                     <div class="card-body">
 
+                        @if ($product->type == 2)
+                            @include('admin.product.components.simple_type', [
+                                'product' => $product,
+                                'style' => 'd-none',
+                            ])
 
-                        @include('admin.product.components.simple_type', [
-                            'product' => $product,
-                            'style' => 'd-none',
-                        ])
-
-                        @include('admin.product.components.variable_type', [
-                            'style' => 'd-flex',
-                            'product' => $product,
-                        ])
+                            @include('admin.product.components.variable_type', [
+                                'style' => 'd-flex',
+                                'product' => $product,
+                            ])
+                        @else
+                            @include('admin.product.components.simple_type', [
+                                'product' => $product,
+                                'style' => 'd-flex',
+                            ])
+                            @include('admin.product.components.variable_type', [
+                                'style' => 'd-none',
+                                'product' => $product,
+                            ])
+                        @endif
 
                     </div>
                 </div>

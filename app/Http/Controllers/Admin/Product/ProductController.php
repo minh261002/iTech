@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductStoreRequest;
+use App\Http\Requests\Admin\ProductUpdateRequest;
 use App\Http\Resources\Admin\ProductResource;
 use App\Repositories\Interfaces\AttributeRepositoryInterface;
 use App\Repositories\Interfaces\AttributeVariationRepositoryInterface;
@@ -83,6 +84,14 @@ class ProductController extends Controller
         );
     }
 
+    public function update(ProductUpdateRequest $request)
+    {
+        $this->productService->update($request);
+
+        notyf()->success('Cập nhật sản phẩm thành công');
+        return redirect()->back();
+    }
+
     public function updateStatus(Request $request)
     {
         $this->productService->updateStatus($request);
@@ -115,5 +124,12 @@ class ProductController extends Controller
         );
 
         return $instance;
+    }
+
+    public function delete($id)
+    {
+        $this->productService->delete($id);
+        notyf()->success('Xóa sản phẩm thành công');
+        return response()->json(['status' => 'success']);
     }
 }
