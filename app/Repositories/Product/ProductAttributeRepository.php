@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Repositories;
-
+namespace App\Repositories\Product;
 use App\Models\ProductAttribute;
-use App\Repositories\Interfaces\ProductAttributeRepositoryInterface;
+use App\Repositories\EloquentRepository;
+use App\Repositories\Interfaces\Product\ProductAttributeRepositoryInterface;
 
 class ProductAttributeRepository extends EloquentRepository implements ProductAttributeRepositoryInterface
 {
-
     protected $select = [];
 
     public function getModel()

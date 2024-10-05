@@ -15,10 +15,10 @@ return new class extends Migration {
             $table->tinyInteger('type')->default(1); //1: sản phẩm đơn giản, 2: sản phẩm biến thể
             $table->string('name');
             $table->string('slug')->unique();
-            $table->integer('price');
+            $table->integer('price')->nullable();
             $table->integer('sale_price')->nullable();
             $table->string('sku')->unique();
-            $table->integer('qty')->default(0);
+            $table->integer('qty')->nullable();
             $table->tinyInteger('status')->default(1); //1: active, 2: inactive
             $table->text('desc')->nullable();
             $table->string('image')->nullable();

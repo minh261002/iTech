@@ -20,8 +20,10 @@ class BindingProvider extends ServiceProvider
         'App\Repositories\Interfaces\NotificationRepositoryInterface' => 'App\Repositories\NotificationRepository',
         'App\Repositories\Interfaces\AttributeRepositoryInterface' => 'App\Repositories\AttributeRepository',
         'App\Repositories\Interfaces\AttributeVariationRepositoryInterface' => 'App\Repositories\AttributeVariationRepository',
-        'App\Repositories\Interfaces\ProductRepositoryInterface' => 'App\Repositories\ProductRepository',
         'App\Repositories\Interfaces\DiscountRepositoryInterface' => 'App\Repositories\DiscountRepository',
+        'App\Repositories\Interfaces\Product\ProductRepositoryInterface' => 'App\Repositories\Product\ProductRepository',
+        'App\Repositories\Interfaces\Product\ProductAttributeRepositoryInterface' => 'App\Repositories\Product\ProductAttributeRepository',
+        'App\Repositories\Interfaces\Product\ProductVariationRepositoryInterface' => 'App\Repositories\Product\ProductVariationRepository',
     ];
 
     protected $services = [
@@ -37,8 +39,8 @@ class BindingProvider extends ServiceProvider
         'App\Services\Interfaces\NotificationServiceInterface' => 'App\Services\NotificationService',
         'App\Services\Interfaces\AttributeServiceInterface' => 'App\Services\AttributeService',
         'App\Services\Interfaces\AttributeVariationServiceInterface' => 'App\Services\AttributeVariationService',
-        'App\Services\Interfaces\ProductServiceInterface' => 'App\Services\ProductService',
         'App\Services\Interfaces\DiscountServiceInterface' => 'App\Services\DiscountService',
+        'App\Services\Interfaces\ProductServiceInterface' => 'App\Services\ProductService',
     ];
     /**
      * Register services.

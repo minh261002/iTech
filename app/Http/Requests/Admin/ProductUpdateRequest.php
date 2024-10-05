@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductStoreRequest extends FormRequest
+class ProductUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,6 +22,7 @@ class ProductStoreRequest extends FormRequest
     public function rules(): array
     {
         $this->validate = [
+            'product.id' => 'required|integer|exists:products,id',
             'product.type' => 'required', // Xác thực kiểu sản phẩm
             'product.name' => 'required|string|max:255', // Tên sản phẩm
             'product.sku' => 'required|string|max:100', // SKU

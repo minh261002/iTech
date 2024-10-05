@@ -17,15 +17,24 @@ class AttributeVariationRepository extends EloquentRepository implements Attribu
     {
         $array = [];
         $this->instance = $this->model;
+
         foreach ($arrayId as $ids) {
-            // $qs = array_fill(0,count($ids),'?');
-            $array[] = $this->instance->whereIn('id', $ids)
-                ->orderByRaw(DB::raw("FIELD(id, " . implode(',', $ids) . ")"))
-                // ->orderByRaw(DB::raw("FIELD(id,". implode(',', $qs).")"),$ids)
+            $idsArray = array_map('intval', $ids);
+
+            $result = $this->instance->whereIn('id', $idsArray)
+                ->orderBy('id', 'asc')
+                ->get()
+                ->sortBy(function ($item) use ($idsArray) {
+                    return array_search($item->id, $idsArray);
+                })
                 ->pluck('name', 'id');
+
+            $array[] = $result;
         }
+
         return $array;
     }
+
 
     public function findOrFailWithRelations($id, $relations = ['attribute'])
     {

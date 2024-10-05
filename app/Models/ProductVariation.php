@@ -10,6 +10,8 @@ class ProductVariation extends Model
     use HasFactory;
     protected $table = 'product_variations';
 
+    protected $guarded = [];
+
     public function product(){
         return $this->belongsTo(Product::class, 'product_id');
     }

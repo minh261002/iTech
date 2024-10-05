@@ -57,7 +57,8 @@
                                     <i data-feather="edit"></i>
                                 </a>
 
-                                <a href="{{ route('admin.product.delete', $product->id) }}" class="btn btn-sm btn-danger">
+                                <a href="{{ route('admin.product.delete', $product->id) }}"
+                                    class="btn btn-sm btn-danger delete-item">
                                     <i data-feather="trash"></i>
                                 </a>
                             </td>

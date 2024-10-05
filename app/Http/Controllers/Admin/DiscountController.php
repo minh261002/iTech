@@ -7,7 +7,7 @@ use App\Http\Requests\Admin\DiscountStoreRequest;
 use App\Http\Requests\Admin\DiscountUpdateRequest;
 use App\Models\User;
 use App\Repositories\Interfaces\DiscountRepositoryInterface;
-use App\Repositories\Interfaces\ProductRepositoryInterface;
+use App\Repositories\Interfaces\Product\ProductRepositoryInterface;
 use App\Services\Interfaces\DiscountServiceInterface;
 use Illuminate\Http\Request;
 

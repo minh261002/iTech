@@ -1,4 +1,4 @@
-<div class="row border product-simple">
+<div class="row border product-simple {{ $style ?? '' }}">
     <div class="col-md-3 p-0 border">
         <div class="nav flex-column nav-pills" id="v-pills-tab-simple" role="tablist" aria-orientation="vertical">
             <a class="nav-link rounded-0 active" id="v-pills-price-tab" data-bs-toggle="pill" href="#v-pills-price"
@@ -18,18 +18,18 @@
                 aria-labelledby="v-pills-price-tab">
                 <div class="col-12 mb-3">
                     <label for="price" class="form-label">Giá gốc</label>
-                    <input type="text" class="form-control" id="price" name="price"
-                        value="{{ old('price') }}">
-                    @error('price')
+                    <input type="text" class="form-control" id="price" name="product[price]"
+                        value="{{ old('product[price]', $product->price ?? '') }}">
+                    @error('product[price]')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <div class="col-12">
                     <label for="sale_price" class="form-label">Giá bán</label>
-                    <input type="text" class="form-control" id="sale_price" name="sale_price"
-                        value="{{ old('sale_price') }}">
-                    @error('sale_price')
+                    <input type="text" class="form-control" id="sale_price" name="product[sale_price]"
+                        value="{{ old('product[sale_price]', $product->sale_price ?? '') }}">
+                    @error('product[sale_price]')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -39,9 +39,9 @@
                 aria-labelledby="v-pills-warehouse-tab-simple">
                 <div class="col-12 mb-3">
                     <label for="qty" class="form-label">Số lượng</label>
-                    <input type="number" class="form-control" id="qty" name="qty"
-                        value="{{ old('qty') }}">
-                    @error('qty')
+                    <input type="number" class="form-control" id="qty" name="product[qty]"
+                        value="{{ old('product[qty]', $product->qty ?? '') }}">
+                    @error('product[qty]')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>

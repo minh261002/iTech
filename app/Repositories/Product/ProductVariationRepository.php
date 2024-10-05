@@ -1,49 +1,53 @@
 <?php
 
-namespace App\Repositories;
-
+namespace App\Repositories\Product;
 use App\Models\ProductVariation;
-use App\Repositories\Interfaces\ProductVariationRepositoryInterface;
+use App\Repositories\EloquentRepository;
+use App\Repositories\Interfaces\Product\ProductVariationRepositoryInterface;
 use Illuminate\Support\Facades\DB;
-
 
 class ProductVariationRepository extends EloquentRepository implements ProductVariationRepositoryInterface
 {
-
     protected $select = [];
 
     public function getModel()
     {
         return ProductVariation::class;
     }
+
     public function getByIdsAndOrderByIdsWithRelations(array $ids, array $relations = ['product'])
     {
         $this->instance = $this->model
             ->whereIn('id', $ids)
             ->with($relations)
-            ->orderByRaw(DB::raw("FIELD(id, " . implode(',', $ids) . ")"))
+            // ->orderByRaw(DB::raw("FIELD(id, " . implode(',', $ids) . ")"))
+            ->orderByRaw("FIELD(id, " . implode(',', $ids) . ")")
             ->get();
 
         return $this->instance;
     }
+
     public function createOrUpdateWithVariation($product_id, array $productVariation)
     {
         $position = 0;
         $ids = [];
+
         foreach ($productVariation['attribute_variation_id'] as $key => $item) {
             $dataModel = $this->model->updateOrCreate([
                 'id' => $productVariation['id'][$key],
                 'product_id' => $product_id,
             ], [
                 'price' => $productVariation['price'][$key],
-                'promotion_price' => $productVariation['promotion_price'][$key],
+                'sale_price' => $productVariation['sale_price'][$key],
                 'image' => $productVariation['image'][$key],
-                'position' => $position
+                'position' => $position,
+                'qty' => $productVariation['qty'][$key],
             ]);
             $dataModel->attributeVariations()->sync($item);
             $ids[] = $dataModel->id;
             $position++;
         }
+
         $this->deleteTrash($product_id, $ids);
         return true;
     }

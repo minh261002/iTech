@@ -37,4 +37,11 @@ class CategoryRepository extends EloquentRepository implements CategoryRepositor
         $this->instance = $this->instance->orderBy($column, $sort);
         return $this->instance;
     }
+
+    public function search($search)
+    {
+        $this->getQueryBuilder();
+        $this->instance = $this->instance->where('name', 'like', '%' . $search . '%');
+        return $this->instance;
+    }
 }
