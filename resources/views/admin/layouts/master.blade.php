@@ -37,6 +37,31 @@
 
     <script>
         var BASE_URL = "{{ env('APP_URL') }}";
+
+        function formatTime(time) {
+            const now = new Date();
+            const secondsPast = Math.floor((now - new Date(time)) / 1000);
+
+            if (secondsPast < 60) {
+                return secondsPast === 0 ? 'Bây giờ' : `${secondsPast} giây trước`;
+            }
+
+            if (secondsPast < 3600) {
+                return `${Math.floor(secondsPast / 60)} phút trước`;
+            }
+
+            if (secondsPast <= 86400) {
+                return `${Math.floor(secondsPast / 3600)} giờ trước`;
+            }
+
+            if (secondsPast > 86400) {
+                const day = new Date(time).getDate();
+                const month = new Date(time).getMonth() + 1;
+                const year = new Date(time).getFullYear();
+
+                return `${day}/${month}/${year}`;
+            }
+        }
     </script>
 </head>
 
@@ -125,7 +150,7 @@
             $('#table').DataTable({
                 'language': {
                     'url': '{{ asset('
-                    admin / assets / lang / dataTable.json ') }}'
+                                                                                                    admin / assets / lang / dataTable.json ') }}'
                 },
                 'order': [
                     [0, 'desc']

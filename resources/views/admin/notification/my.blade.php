@@ -21,38 +21,18 @@
                     <div class="card-header">
                         <input type="text" class="form-control" placeholder="Tìm kiếm thông báo">
                     </div>
-                    <div class="card-body" style="height:60vh; overflow-y:auto">
-                        @forelse($notifications as $noty)
-                            <a href="{{ route('admin.myNotification', ['id' => $noty->id]) }}"
-                                class="card-body d-block mt-1 rounded {{ $noty->is_read == 1 ? 'bg-light' : 'border' }}">
+                    <div class="card-body" style="height:60vh; overflow-y:auto" id="notification-box">
 
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <i data-feather="bell" class="text-success"></i>
-                                    </div>
-                                    <div class="flex-grow-1 ms-3 text-truncate">
-                                        <h6 class="my-0 fw-medium text-dark fs-15">
-                                            {{ $noty->title }}
-                                        </h6>
-                                        <small class="text-muted fs-13 fw-medium mb-0">
-                                            {{ format_datetime($noty->created_at) }}
-                                        </small>
-                                    </div>
-                                </div>
-                            </a>
-                        @empty
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-grow-1 ms-3 text-truncate">
-                                        <h6 class="my-0 fw-medium text-dark fs-15">Không có thông báo mới</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforelse
                     </div>
 
-                    <div class="card-footer text-center">
-                        Đánh dấu đã đọc tất cả
+                    <div class="card-footer d-flex align-items-center justify-content-between" style="cursor:pointer">
+                        <span id="readAll">
+                            Đánh dấu đọc tất cả
+                        </span>
+
+                        <span id="deleteAll" class="text-danger">
+                            Xóa tất cả
+                        </span>
                     </div>
 
                 </div>
@@ -60,29 +40,8 @@
 
 
             <div class="col-md-8">
-                <div class="card">
-                    @if ($notification)
-                        <div class="card-header">
-                            <h2 class="card-title py-2 mb-0"> {{ $notification->title }}</h2>
-                        </div>
-                        <div class="card-body" style="height:60vh; overflow-y:auto">
-                            {!! $notification->content !!}
-                        </div>
-                    @else
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-grow-1 ms-3 text-truncate">
-                                    <h6 class="my-0 fw-medium text-dark fs-15">Không có thông báo mới</h6>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    <div class="card-footer">
-                        <p class="text-center mb-0">
-                            Notification push here
-                        </p>
-                    </div>
+                <div class="card" id="notification-container">
+                    @include('admin.notification.components.container_notification')
                 </div>
             </div>
         </div>
@@ -90,4 +49,102 @@
 @endsection
 
 @push('scripts')
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "/ajax/admin/notification/get",
+                type: 'GET',
+                beforeSend: function() {
+                    $('#notification-box').html(
+                        '<div class="d-flex justify-content-center align-items-center" style="height: 60vh"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+                    )
+                },
+                data: {
+                    admin_id: {{ Auth::guard('admin')->user()->id }}
+                },
+                success: function(response) {
+                    $('#notification-box').html(response)
+                }
+            })
+
+            $(document).on('click', ('.notification-item'), function(e) {
+                e.preventDefault();
+
+                let notification_id = $(this).data('notification-id');
+
+                $.ajax({
+                    url: "/ajax/admin/notification/show/" + notification_id,
+                    type: 'GET',
+                    beforeSend: function() {
+                        $('#notification-container').html(
+                            '<div class="d-flex justify-content-center align-items-center" style="height: 74vh"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+                        )
+                    },
+                    success: function(response) {
+                        $('#notification-container').html(response);
+                        $(`.notification-item-${notification_id}`).removeClass('bg-light');
+                    },
+                })
+            });
+
+            $('#readAll').on('click', function() {
+
+                $.ajax({
+                    url: "/ajax/admin/notification/readAll",
+                    type: 'GET',
+                    data: {
+                        admin_id: {{ Auth::guard('admin')->user()->id }}
+                    },
+                    beforeSend: function() {
+                        $('#notification-box').html(
+                            '<div class="d-flex justify-content-center align-items-center" style="height: 60vh"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+                        )
+                    },
+                    success: function(response) {
+                        $('#notification-box').html(response)
+                        $('#countUnreadNotification').text(0)
+                        FuiToast.success('Đánh dấu đã đọc tất cả thông báo')
+                    }
+                })
+            });
+
+            $(document).on('click', '.delete-notification', function(e) {
+                e.preventDefault();
+
+                let notyId = $(this).data('notyid');
+
+                $.ajax({
+                    url: "/ajax/admin/notification/delete/" + notyId,
+                    type: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        $(`.box-noty-${notyId}`).remove();
+                        FuiToast.success('Xóa thông báo thành công')
+                    }
+                })
+            });
+
+            $('#deleteAll').on('click', function() {
+                $.ajax({
+                    url: "/ajax/admin/notification/deleteAll",
+                    type: 'GET',
+                    data: {
+                        admin_id: {{ Auth::guard('admin')->user()->id }}
+                    },
+                    beforeSend: function() {
+                        $('#notification-box').html(
+                            '<div class="d-flex justify-content-center align-items-center" style="height: 60vh"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+                        )
+                    },
+                    success: function(response) {
+                        $('#notification-box').html(response)
+                        $('#countUnreadNotification').text(0)
+                        FuiToast.success('Xóa tất cả thông báo thành công')
+                    }
+                })
+            });
+        })
+    </script>
 @endpush

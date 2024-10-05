@@ -26,9 +26,12 @@ use Illuminate\Support\Facades\Route;
 // ----------------- Route for Admin ----------------- //
 Route::prefix('ajax')->group(function () {
     Route::get('/location', [LocationController::class, 'index']);
-    Route::get('/notification', [NotificationController::class, 'get']);
-    Route::put('/notification/read', [NotificationController::class, 'read']);
-    Route::put('/notification/read-all', [NotificationController::class, 'readAll']);
+    //ajax notification
+    Route::get('/admin/notification/get', [NotificationController::class, 'getMyNotification'])->name('notification.getMyNotification');
+    Route::get('/admin/notification/show/{id}', [NotificationController::class, 'showNotification'])->name('notification.showNotification');
+    Route::get('/admin/notification/readAll', [NotificationController::class, 'readAll'])->name('notification.readAll');
+    Route::delete('/admin/notification/delete/{id}', [NotificationController::class, 'deleteNotification'])->name('notification.deleteNotification');
+    Route::get('/admin/notification/deleteAll', [NotificationController::class, 'deleteAll'])->name('notification.deleteAll');
 });
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {

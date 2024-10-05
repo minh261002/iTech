@@ -10,6 +10,7 @@ use App\Repositories\Interfaces\NotificationRepositoryInterface;
 use App\Services\Interfaces\NotificationServiceInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class NotificationController extends Controller
 {
@@ -77,21 +78,49 @@ class NotificationController extends Controller
 
     public function readAll(Request $request)
     {
-        //
+        $admin_id = $request->admin_id;
+        $this->notificationRepository->readAll($admin_id);
+
+        return view('admin.notification.components.box_notificaiton', [
+            'notifications' => $this->notificationRepository->getByAdminId($admin_id),
+        ])->render();
     }
 
     public function myNotification(): View
     {
+        return view('admin.notification.my');
 
+    }
+
+    function getMyNotification()
+    {
         $notifications = $this->notificationRepository->getByAdminId(auth('admin')->user()->id);
 
-        $notification = null;
-        if (request()->has('id')) {
-            $notification = $this->notificationRepository->find(request()->id);
-            $notification->update(['is_read' => 2]);
-        }
+        return view('admin.notification.components.box_notificaiton', compact('notifications'))->render();
+    }
 
-        return view('admin.notification.my', compact('notifications', 'notification'));
+    function showNotification($id)
+    {
+        $notification = $this->notificationRepository->findOrFail($id);
+        $this->notificationRepository->update($notification->id, ['is_read' => 2]);
+        return view('admin.notification.components.container_notification', compact('notification'))->render();
+    }
 
+    public function deleteNotification($id)
+    {
+        $this->notificationRepository->delete($id);
+
+        return response()->json([
+            'status' => 'success',
+        ]);
+    }
+
+    public function deleteAll()
+    {
+        $this->notificationRepository->deleteAll(auth('admin')->user()->id);
+
+        return view('admin.notification.components.box_notificaiton', [
+            'notifications' => $this->notificationRepository->getByAdminId(auth('admin')->user()->id),
+        ])->render();
     }
 }

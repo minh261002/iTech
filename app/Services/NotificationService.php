@@ -100,18 +100,18 @@ class NotificationService implements NotificationServiceInterface
         }
         $noty = $this->notificationRepository->create($data);
 
-        // broadcast(new NotificationEvent(
-        //     $noty->title,
-        //     $noty->content,
-        //     $isAdmin ? $noty->admin_id : $noty->user_id,
-        //     $isAdmin ? 'admin' : 'user'
-        // ))->toOthers();
-        event(new NotificationEvent(
+        $body = [
+            'content' => $noty->content,
+            'created_at' => $noty->created_at,
+            'notyId' => $noty->id,
+        ];
+
+        broadcast(new NotificationEvent(
             $noty->title,
-            $noty->content,
+            $body,
             $isAdmin ? $noty->admin_id : $noty->user_id,
-            $isAdmin ? 'admin' : 'user'
-        ));
+            $isAdmin ? 'admin' : 'user',
+        ))->toOthers();
     }
 
     public function delete($id)

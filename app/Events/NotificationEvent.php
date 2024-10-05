@@ -16,7 +16,6 @@ class NotificationEvent implements ShouldBroadcast
     public $body;
     public $title;
     public $id;
-
     public $type;
 
     /**
