@@ -375,6 +375,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::middleware(['permission:viewOrder', 'auth:admin'])->group(function () {
                 Route::get('/', [OrderController::class, 'index'])->name('order.index');
                 Route::get('/userInfo', [OrderController::class, 'getUserInfo']);
+                Route::get('/productInfo', [OrderController::class, 'getProductInfo']);
             });
 
             Route::middleware(['permission:createOrder', 'auth:admin'])->group(function () {

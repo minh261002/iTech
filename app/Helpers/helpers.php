@@ -48,3 +48,8 @@ function uniqid_real($lenght = 13)
     }
     return Str::upper(substr(bin2hex($bytes), 0, $lenght));
 }
+
+function format_price($price)
+{
+    return number_format($price, 0, ',', '.') . 'đ';
+}
