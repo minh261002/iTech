@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Thêm sản phẩm mới')
+@section('title', 'Chỉnh sửa thông tin')
 
 @section('content')
     <div class="container-fluid">
@@ -10,14 +10,15 @@
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('admin.product.index') }}">Quản lý sản phẩm</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Thêm mới</li>
+                        <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa thông tin</li>
                     </ol>
                 </nav>
             </div>
         </div>
 
-        <form action="{{ route('admin.product.store') }}" class="row" method="POST">
+        <form action="{{ route('admin.product.update', $product->id) }}" class="row" method="POST">
             @csrf
+            @method('PUT')
 
             <div class="col-md-9">
                 <div class="card">
@@ -30,7 +31,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="name" class="form-label">Tên sản phẩm</label>
                                 <input type="text" class="form-control" id="name" name="product[name]"
-                                    value="{{ old('product[name]') }}">
+                                    value="{{ old('product[name]', $product->name) }}">
                                 @error('product[name]')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -39,7 +40,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="sku" class="form-label">SKU</label>
                                 <input type="text" class="form-control" id="sku" name="product[sku]"
-                                    value="{{ old('product[sku]') ? old('product[sku]') : 'IT' . '_' . rand(10000, 99999) }}">
+                                    value="{{ old('product[sku]', $product->sku) }}">
                                 @error('product[sku]')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -47,7 +48,7 @@
 
                             <div class="col-12 mb-3">
                                 <label for="desc" class="form-label">Mô tả</label>
-                                <textarea class="form-control ck-editor" id="desc" name="product[desc]" rows="5">{{ old('product[desc]') }}</textarea>
+                                <textarea class="form-control ck-editor" id="desc" name="product[desc]" rows="5">{!! $product->desc !!}</textarea>
                                 @error('product[desc]')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -61,7 +62,9 @@
                         <h2 class="card-title mb-0">Bộ sưu tập ảnh</h2>
                         <div class="upload-album"><a href="" class="upload-picture">Tải lên</a></div>
                     </div>
-
+                    @php
+                        $product->gallery ? ($gallery = json_decode($product->gallery)) : ($gallery = []);
+                    @endphp
                     <div class="card-body">
                         <div class="col-lg-12">
                             @if (!isset($gallery) || count($gallery) == 0)
@@ -81,9 +84,7 @@
                                     </div>
                                 </div>
                             @endif
-                            @php
-                                $gallery = old('product.gallery') ?? ($product->gallery ?? []);
-                            @endphp
+
                             <div class="upload-list {{ isset($gallery) && count($gallery) ? '' : 'hidden' }}">
                                 <ul id="sortable" class="clearfix data-album sortui ui-sortable">
                                     @if (isset($gallery) && count($gallery))
@@ -92,8 +93,7 @@
                                                 <div class="thumb">
                                                     <span class="span image img-scaledown">
                                                         <img src="{{ $val }}" alt="{{ $val }}">
-                                                        <input type="hidden" name="product[gallery][]"
-                                                            value="{{ $val }}">
+                                                        <input type="hidden" name="gallery[]" value="{{ $val }}">
                                                     </span>
                                                     <button class="delete-image">
                                                         <i class="fa-solid fa-trash"></i>
@@ -116,19 +116,24 @@
                         </h2>
                         <span>----</span>
                         <select name="product[type]" id="type" class="form-select w-25">
-                            <option value="1" {{ request()->type == 1 || !request()->type ? 'selected' : '' }}>Sản
-                                phẩm
-                                đơn giản</option>
-                            <option value="2" {{ request()->type == 2 ? 'selected' : '' }}>Sản phẩm có biến thể
+                            <option value="1" {{ $product->type == 1 ? 'selected' : '' }}>Sản phẩm đơn giản</option>
+                            <option value="2" {{ $product->type == 2 ? 'selected' : '' }}>Sản phẩm có biến thể
                             </option>
                         </select>
                     </div>
 
                     <div class="card-body">
 
-                        @include('admin.product.components.variable_type')
 
-                        @include('admin.product.components.simple_type')
+                        @include('admin.product.components.simple_type', [
+                            'product' => $product,
+                            'style' => 'd-none',
+                        ])
+
+                        @include('admin.product.components.variable_type', [
+                            'style' => 'd-flex',
+                            'product' => $product,
+                        ])
 
                     </div>
                 </div>
@@ -141,21 +146,26 @@
                     <div class="card-body">
                         <div class="seo-preview border p-2 rounded mb-3">
                             <div class="seo-preview-title">
-                                <span class="seo-preview-title-content">Tiêu đề SEO</span>
+                                <span class="seo-preview-title-content">
+                                    {{ $product->meta_title ?? $product->name }}
+                                </span>
                             </div>
                             <div class="seo-preview-url">
-                                <span class="seo-preview-link-content">{{ env('APP_URL') }}</span>
+                                <span class="seo-preview-link-content">{{ env('APP_URL') }}san-pham/{{ $product->slug }}
+                                </span>
                             </div>
                             <div class="seo-preview-description">
 
-                                <span class="seo-preview-description-content">Mô tả SEO</span>
+                                <span class="seo-preview-description-content">
+                                    {{ $product->meta_desc ?? 'Mô tả SEO' }}
+                                </span>
                             </div>
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="meta_title" class="form-label">Tiêu đề SEO</label>
                             <input type="text" class="form-control" id="meta_title" name="product[meta_title]"
-                                value="{{ old('product[meta_title]') }}">
+                                value="{{ $product->meta_title }}">
                             <span class="error-title text-danger"></span>
                             @error('product[meta_title]')
                                 <span class="text-danger">{{ $message }}</span>
@@ -164,7 +174,7 @@
 
                         <div class="form-group mb-3">
                             <label for="meta_description" class="form-label">Mô tả SEO</label>
-                            <textarea name="product[meta_desc]" class="form-control" id="meta_description">{{ old('product[meta_desc]') }}</textarea>
+                            <textarea name="product[meta_desc]" class="form-control" id="meta_description">{{ $product->meta_desc }}</textarea>
                             <span class="error-desc text-danger"></span>
                             @error('product[meta_desc]')
                                 <span class="text-danger">{{ $message }}</span>
@@ -176,7 +186,7 @@
                                 (Phân cách bằng dấu phẩy)
                             </label>
                             <input type="text" class="form-control" id="meta_keywords" name="product[meta_keywords]"
-                                value="{{ old('product[meta_keywords]') }}">
+                                value="{{ $product->meta_keywords }}">
                             @error('product[meta_keywords]')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -194,8 +204,11 @@
                     <div class="card-body">
                         <div class="form-group">
                             <select name="product[status]" id="status" class="form-select">
-                                <option value="1">Bản nháp</option>
-                                <option value="2">Đã xuất bản</option>
+                                <option value="1"
+                                    {{ old('product[status]', $product->status) == 1 ? 'selected' : '' }}>Bản nháp</option>
+                                <option value="2"
+                                    {{ old('product[status]', $product->status) == 2 ? 'selected' : '' }}>Đã xuất bản
+                                </option>
                             </select>
                             @error('product[status]')
                                 <span class="text-danger">{{ $message }}</span>
@@ -234,7 +247,8 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <span class="image img-cover image-target"><img class="w-100"
-                                        src="{{ asset('admin/assets/images/not-found.jpg') }}" alt=""></span>
+                                        src="{{ asset($product->image ?? 'admin/assets/images/not-found.jpg') }}"
+                                        alt=""></span>
                                 <input type="hidden" name="product[image]"
                                     value="{{ old('image', $product->image ?? '') }}">
                             </div>
@@ -248,7 +262,7 @@
                     </div>
                     <div class="card-body">
                         <div class="col-12 mb-3">
-                            <button type="submit" class="w-100 btn btn-primary">Thêm mới</button>
+                            <button type="submit" class="w-100 btn btn-primary">Lưu Thay Đổi</button>
                         </div>
                     </div>
                 </div>
@@ -351,6 +365,8 @@
             const limit = 10;
             let keyword = '';
 
+            let list_categories = {{ json_encode($product->categories->pluck('id')) }};
+
             function getCategories(hidePrevious = false) {
                 let url = "{{ route('admin.category.get') }}";
                 $.ajax({
@@ -373,13 +389,20 @@
                         categories.forEach(category => {
                             html += `
                                 <div class="form-check" style="margin-left: ${category.depth * 20}px;">
-                                    <input class="form-check-input" type="checkbox" value="${category.id}" name="category_id[]" data-lft="${category._lft}" data-rgt="${category._rgt}"
-                                        id="category_id-${category.id}">
+                                    <input class="form-check-input"
+                                        type="checkbox" value="${category.id}"
+                                        name="category_id[]"
+                                        data-lft="${category._lft}"
+                                        data-rgt="${category._rgt}"
+                                        id="category_id-${category.id}"
+                                        ${list_categories.includes(category.id) ? 'checked' : ''}
+                                        >
                                     <label class="form-check-label" for="category_id-${category.id}">
                                         ${category.name}
                                     </label>
                                 </div>
                             `;
+
                         });
 
                         if (hidePrevious) {

@@ -31,7 +31,7 @@ class ProductStoreRequest extends FormRequest
             'category_id' => 'required|array',
             'category_id.*' => 'required|integer|exists:categories,id', // Danh mục sản phẩm
             'product.image' => 'nullable', // Hình ảnh chính
-            'product.gallery' => 'nullable|array', // Thư viện hình ảnh
+            // 'product.gallery' => 'nullable|array',
             'product.qty' => 'nullable', // Số lượng sản phẩm
             'product.meta_title' => 'nullable|string|max:255', // Tiêu đề meta
             'product.meta_desc' => 'nullable|string', // Mô tả meta
@@ -39,22 +39,24 @@ class ProductStoreRequest extends FormRequest
             'product.status' => 'nullable', // Trạng thái
         ];
 
+        $this->validate['gallery'] = ['nullable', 'array'];
+
         if ($this->input('product.type') == 1) {
             // Quy tắc cho sản phẩm đơn giản
             $this->validate['product.price'] = 'required|numeric|min:0';
         } elseif ($this->input('product.type') == 2) {
             $this->validate['product_attribute.attribute_id'] = ['required', 'array'];
-            $this->validate['product_attribute.attribute_id.*'] = ['required', 'exists:App\Models\Attribute,id'];
+            $this->validate['product_attribute.attribute_id.*'] = ['required'];
             $this->validate['product_attribute.attribute_variation_id'] = ['required', 'array'];
             $this->validate['product_attribute.attribute_variation_id.*'] = ['required', 'array'];
-            $this->validate['product_attribute.attribute_variation_id.*.*'] = ['required', 'exists:App\Models\AttributeVariation,id'];
+            $this->validate['product_attribute.attribute_variation_id.*.*'] = ['required'];
             $this->validate['products_variations.attribute_variation_id'] = ['nullable', 'array'];
             if ($this->input('products_variations.attribute_variation_id') && count($this->input('products_variations.attribute_variation_id')) > 0) {
                 $this->validate['products_variations.id'] = ['required', 'array'];
                 $this->validate['products_variations.id.*'] = ['required', 'integer'];
                 $this->validate['products_variations.attribute_variation_id'] = ['nullable', 'array'];
                 $this->validate['products_variations.attribute_variation_id.*'] = ['required', 'array'];
-                $this->validate['products_variations.attribute_variation_id.*.*'] = ['required', 'exists:App\Models\AttributeVariation,id'];
+                $this->validate['products_variations.attribute_variation_id.*.*'] = ['required'];
                 $this->validate['products_variations.image'] = ['required', 'array'];
                 $this->validate['products_variations.price'] = ['required', 'array'];
                 $this->validate['products_variations.price.*'] = ['required', 'numeric'];

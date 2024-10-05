@@ -26,7 +26,7 @@ class ProductAttributeController extends Controller
         $instance = $this->repositoryAttribute->findOrFailWithVariations($request->input('attribute_id'));
 
         return view('admin.product.components.box_attribute', [
-            'response' => $instance
+            'attribute' => $instance
         ]);
     }
 

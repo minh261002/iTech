@@ -6,3 +6,12 @@
 
     <button type="button" class="btn btn-primary" id="btn_variation_action">Thêm</button>
 </div>
+
+@isset($productVariations)
+    @foreach ($productVariations as $productVariation)
+        @include('admin.product.components.box_item_variation', [
+            'productVariation' => $productVariation,
+            'attributeVariations' => $arrProductAttributes,
+        ])
+    @endforeach
+@endisset

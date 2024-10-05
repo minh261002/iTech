@@ -1,4 +1,4 @@
-<div class="row border product-variable d-none">
+<div class="row border product-variable {{ isset($style) ? $style : ' d-none ' }}">
 
     <div class="col-md-3 p-0 border">
         <div class="nav flex-column nav-pills" id="v-pills-tab-variable" role="tablist" aria-orientation="vertical">
@@ -22,12 +22,24 @@
                 aria-labelledby="v-pills-attribute-tab-variable">
                 <select name="attribute_id" id="attribute_id" class="form-control">
                     <option value="">Chọn thuộc tính</option>
-                    @foreach ($attributes as $attribute)
-                        <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>
+                    @foreach ($attributes as $key => $attribute)
+                        <option value="{{ $key }}"
+                            {{ isset($product) ? ($product->productAttributes->contains('attribute_id', $key) ? 'disabled' : '') : '' }}>
+                            {{ $attribute }}</option>
                     @endforeach
                 </select>
 
-                <div id="attributes_result"></div>
+                <div id="attributes_result">
+                    @isset($product)
+                        @foreach ($product->productAttributes as $productAttribute)
+                            @include('admin.product.components.box_attribute', [
+                                'attribute' => $productAttribute->attribute,
+                                'productAttributeId' => $productAttribute->id,
+                                'attributeVariations' => $productAttribute->attributeVariations,
+                            ])
+                        @endforeach
+                    @endisset
+                </div>
 
                 <button class="btn btn-primary mt-3" id="saveAttribute">Lưu thuộc tính</button>
             </div>
@@ -35,11 +47,22 @@
             <div class="tab-pane fade " id="v-pills-variation-variable" role="tabpanel"
                 aria-labelledby="v-pills-variation-tab-variable">
 
-                <div class="alert alert-danger" id="alert_error">
-                    <i class="mdi mdi-alert"></i> Bạn cần lưu thuộc tính trước khi tạo các biến thể của sản phẩm
-                </div>
+                @if (!isset($product))
+                    <div class="alert alert-danger" id="alert_error">
+                        <i class="mdi mdi-alert"></i> Bạn cần lưu thuộc tính trước khi tạo các biến thể của sản phẩm
+                    </div>
+                @endif
 
-                <div class="variation_result accordion" id="accordion"></div>
+                <div class="variation_result accordion" id="accordion">
+                    @if (isset($product) && $product->productAttributes->count() > 0)
+                        @include('admin.product.components.box_variation', [
+                            'productVariations' => $product->productVariations,
+                            'arrProductAttributes' => $product->arrProductAttributes,
+                        ])
+                    @else
+                        @include('admin.product.components.no-variation')
+                    @endif
+                </div>
             </div>
         </div>
     </div>

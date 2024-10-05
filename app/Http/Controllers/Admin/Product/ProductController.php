@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductStoreRequest;
+use App\Http\Resources\Admin\ProductResource;
 use App\Repositories\Interfaces\AttributeRepositoryInterface;
 use App\Repositories\Interfaces\AttributeVariationRepositoryInterface;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
@@ -44,17 +45,42 @@ class ProductController extends Controller
     public function create(): View
     {
         $categories = $this->categoryRepository->getFlatTree();
-        $attributes = $this->attributeRepository->getAll();
-        $attributeVariations = $this->attributeVariationRepository->getAll();
-        // dd($attributeVariations);
-        return view('admin.product.create', compact('categories', 'attributes', 'attributeVariations'));
+        $attributes = $this->attributeRepository->getAllPluckById();
+        return view('admin.product.create', compact('categories', 'attributes', ));
     }
 
     public function store(ProductStoreRequest $request)
     {
+        // dd($request['product_attribute']['attribute_id']);
         $this->productService->store($request);
         notyf()->success('Thêm sản phẩm thành công');
         return redirect()->route('admin.product.index');
+    }
+
+    public function edit($id, Request $request): View
+    {
+        $product = $this->productRepository->loadRelations($this->productRepository->findOrFail($id), [
+            'categories:id',
+            'productAttributes' => function ($query) {
+                return $query->with(['attribute.variations', 'attributeVariations:id']);
+            },
+            'productVariations.attributeVariations'
+        ]);
+
+        $product = new ProductResource($product);
+        $categories = $this->categoryRepository->getFlatTree();
+        $attributes = $this->attributeRepository->getAllPluckById();
+
+        $product = (object) $product->toArray($request);
+
+        return view(
+            'admin.product.edit',
+            [
+                'product' => $product,
+                'categories' => $categories,
+                'attributes' => $attributes,
+            ]
+        );
     }
 
     public function updateStatus(Request $request)

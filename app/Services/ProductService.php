@@ -38,31 +38,36 @@ class ProductService implements ProductServiceInterface
     {
         DB::beginTransaction();
         $this->data = $request->validated();
+        try {
+            $categories = $this->data['category_id'];
+            unset($this->data['category_id']);
 
-        $categories = $this->data['category_id'];
+            if (isset($this->data['gallery'])) {
+                $this->data['gallery'] = json_encode($this->data['gallery']);
+            }
+            isset($this->data['product']['gallery']) && $this->data['product']['gallery'] = $this->data['gallery'];
+            $product = $this->repository->create($this->data['product']);
+            $product->categories()->sync($categories);
 
-        unset($this->data['category_id']);
-        if (isset($this->data['gallery'])) {
-            $this->data['gallery'] = json_encode($this->data['gallery']);
+            if ($product->type == 2 && isset($this->data['product_attribute']) && $this->data['product_attribute']) {
+                $this->repositoryProductAttribute->createOrUpdateWithVariation($product->id, $this->data['product_attribute']);
+
+                $this->storeOrUpdateProductVariations($product->id);
+            }
+
+            DB::commit();
+            return $product;
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
-
-        $product = $this->repository->create($this->data['product']);
-        $product->categories()->sync($categories);
-
-        if ($product->type == 2 && isset($this->data['product_attribute']) && $this->data['product_attribute']) {
-            $this->repositoryProductAttribute->createOrUpdateWithVariation($product->id, $this->data['product_attribute']);
-
-            $this->storeOrUpdateProductVariations($product->id);
-        }
-
-        DB::commit();
     }
 
     public function updateStatus($request)
     {
         $this->data = $request->all();
         $productId = $this->data['product_id'];
-        unset($data['product_id']);
+        unset($this->data['product_id']);
 
         return $this->repository->update($productId, $this->data);
 
@@ -88,12 +93,14 @@ class ProductService implements ProductServiceInterface
         $data = $request->all();
         $attributeVariations = $this->repositoryAttributeVariation->getOrderByFollow($data['product_attribute']['attribute_variation_id']);
 
-        $indentity = rand(000000, 999999);
         if ($data['variation_action'] == 1) {
 
             $response = view(
                 'admin.product.components.box_item_variation',
-                compact('attributeVariations', )
+                [
+                    'attributeVariations' => $attributeVariations,
+                    'identity' => $this->uniqidReal(5)
+                ]
             )->render();
 
 
@@ -111,7 +118,8 @@ class ProductService implements ProductServiceInterface
             foreach ($collect as $item) {
                 $response .= view('admin.product.components.box_item_variation', [
                     'attributeVariations' => $attributeVariations,
-                    'selected' => $item
+                    'selected' => $item,
+                    'identity' => $this->uniqidReal(5)
                 ])->render();
             }
             return $response;

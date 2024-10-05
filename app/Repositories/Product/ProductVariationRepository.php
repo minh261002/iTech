@@ -26,10 +26,12 @@ class ProductVariationRepository extends EloquentRepository implements ProductVa
 
         return $this->instance;
     }
+
     public function createOrUpdateWithVariation($product_id, array $productVariation)
     {
         $position = 0;
         $ids = [];
+
         foreach ($productVariation['attribute_variation_id'] as $key => $item) {
             $dataModel = $this->model->updateOrCreate([
                 'id' => $productVariation['id'][$key],
@@ -38,13 +40,14 @@ class ProductVariationRepository extends EloquentRepository implements ProductVa
                 'price' => $productVariation['price'][$key],
                 'sale_price' => $productVariation['sale_price'][$key],
                 'image' => $productVariation['image'][$key],
+                'position' => $position,
                 'qty' => $productVariation['qty'][$key],
-                'position' => $position
             ]);
             $dataModel->attributeVariations()->sync($item);
             $ids[] = $dataModel->id;
             $position++;
         }
+
         $this->deleteTrash($product_id, $ids);
         return true;
     }
