@@ -22,8 +22,7 @@
             <ul class="list-unstyled topnav-menu mb-0 d-flex align-items-center">
 
                 <li class="dropdown notification-list topbar-dropdown">
-                    <a class="nav-link dropdown-toggle"
-                        href="{{ route('admin.myNotification', Auth::guard('admin')->user()->id) }}" role="button">
+                    <a class="nav-link dropdown-toggle" href="{{ route('admin.myNotification') }}" role="button">
                         <i data-feather="bell" class="noti-icon"></i>
 
                         <span class="badge bg-danger rounded-circle noti-icon-badge" id="countUnreadNotification">
