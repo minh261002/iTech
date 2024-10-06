@@ -149,8 +149,7 @@
 
             $('#table').DataTable({
                 'language': {
-                    'url': '{{ asset('
-                                                                                                    admin / assets / lang / dataTable.json ') }}'
+                    'url': "{{ asset('admin/assets/lang/dataTable.json') }}"
                 },
                 'order': [
                     [0, 'desc']

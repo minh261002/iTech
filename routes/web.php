@@ -131,6 +131,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::prefix('post/catalogue')->group(function () {
             Route::middleware(['permission:viewPostCatalogue', 'auth:admin'])->group(function () {
                 Route::get('/', [PostCatalogueController::class, 'index'])->name('post.catalogue.index');
+                Route::get('/get', [PostCatalogueController::class, 'get'])->name('post.catalogue.get');
             });
 
             Route::middleware(['permission:createPostCatalogue', 'auth:admin'])->group(function () {
