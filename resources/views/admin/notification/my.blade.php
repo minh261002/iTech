@@ -82,7 +82,7 @@
                     },
                     success: function(response) {
                         $('#notification-container').html(response);
-                        $(`.notification-item-${notification_id}`).removeClass('bg-light');
+                        $(`.box-noty-${notification_id}`).removeClass('bg-light');
                     },
                 })
             });
