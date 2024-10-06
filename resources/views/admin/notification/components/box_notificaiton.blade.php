@@ -1,5 +1,5 @@
 @forelse($notifications as $noty)
-    <div class="card-body border box-noty-{{ $noty->id }} d-block mt-1 rounded {{ $noty->is_read == 1 ? 'bg-light' : 'border' }}"
+    <div class="card-body border notification-item box-noty-{{ $noty->id }} d-block mt-1 rounded {{ $noty->is_read == 1 ? 'bg-light' : 'border' }}"
         data-notification-id="{{ $noty->id }}" style="cursor: pointer">
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center notification-item-{{ $noty->id }}">
