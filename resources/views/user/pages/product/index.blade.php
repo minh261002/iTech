@@ -4,6 +4,20 @@
 
 
 @section('content')
+<!-- Breadcrumb -->
+<section class="breadcrumb-container">
+    <div class="container-xxl">
+        <nav class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Trang chủ</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="#">Sản phẩm</a>
+            </li>
+        </nav>
+    </div>
+</section>
+
 <section class="navfocus-product-wrapper mt-4">
     <div class="container-xxl">
         <div class="prod-cate-list">
@@ -123,7 +137,6 @@
                             <i class="fa-regular fa-star"></i>
                             <i class="fa-regular fa-star"></i>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -712,7 +725,7 @@
 <!-- News -->
 @include('user.partials.news')
 
-
+<!-- Comment -->
 <section class="comment-user mt-3">
     <div class="container-xxl">
         <p class="boxcomment-title mb-3">Mời bạn cùng thảo luận</p>
