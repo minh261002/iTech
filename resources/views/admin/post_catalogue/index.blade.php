@@ -29,6 +29,7 @@
             <table class="table table-striped table-bordered" id="table">
                 <thead>
                     <tr>
+                        <th>Ảnh</th>
                         <th>Tên danh mục</th>
                         <th>Trạng thái</th>
                         <th>Thao tác</th>
@@ -37,9 +38,16 @@
                 <tbody>
                     @foreach ($post_catalogues as $catalogue)
                         <tr>
-                            <td>{{ generate_text_depth_tree($catalogue->depth) }}
-                                {{ $catalogue->name }}
+                            <td style="width: 70px">
+                                @if ($catalogue->image)
+                                    <img src="{{ asset($catalogue->image) }}" alt="{{ $catalogue->name }}"
+                                        class="custom-img-table">
+                                @else
+                                    <img src="{{ asset('admin/assets/images/not-found.jpg') }}" alt="{{ $catalogue->name }}"
+                                        class="custom-img-table">
+                                @endif
                             </td>
+                            <td>{{ generate_text_depth_tree($catalogue->depth) . '' . $catalogue->name }}</td>
                             <td>
                                 <input type="checkbox" class="js-switch" {{ $catalogue->status == 2 ? 'checked' : '' }}
                                     data-id={{ $catalogue->id }}>
@@ -47,12 +55,12 @@
                             <td>
                                 <a href="{{ route('admin.post.catalogue.edit', $catalogue->id) }}"
                                     class="btn btn-sm btn-primary">
-                                    <i class="mdi mdi-pencil"></i>
+                                    <i data-feather="edit"></i>
                                 </a>
 
                                 <a href="{{ route('admin.post.catalogue.delete', $catalogue->id) }}"
                                     class="btn btn-sm btn-danger delete-item">
-                                    <i class="mdi mdi-delete"></i>
+                                    <i data-feather="trash"></i>
                                 </a>
                             </td>
                         </tr>

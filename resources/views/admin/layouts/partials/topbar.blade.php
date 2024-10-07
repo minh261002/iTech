@@ -1,3 +1,14 @@
+@php
+    $notifications = App\Models\Notification::where('admin_id', Auth::guard('admin')->user()->id)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    $unreadNotifications = App\Models\Notification::where('admin_id', Auth::guard('admin')->user()->id)
+        ->where('is_read', 1)
+        ->orderBy('created_at', 'desc')
+        ->get();
+@endphp
+
 <div class="topbar-custom">
     <div class="container-fluid">
         <div class="d-flex justify-content-between">
@@ -11,36 +22,13 @@
             <ul class="list-unstyled topnav-menu mb-0 d-flex align-items-center">
 
                 <li class="dropdown notification-list topbar-dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                        aria-haspopup="false" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="{{ route('admin.myNotification') }}" role="button">
                         <i data-feather="bell" class="noti-icon"></i>
-                        <span class="badge bg-danger rounded-circle noti-icon-badge">9</span>
+
+                        <span class="badge bg-danger rounded-circle noti-icon-badge" id="countUnreadNotification">
+                            {{ $unreadNotifications->count() }}
+                        </span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-end dropdown-lg">
-
-                        <!-- item-->
-                        <div class="dropdown-item noti-title">
-                            <h5 class="m-0">
-                                <span class="float-end">
-                                    <a href="" class="text-dark">
-                                        <small>Clear All</small>
-                                    </a>
-                                </span>Notification
-                            </h5>
-                        </div>
-
-                        <div class="noti-scroll" data-simplebar>
-
-                        </div>
-
-                        <!-- All-->
-                        <a href="javascript:void(0);"
-                            class="dropdown-item text-center text-primary notify-item notify-all">
-                            View all
-                            <i class="fe-arrow-right"></i>
-                        </a>
-
-                    </div>
                 </li>
 
                 <li class="dropdown notification-list topbar-dropdown">
@@ -89,3 +77,6 @@
     </div>
 
 </div>
+
+@push('scripts')
+@endpush

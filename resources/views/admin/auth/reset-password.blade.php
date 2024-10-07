@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset(config('settings.site_favicon')) }}">
 
     <!-- App css -->
     <link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
@@ -34,8 +34,8 @@
                                             <div class="text-center">
                                                 <div class="mb-4">
                                                     <a href="#" class="auth-logo">
-                                                        <img src="{{ asset('admin/assets/images/logo-dark.png') }}"
-                                                            alt="logo-dark" class="mx-auto" height="28" />
+                                                        <img src="{{ asset(config('settings.site_logo')) }}"
+                                                            alt="logo-dark" class="mx-auto" height="60" />
                                                     </a>
                                                 </div>
 

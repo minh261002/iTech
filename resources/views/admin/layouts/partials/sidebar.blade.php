@@ -1,24 +1,23 @@
 <div class="app-sidebar-menu">
     <div class="h-100" data-simplebar>
-
         <!--- Sidemenu -->
         <div id="sidebar-menu">
 
             <div class="logo-box">
                 <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ asset('admin/assets/images/logo-sm.png') }}" alt="" height="22">
+                        <img src="{{ asset(config('settings')['site_admin_logo']) }}" alt="" height="55">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('admin/assets/images/logo-light.png') }}" alt="" height="24">
+                        <img src="{{ asset(config('settings')['site_admin_logo']) }}" alt="" height="55">
                     </span>
                 </a>
                 <a href="{{ route('admin.dashboard') }}" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ asset('admin/assets/images/logo-sm.png') }}" alt="" height="22">
+                        <img src="{{ asset(config('settings')['site_admin_logo']) }}" alt="" height="55">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('admin/assets/images/logo-dark.png') }}" alt="" height="24">
+                        <img src="{{ asset(config('settings')['site_admin_logo']) }}" alt="" height="55">
                     </span>
                 </a>
             </div>
@@ -35,24 +34,28 @@
                 <li class="menu-title">Main</li>
 
                 @foreach (config('admin_sidebar') as $item)
-                    <li>
-                        <a href="#{{ $item['href'] }}" data-bs-toggle="collapse">
-                            {!! $item['icon'] !!}
-                            <span>{{ $item['title'] }}</span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div id="{{ $item['href'] }}" class="collapse">
-                            <ul class="nav-second-level">
-                                @foreach ($item['sub_menu'] as $subItem)
-                                    <li>
-                                        <a href="{{ route($subItem['route']) }}">
-                                            {{ $subItem['title'] }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </li>
+                    @if (auth('admin')->user()->checkPermissions($item['permissions']) || in_array('Root', $item['permissions']))
+                        <li>
+                            <a href="#{{ $item['href'] }}" data-bs-toggle="collapse">
+                                {!! $item['icon'] !!}
+                                <span>{{ $item['title'] }}</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div id="{{ $item['href'] }}" class="collapse">
+                                <ul class="nav-second-level">
+                                    @foreach ($item['sub_menu'] as $subItem)
+                                        @if (auth('admin')->user()->checkPermissions($item['permissions']) || in_array('Root', $item['permissions']))
+                                            <li>
+                                                <a href="{{ route($subItem['route']) }}">
+                                                    {{ $subItem['title'] }}
+                                                </a>
+                                            </li>
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </li>
+                    @endif
                 @endforeach
             </ul>
 

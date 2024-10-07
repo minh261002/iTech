@@ -6,11 +6,12 @@
     <meta charset="utf-8" />
     <title>@yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="adminId" content="{{ Auth::guard('admin')->user()->id }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.png') }}">
 
     <!-- App css -->
     <link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
@@ -30,7 +31,38 @@
     <link rel="stylesheet" href="{{ asset('admin/assets/css/switchery.css') }}">
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/css/toast@1.0.1/fuiToast.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/jquery-ui.min.css') }}">
+
+    <script>
+        var BASE_URL = "{{ env('APP_URL') }}";
+
+        function formatTime(time) {
+            const now = new Date();
+            const secondsPast = Math.floor((now - new Date(time)) / 1000);
+
+            if (secondsPast < 60) {
+                return secondsPast === 0 ? 'Bây giờ' : `${secondsPast} giây trước`;
+            }
+
+            if (secondsPast < 3600) {
+                return `${Math.floor(secondsPast / 60)} phút trước`;
+            }
+
+            if (secondsPast <= 86400) {
+                return `${Math.floor(secondsPast / 3600)} giờ trước`;
+            }
+
+            if (secondsPast > 86400) {
+                const day = new Date(time).getDate();
+                const month = new Date(time).getMonth() + 1;
+                const year = new Date(time).getFullYear();
+
+                return `${day}/${month}/${year}`;
+            }
+        }
+    </script>
 </head>
 
 <!-- body start -->
@@ -67,16 +99,17 @@
         <!-- ============================================================== -->
         <!-- End Page content -->
         <!-- ============================================================== -->
-
-
     </div>
-    <!-- END wrapper -->
-    <script src="{{ asset('admin/assets/libs/ckeditor/ckeditor.js') }}"></script>
+    {{-- <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script> --}}
+
+    <script src="{{ asset('plugins/ckeditor/ckeditor.js') }}"></script>
+
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/js/toast@1.0.1/fuiToast.min.js"></script>
 
     <!-- Vendor -->
     <script src="{{ asset('admin/assets/libs/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/simplebar/simplebar.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/node-waves/waves.min.js') }}"></script>
@@ -99,28 +132,28 @@
     <!-- Data table js -->
     <script src="{{ asset('admin/assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/libs/ckfinder_2/ckfinder.js') }}"></script>
+    {{-- <script src="{{ asset('admin/assets/libs/ckfinder_2/ckfinder.js') }}"></script> --}}
+
+    <script src="{{ asset('plugins/ckfinder/ckfinder.js') }}"></script>
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <!-- Flatpickr Timepicker Plugin js -->
     <script src="{{ asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 
     <script src="{{ asset('admin/assets/js/pages/form-picker.js') }}"></script>
     <script src="{{ asset('admin/assets/js/switchery.js') }}"></script>
+
+    @include('admin.layouts.partials.pusher')
+
     <script>
         $(document).ready(function() {
 
             $('#table').DataTable({
                 'language': {
-                    'url': '{{ asset('admin/assets/lang/dataTable.json') }}'
+                    'url': "{{ asset('admin/assets/lang/dataTable.json') }}"
                 },
                 'order': [
                     [0, 'desc']
                 ]
-            });
-
-            $('.select2').select2({
-                theme: 'bootstrap-5',
-                width: '100%'
             });
 
             $('.delete-item').on('click', function(e) {
@@ -150,6 +183,7 @@
                     }
                 });
             })
+
         });
     </script>
 

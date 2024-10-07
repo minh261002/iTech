@@ -13,6 +13,17 @@ class BindingProvider extends ServiceProvider
         'App\Repositories\Interfaces\RoleRepositoryInterface' => 'App\Repositories\RoleRepository',
         'App\Repositories\Interfaces\PostCatalogueRepositoryInterface' => 'App\Repositories\PostCatalogueRepository',
         'App\Repositories\Interfaces\PostRepositoryInterface' => 'App\Repositories\PostRepository',
+        'App\Repositories\Interfaces\MemberRepositoryInterface' => 'App\Repositories\MemberRepository',
+        'App\Repositories\Interfaces\CategoryRepositoryInterface' => 'App\Repositories\CategoryRepository',
+        'App\Repositories\Interfaces\SliderRepositoryInterface' => 'App\Repositories\SliderRepository',
+        'App\Repositories\Interfaces\SliderItemRepositoryInterface' => 'App\Repositories\SliderItemRepository',
+        'App\Repositories\Interfaces\NotificationRepositoryInterface' => 'App\Repositories\NotificationRepository',
+        'App\Repositories\Interfaces\AttributeRepositoryInterface' => 'App\Repositories\AttributeRepository',
+        'App\Repositories\Interfaces\AttributeVariationRepositoryInterface' => 'App\Repositories\AttributeVariationRepository',
+        'App\Repositories\Interfaces\DiscountRepositoryInterface' => 'App\Repositories\DiscountRepository',
+        'App\Repositories\Interfaces\Product\ProductRepositoryInterface' => 'App\Repositories\Product\ProductRepository',
+        'App\Repositories\Interfaces\Product\ProductAttributeRepositoryInterface' => 'App\Repositories\Product\ProductAttributeRepository',
+        'App\Repositories\Interfaces\Product\ProductVariationRepositoryInterface' => 'App\Repositories\Product\ProductVariationRepository',
     ];
 
     protected $services = [
@@ -21,6 +32,15 @@ class BindingProvider extends ServiceProvider
         'App\Services\Interfaces\RoleServiceInterface' => 'App\Services\RoleService',
         'App\Services\Interfaces\PostCatalogueServiceInterface' => 'App\Services\PostCatalogueService',
         'App\Services\Interfaces\PostServiceInterface' => 'App\Services\PostService',
+        'App\Services\Interfaces\MemberServiceInterface' => 'App\Services\MemberService',
+        'App\Services\Interfaces\CategoryServiceInterface' => 'App\Services\CategoryService',
+        'App\Services\Interfaces\SliderServiceInterface' => 'App\Services\SliderService',
+        'App\Services\Interfaces\SliderItemServiceInterface' => 'App\Services\SliderItemService',
+        'App\Services\Interfaces\NotificationServiceInterface' => 'App\Services\NotificationService',
+        'App\Services\Interfaces\AttributeServiceInterface' => 'App\Services\AttributeService',
+        'App\Services\Interfaces\AttributeVariationServiceInterface' => 'App\Services\AttributeVariationService',
+        'App\Services\Interfaces\DiscountServiceInterface' => 'App\Services\DiscountService',
+        'App\Services\Interfaces\ProductServiceInterface' => 'App\Services\ProductService',
     ];
     /**
      * Register services.
