@@ -98,24 +98,6 @@ return [
         ],
     ],
     [
-        'href' => 'sidebarPromotion',
-        'title' => 'Khuyến mãi',
-        'icon' => '<i data-feather="gift"></i>',
-        'permissions' => ['viewDiscount', 'createDiscount', 'editDiscount', 'deleteDiscount'],
-        'sub_menu' => [
-            [
-                'title' => 'Thêm mới',
-                'route' => 'admin.discount.create',
-                'permissions' => ['createDiscount'],
-            ],
-            [
-                'title' => 'Danh sách',
-                'route' => 'admin.discount.index',
-                'permissions' => ['viewDiscount'],
-            ],
-        ],
-    ],
-    [
         'href' => 'sidebarOrder',
         'title' => 'Đơn hàng',
         'icon' => '<i data-feather="shopping-cart"></i>',
@@ -228,17 +210,17 @@ return [
         'href' => 'sidebarSetting',
         'title' => 'Cài đặt',
         'icon' => '<i data-feather="settings"></i>',
-        'permissions' => ['viewRole', 'createRole', 'editRole', 'deleteRole'],
+        'permissions' => ['generalSetting', 'seoSetting'],
         'sub_menu' => [
             [
-                'title' => 'Thêm mới',
-                'route' => 'admin.role.create',
-                'permissions' => ['createRole'],
+                'title' => 'Hệ thống',
+                'route' => 'admin.setting.general',
+                'permissions' => ['generalSetting'],
             ],
             [
-                'title' => 'Danh sách',
-                'route' => 'admin.role.index',
-                'permissions' => ['viewRole'],
+                'title' => 'SEO',
+                'route' => 'admin.setting.seo',
+                'permissions' => ['generalSetting', 'seoSetting'],
             ],
         ],
     ],

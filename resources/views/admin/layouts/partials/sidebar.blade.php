@@ -1,24 +1,23 @@
 <div class="app-sidebar-menu">
     <div class="h-100" data-simplebar>
-
         <!--- Sidemenu -->
         <div id="sidebar-menu">
 
             <div class="logo-box">
                 <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ asset('admin/assets/images/logo-horizontal.png') }}" alt="" height="55">
+                        <img src="{{ asset(config('settings')['site_admin_logo']) }}" alt="" height="55">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('admin/assets/images/logo-horizontal.png') }}" alt="" height="55">
+                        <img src="{{ asset(config('settings')['site_admin_logo']) }}" alt="" height="55">
                     </span>
                 </a>
                 <a href="{{ route('admin.dashboard') }}" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ asset('admin/assets/images/logo-horizontal.png') }}" alt="" height="55">
+                        <img src="{{ asset(config('settings')['site_admin_logo']) }}" alt="" height="55">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('admin/assets/images/logo-horizontal.png') }}" alt="" height="55">
+                        <img src="{{ asset(config('settings')['site_admin_logo']) }}" alt="" height="55">
                     </span>
                 </a>
             </div>
