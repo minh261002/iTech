@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Ajax\LocationController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\ProductController as UserProductController;
+use App\Http\Controllers\User\AuthController as UserAuthController;
 use Illuminate\Support\Facades\Route;
 
 // ----------------- Route for Admin ----------------- //
@@ -387,4 +388,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 Route::group(['as' => 'user.'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/products', [UserProductController::class, 'index'])->name('products');
+    Route::get('/product-detail', [UserProductController::class, 'product_detail'])->name('product-detail');
+    Route::get('/register', [UserAuthController::class, 'register'])->name('register');
+    Route::get('/login', [UserAuthController::class, 'login'])->name('login');
+    Route::get('/forgot-password', [UserAuthController::class, 'forgot_password'])->name('forgot-password');
+    Route::get('/reset-password', [UserAuthController::class, 'reset_password'])->name('reset-password');
+    Route::get('/cart_0', [UserProductController::class, 'cart_0'])->name('cart');
+    Route::get('/cart', [UserProductController::class, 'cart'])->name('cart');
 });
