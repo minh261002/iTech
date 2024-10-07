@@ -10,12 +10,15 @@
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/debugging.html
 
 // Production
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
-ini_set('display_errors', 0);
+//  error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
+// ini_set('display_errors', 0);
 
 // Development
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+//env file
+
 
 /*============================ General Settings =======================================*/
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html
@@ -39,7 +42,7 @@ $config['licenseKey'] = '*6?8-*1**-X**7-*X**-*A**-4*Q*-2**J';
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_privateDir
 
 $config['privateDir'] = array(
-    'backend' => 'default',
+    'backend' => 'awss3',
     'tags' => '.ckfinder/tags',
     'logs' => '.ckfinder/logs',
     'cache' => '.ckfinder/cache',
@@ -63,15 +66,19 @@ $config['images'] = array(
 /*=================================== Backends ========================================*/
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_backends
 
+
 $config['backends'][] = array(
-    'name' => 'default',
-    'adapter' => 'local',
-    'baseUrl' => '/uploads/',
-    //  'root'         => '', // Can be used to explicitly set the CKFinder user files directory.
-    'chmodFiles' => 0777,
-    'chmodFolders' => 0755,
-    'filesystemEncoding' => 'UTF-8',
+    'name' => 'awss3',
+    'adapter' => 's3',
+    'bucket' => 'itechcenter',
+    'region' => 'us-east-1',
+    'key' => 'AKIA5MSUBM5MFSSTJUP5',
+    'secret' => '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',
+    'visibility' => 'private',
+    'baseUrl' => 'https://d1wjt82qhgdhd4.cloudfront.net/',
+    'root' => '',
 );
+
 
 /*================================ Resource Types =====================================*/
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_resourceTypes
@@ -79,12 +86,12 @@ $config['backends'][] = array(
 $config['defaultResourceTypes'] = '';
 
 $config['resourceTypes'][] = array(
-    'name' => 'Files', // Single quotes not allowed.
+    'name' => 'Files',
     'directory' => 'files',
     'maxSize' => 0,
     'allowedExtensions' => '7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,webp,wma,wmv,xls,xlsx,zip',
     'deniedExtensions' => '',
-    'backend' => 'default'
+    'backend' => 'awss3'
 );
 
 $config['resourceTypes'][] = array(
@@ -93,7 +100,7 @@ $config['resourceTypes'][] = array(
     'maxSize' => 0,
     'allowedExtensions' => 'bmp,gif,jpeg,jpg,png,webp,svg',
     'deniedExtensions' => '',
-    'backend' => 'default'
+    'backend' => 'awss3'
 );
 
 /*================================ Access Control =====================================*/
@@ -176,6 +183,6 @@ $config['headers'] = array();
 
 /*============================== End of Configuration =================================*/
 
-
+$config['errorLog'] = __DIR__ . 'error.log';
 // Config must be returned - do not change it.
 return $config;

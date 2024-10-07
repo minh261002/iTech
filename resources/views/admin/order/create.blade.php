@@ -109,34 +109,16 @@
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <h2 class="card-title mb-0">Giỏ hàng</h2>
+
+                        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                            data-bs-target=".bs-example-modal" id="showModal">
+                            <i data-feather="plus"></i>
+                            Chọn sản phẩm</button>
                     </div>
 
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <button class="btn btn-primary" type="button" data-bs-target="#modalProduct"
-                                    data-bs-toggle="modal">Chọn
-                                    sản phẩm</button>
-
-                                <div class="modal fade" id="modalProduct" aria-labelledby="modalProductToggleLabel"
-                                    tabindex="-1" style="display: none;" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="modalProductToggleLabel">Modal 1</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Show a second modal and hide this one with the button below.
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2"
-                                                    data-bs-toggle="modal">Open second modal</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -212,6 +194,12 @@
             </div>
         </form>
     </div>
+
+    <div id="renderModal">
+
+    </div>
+    {{-- @include('admin.order.components.modal') --}}
+
 @endsection
 
 @push('scripts')
@@ -240,20 +228,74 @@
                         setTimeout(() => {
                             $('.districts').val(district_id);
                             $('.districts').trigger('change');
-                        }, 1000);
+                        }, 700);
 
                         setTimeout(() => {
                             $('.wards').val(ward_id);
                             $('.wards').trigger('change');
-                        }, 2000);
+                        }, 1400);
 
                         setTimeout(() => {
                             $('#address').val(response.address);
-                        }, 2500);
+                        }, 1500);
                     }
                 });
             });
         });
+
+        $(document).ready(function() {
+            function getDataProduct() {
+                $.ajax({
+                    url: "/admin/order/productInfo",
+                    type: 'GET',
+                    success: function(response) {
+                        $('#renderModal').html(response);
+                    }
+                });
+            }
+
+            $(document).on('keyup', '#search', function() {
+                clearTimeout($.data(this, 'timer'));
+
+                let search = $(this).val();
+                // $.ajax({
+                //     url: "/admin/order/productInfo",
+                //     type: 'GET',
+                //     data: {
+                //         search: search
+                //     },
+                //     beforeSend: function() {
+                //         $('#product-container').html(
+                //             '<div class="d-flex justify-content-center align-items-center" style="height: 200px"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+                //         );
+                //     },
+                //     success: function(response) {
+                //         // $('#renderModal').html(response);
+                //         console.log(response)
+                //     }
+                // });
+
+                $(this).data('timer', setTimeout(function() {
+                    $.ajax({
+                        url: "/admin/order/productInfo",
+                        type: 'GET',
+                        data: {
+                            search: search
+                        },
+                        beforeSend: function() {
+                            $('#product-container').html(
+                                '<div class="d-flex justify-content-center align-items-center" style="height: 200px"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+                            );
+                        },
+                        success: function(response) {
+                            $('#product-container').html(response);
+                        }
+                    });
+                }, 500));
+            });
+
+            getDataProduct();
+        })
     </script>
 
 

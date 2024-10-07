@@ -57,14 +57,20 @@
                     <div class="card-body">
                         <div class="seo-preview border p-2 rounded mb-3">
                             <div class="seo-preview-title">
-                                <span class="seo-preview-title-content">Tiêu đề SEO</span>
+                                <span class="seo-preview-title-content">
+                                    {{ $post->meta_title ? $post->meta_title : $post->title }}
+                                </span>
                             </div>
                             <div class="seo-preview-url">
-                                <span class="seo-preview-link-content">{{ env('APP_URL') }}</span>
+                                <span class="seo-preview-link-content">{{ env('APP_URL') }}
+                                    bai-viet/{{ $post->slug }}
+                                </span>
                             </div>
                             <div class="seo-preview-description">
 
-                                <span class="seo-preview-description-content">Mô tả SEO</span>
+                                <span class="seo-preview-description-content">
+                                    {{ $post->meta_description ? $post->meta_description : 'Mô tả SEO' }}
+                                </span>
                             </div>
                         </div>
 
@@ -105,27 +111,22 @@
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <h2 class="card-title">Danh mục</h2>
+
+
                     </div>
 
                     <div class="card-body">
-                        <div class="form-group mb-3">
-                            @foreach ($postCatalogues as $catalogue)
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="{{ $catalogue->id }}"
-                                        name="catalogue_id[]" id="catalogue_id-{{ $catalogue->id }}"
-                                        {{ $post->catalogues->contains($catalogue->id) ? 'checked' : '' }}>
+                        <div class="form-group mb-3" id="catalogues_result">
 
-                                    <label class="form-check-label" for="catalogue_id-{{ $catalogue->id }}">
-                                        {{ generate_text_depth_tree($catalogue->depth) }}
-                                        {{ $catalogue->name }}
-                                    </label>
-                                </div>
-                            @endforeach
                             @error('catalogue_id')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
+                        <div class="text-center mt-3">
+                            <p id="loadMoreCategory" style="cursor:pointer">Xem thêm</p>
+                            <p id="hideCategory" class="hidden" style="cursor:pointer">Ẩn bớt</p>
+                        </div>
                     </div>
                 </div>
                 <div class="card">
@@ -264,5 +265,126 @@
                 return slug;
             }
         })
+
+        // Load more category
+        $(document).ready(function() {
+            let offset = 0;
+            let totalCategories = 0;
+            const limit = 10;
+            let keyword = '';
+
+            let list_catalogues = {{ json_encode($post->catalogues->pluck('id')) }};
+
+            function getCategories(hidePrevious = false) {
+                let url = "{{ route('admin.post.catalogue.get') }}";
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    data: {
+                        offset: offset,
+                        search: keyword
+                    },
+                    beforeSend: function() {
+                        $('#catalogues_result').append(
+                            '<div class="d-flex align-items-center justify-content-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+                        );
+                    },
+                    success: function(response) {
+                        let catalogues = response.catalogues;
+                        totalcatalogues = response.total;
+                        let html = '';
+
+                        catalogues.forEach(catalogue => {
+                            html += `
+                                <div class="form-check" style="margin-left: ${catalogue.depth * 20}px;">
+                                    <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        value="${catalogue.id}"
+                                        name="catalogue_id[]"
+                                        data-lft="${catalogue._lft}"
+                                        data-rgt="${catalogue._rgt}"
+                                        id="catalogue_id-${catalogue.id}"
+                                        ${list_catalogues.includes(catalogue.id) ? 'checked' : ''}
+                                        >
+                                    <label class="form-check-label" for="catalogue_id-${catalogue.id}">
+                                        ${catalogue.name}
+                                    </label>
+                                </div>
+                            `;
+                        });
+
+                        if (hidePrevious) {
+                            $('#catalogues_result').html(html);
+                        } else {
+                            $('#catalogues_result').append(html);
+                        }
+
+                        if (offset + catalogues.length >= totalcatalogues) {
+                            $('#loadMoreCategory').hide();
+                        } else {
+                            $('#loadMoreCategory').show();
+                        }
+
+                        if (offset > 0) {
+                            $('#hideCategory').show();
+                        } else {
+                            $('#hideCategory').hide();
+                        }
+                    },
+                    complete: function() {
+                        $('#catalogues_result').find('.spinner-border').remove();
+                    }
+                });
+            }
+
+            $('#loadMoreCategory').click(function() {
+                offset += limit;
+                getCategories();
+            });
+
+            $('#hideCategory').click(function() {
+                offset = 0;
+                getCategories(true);
+            });
+
+            $('#search_category').on('input', function() {
+                clearTimeout($.data(this, 'timer'));
+                let search = $(this).val();
+                $(this).data('timer', setTimeout(function() {
+                    keyword = search;
+                    offset = 0;
+                    getCategories(true);
+                }, 500));
+            });
+
+            getCategories();
+        })
+
+        $(document).on('change', 'input[type="checkbox"]', function() {
+            let lft = $(this).data('lft');
+            let rgt = $(this).data('rgt');
+            let checked = $(this).prop('checked');
+
+            if (checked) {
+                $('input[type="checkbox"]').each(function() {
+                    let parentLft = $(this).data('lft');
+                    let parentRgt = $(this).data('rgt');
+
+                    if (parentLft < lft && parentRgt > rgt) {
+                        $(this).prop('checked', true);
+                    }
+                });
+            } else {
+                $('input[type="checkbox"]').each(function() {
+                    let parentLft = $(this).data('lft');
+                    let parentRgt = $(this).data('rgt');
+
+                    if (parentLft < lft && parentRgt > rgt) {
+                        $(this).prop('checked', false);
+                    }
+                });
+            }
+        });
     </script>
 @endpush

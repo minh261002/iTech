@@ -32,7 +32,6 @@
                         <th>Khách hàng</th>
                         <th>Quản trị viên</th>
                         <th>Tiêu đề</th>
-                        <th>Nội dung</th>
                         <th>Trạng thái</th>
                         <th>Ngày gửi</th>
                         <th>Thao tác</th>
@@ -45,7 +44,6 @@
                             <td>{{ $noty->user->name ?? 'N/A' }}</td>
                             <td>{{ $noty->admin->name ?? 'N/A' }}</td>
                             <td>{{ $noty->title }}</td>
-                            <td>{{ $noty->content }}</td>
                             <td>
                                 @if ($noty->is_read == 2)
                                     <span class="badge bg-success">Đã đọc</span>

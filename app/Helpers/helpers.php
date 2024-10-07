@@ -38,6 +38,7 @@ function format_datetime($datetime)
 
 function uniqid_real($lenght = 13)
 {
+    // uniqid gives 13 chars, but you could adjust it to your needs.
     if (function_exists("random_bytes")) {
         $bytes = random_bytes(ceil($lenght / 2));
     } elseif (function_exists("openssl_random_pseudo_bytes")) {
@@ -48,7 +49,7 @@ function uniqid_real($lenght = 13)
     return Str::upper(substr(bin2hex($bytes), 0, $lenght));
 }
 
-function uniqidReal($lenght = 13)
+function format_price($price)
 {
-    return uniqid_real($lenght);
+    return number_format($price, 0, ',', '.') . 'đ';
 }

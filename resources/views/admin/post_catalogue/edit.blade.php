@@ -91,14 +91,20 @@
                     <div class="card-body">
                         <div class="seo-preview border p-2 rounded mb-3">
                             <div class="seo-preview-title">
-                                <span class="seo-preview-title-content">Tiêu đề SEO</span>
+                                <span class="seo-preview-title-content">
+                                    {{ $post_catalogue->meta_title ? $post_catalogue->meta_title : $post_catalogue->name }}
+                                </span>
                             </div>
                             <div class="seo-preview-url">
-                                <span class="seo-preview-link-content">{{ env('APP_URL') }}</span>
+                                <span class="seo-preview-link-content">{{ env('APP_URL') }}
+                                    chuyen-muc/{{ $post_catalogue->slug }}
+                                </span>
                             </div>
                             <div class="seo-preview-description">
 
-                                <span class="seo-preview-description-content">Mô tả SEO</span>
+                                <span class="seo-preview-description-content">
+                                    {{ $post_catalogue->meta_description ?? 'Mô tả SEO' }}
+                                </span>
                             </div>
                         </div>
 

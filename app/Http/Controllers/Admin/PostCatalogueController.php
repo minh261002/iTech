@@ -70,4 +70,29 @@ class PostCatalogueController extends Controller
         $this->service->updateStatus($request);
         return response()->json(['status' => 'success']);
     }
+
+    public function get()
+    {
+        $offset = request()->get('offset', 0);
+        $limit = 10;
+
+        $catalogues = $this->repository->getFlatTree();
+        $cataloguesArray = $catalogues->toArray();
+
+        if (request()->has('search')) {
+            $search = request()->get('search');
+            $cataloguesArray = array_filter($cataloguesArray, function ($catalogue) use ($search) {
+                return strpos($catalogue['name'], $search) !== false;
+            });
+        }
+
+        $total = count($cataloguesArray);
+
+        $cataloguesArray = array_slice($cataloguesArray, $offset, $limit);
+
+        return response()->json([
+            'catalogues' => $cataloguesArray,
+            'total' => $total
+        ]);
+    }
 }

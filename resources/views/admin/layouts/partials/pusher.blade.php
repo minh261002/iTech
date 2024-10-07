@@ -1,7 +1,7 @@
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 <script>
-    var pusher = new Pusher('3cc7a46e532c9e22baf5', {
-        cluster: 'ap1',
+    var pusher = new Pusher("{{ env('PUSHER_APP_KEY') }}", {
+        cluster: "{{ env('PUSHER_APP_CLUSTER') }}",
         authEndpoint: '/broadcasting/auth',
         auth: {
             headers: {
@@ -22,19 +22,61 @@
 
         $('#countUnreadNotification').text(parseInt($('#countUnreadNotification').text()) + 1);
 
-        var html = `
-            <a href="javascript:void(0);" class="dropdown-item notify-item text-muted link-primary active">
-                <div class="notify-icon">
-                    <img src="${data.image}" class="img-fluid rounded-circle" alt="" />
-                </div>
+        let html = `
+            <div class="card-body border notification-item box-noty-${data.body['notyId']} d-block mt-1 rounded border bg-light"
+                data-notification-id="${data.body['notyId']}" style="cursor: pointer">
+
                 <div class="d-flex align-items-center justify-content-between">
-                    <p class="notify-details">${data.title}</p>
-                    <small class="text-muted">${data.created_at}</small>
+                    <div class="d-flex align-items-center notification-item-${data.body['notyId']}">
+                        <div class="flex-shrink-0">
+                            <i class="fa-solid fa-bell text-success" style="font-size: 32px"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3 text-truncate">
+                            <h6 class="my-0 fw-medium text-dark fs-15">
+                                ${data.title}
+                            </h6>
+                            <small class="text-muted fs-13 fw-medium mb-0">
+                                ${formatTime(data.body['created_at'])}
+                            </small>
+                        </div>
+                    </div>
+
+                     <div class="delete-notification" data-notyId="${data.body['notyId']}">
+                        <button class="btn btn-sm btn-danger rounded-circle">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
                 </div>
-                <p class="mb-0 user-msg">
-                    <small class="fs-14">${data.content}</small>
-                </p>
-            </a>
+            </div>
         `;
+
+        $('#notification-box').prepend(html);
     });
 </script>
+
+{{-- <div class="card-body border notification-item box-noty-{{ $noty->id }} d-block mt-1 rounded {{ $noty->is_read == 1 ? 'bg-light' : 'border' }}"
+        data-notification-id="{{ $noty->id }}" style="cursor: pointer">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center notification-item-{{ $noty->id }}">
+
+                <div class="flex-shrink-0">
+                    <i class="fa-solid fa-bell text-success" style="font-size: 32px"></i>
+                </div>
+                <div class="flex-grow-1 ms-3 text-truncate">
+                    <h6 class="my-0 fw-medium text-dark fs-15">
+                        {{ $noty->title }}
+                    </h6>
+                    <small class="text-muted fs-13 fw-medium mb-0">
+                        {{ format_datetime($noty->created_at) }}
+                    </small>
+                </div>
+
+            </div>
+
+            <div class="delete-notification " data-notyId="{{ $noty->id }}">
+                <button class="btn btn-sm btn-danger rounded-circle">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div> --}}

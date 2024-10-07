@@ -948,3 +948,21 @@ select+.select2-container--bootstrap-5 {
     display: block;
     object-fit: cover;
 }
+
+.product-variations {
+    padding-left: 100px;
+    font-size: 16px;
+}
+
+.product-variations li {
+    list-style: none;
+}
+
+.product-variations-item {
+    line-height: 14px;
+}
+
+.product-variations-item:hover {
+    background: #f9f9f9;
+    transition: all 0.3s;
+}

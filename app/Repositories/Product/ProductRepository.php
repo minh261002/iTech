@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Product;
 use App\Models\Product;
-use App\Repositories\Interfaces\ProductRepositoryInterface;
+use App\Repositories\EloquentRepository;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\Interfaces\Product\ProductRepositoryInterface;
 
 class ProductRepository extends EloquentRepository implements ProductRepositoryInterface
 {
-    protected $select = [];
-
     public function getModel()
     {
         return Product::class;
@@ -18,7 +17,8 @@ class ProductRepository extends EloquentRepository implements ProductRepositoryI
     {
         $this->instance = $this->model
             ->whereIn('id', $ids)
-            ->orderByRaw(DB::raw("FIELD(id, " . implode(',', $ids) . ")"))
+            // ->orderByRaw(DB::raw("FIELD(id, " . implode(',', $ids) . ")"))
+            ->orderByRaw("FIELD(id, " . implode(',', $ids) . ")")
             ->get();
 
         return $this->instance;

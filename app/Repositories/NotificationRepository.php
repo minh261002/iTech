@@ -19,6 +19,16 @@ class NotificationRepository extends EloquentRepository implements NotificationR
 
     public function getByAdminId($admin_id)
     {
-        return $this->model->where('admin_id', $admin_id)->orderBy('created_at', 'desc')->get();
+        return $this->model->where('admin_id', $admin_id)->orderBy('is_read', 'asc')->orderBy('created_at', 'desc')->get();
+    }
+
+    public function readAll($admin_id)
+    {
+        return $this->model->where('admin_id', $admin_id)->update(['is_read' => 2]);
+    }
+
+    public function deleteAll($admin_id)
+    {
+        return $this->model->where('admin_id', $admin_id)->delete();
     }
 }

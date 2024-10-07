@@ -125,8 +125,8 @@
                             <div class="col-md-6 mb-3">
                                 <label for="product_variation_id">Biến thể sản phẩm</label>
                                 <select class="form-control select2" name="product_variation_id[]"
-                                    id="product_variation_id" multiple>
-                                    {{-- <option value="">Áp dụng cho tất cả biến thể</option> --}}
+                                    id="product_variation_id">
+                                    <option value="">Áp dụng cho tất cả biến thể</option>
                                 </select>
                             </div>
 

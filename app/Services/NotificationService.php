@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Repositories\Interfaces\NotificationRepositoryInterface;
 use App\Services\Interfaces\NotificationServiceInterface;
 use Illuminate\Http\Request;
-use Log;
+use Illuminate\Support\Facades\Event;
 
 class NotificationService implements NotificationServiceInterface
 {
@@ -100,18 +100,20 @@ class NotificationService implements NotificationServiceInterface
         }
         $noty = $this->notificationRepository->create($data);
 
-        // broadcast(new NotificationEvent(
-        //     $noty->title,
-        //     $noty->content,
-        //     $isAdmin ? $noty->admin_id : $noty->user_id,
-        //     $isAdmin ? 'admin' : 'user'
-        // ))->toOthers();
-        event(new NotificationEvent(
+        $body = [
+            'content' => $noty->content,
+            'created_at' => $noty->created_at,
+            'notyId' => $noty->id,
+        ];
+
+        $event = new NotificationEvent(
             $noty->title,
-            $noty->content,
+            $body,
             $isAdmin ? $noty->admin_id : $noty->user_id,
-            $isAdmin ? 'admin' : 'user'
-        ));
+            $isAdmin ? 'admin' : 'user',
+        );
+
+        Event::dispatch($event);
     }
 
     public function delete($id)
