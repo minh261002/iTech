@@ -22,7 +22,7 @@ jobs:
 
       - name: Clone repository on EC2
         run: |
-          ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_PUBLIC_IP }} 'git clone https://github.com/minh261002/iTech.git /var/www/html/ || (cd /var/www/html/iTech && git pull)'
+          ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_PUBLIC_IP }} 'git clone https://github.com/minh261002/iTech.git || (cd /var/www/html/iTech && git pull)'
 
       - name: Install Composer dependencies
         run: |
