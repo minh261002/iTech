@@ -2,6 +2,13 @@
     height: 300px !important;
 }
 
+
+.custom-meta-value {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+}
+
 .seo-preview-title {
     font-size: 1.5rem;
     font-weight: 500;
@@ -22,6 +29,12 @@
     width: 50px !important;
     height: 50px !important;
     border-radius: 50% !important;
+    object-fit: cover;
+}
+
+.custom-img-table {
+    width: 70px !important;
+    height: 70px !important;
     object-fit: cover;
 }
 
@@ -840,4 +853,116 @@ select+.select2-container--bootstrap-5 {
 
 .form-select-lg~.select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__clear {
     right: 1rem
+}
+
+.clearfix:before {
+    content: "";
+    display: table-cell;
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.sortui {
+    list-style: none;
+    padding-left: 0;
+}
+
+.sortui .ui-state-default {
+    width: calc(20% - 2px);
+    float: left;
+    padding-left: 10px;
+    margin: 0 0 10px 0;
+    margin-bottom: 10px;
+    cursor: move;
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+}
+
+.sortui .ui-state-default .thumb {
+    border: 1px solid #ddd;
+    height: 150px;
+    background: #fafbfc;
+}
+
+.img-scaledown {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.img-scaledown img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+}
+
+.click-to-upload {
+    text-align: center;
+    padding: 20px;
+    border: 1px dashed #b8b2b2;
+}
+
+.sortui .thumb {
+    position: relative;
+}
+
+.sortui .variant-delete-image,
+.sortui .delete-image {
+    position: absolute;
+    background: linear-gradient(to bottom, #fff, #f9fafb);
+    color: red;
+    right: 10px;
+    top: 10px;
+    border: 0;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+}
+
+.sortui .variant-delete-image:hover,
+.sortui .delete-image:hover {
+    background: red;
+    transition: all 0.3s;
+    color: #fff;
+}
+
+.hidden {
+    display: none;
+}
+
+.image-post {
+    width: 75px;
+    height: 45px;
+}
+
+.img-cover {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.product-variations {
+    padding-left: 100px;
+    font-size: 16px;
+}
+
+.product-variations li {
+    list-style: none;
+}
+
+.product-variations-item {
+    line-height: 14px;
+}
+
+.product-variations-item:hover {
+    background: #f9f9f9;
+    transition: all 0.3s;
 }

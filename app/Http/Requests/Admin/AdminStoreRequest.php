@@ -24,7 +24,7 @@ class AdminStoreRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email|unique:admins,email',
-            'password' => 'required|min:6',
+            'password' => 'required|min:6|confirmed',
             'role' => 'required',
             'province_id' => 'nullable',
             'district_id' => 'nullable',
