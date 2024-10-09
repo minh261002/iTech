@@ -16,6 +16,7 @@ class PostCatalogueRepository extends EloquentRepository implements PostCatalogu
     {
         $this->getQueryBuilderOrderBy('position', 'ASC');
         $this->instance = $this->instance->whereNotIn('id', $nodeId)
+        ->defaultOrder()
             ->withDepth()
             ->get()
             ->toFlatTree();

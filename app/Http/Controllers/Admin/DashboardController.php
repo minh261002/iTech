@@ -9,7 +9,6 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class DashboardController extends Controller
 {
-
     public function index(): View
     {
         return view('admin.dashboard.index');
