@@ -20,10 +20,6 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_PUBLIC_IP }} >> ~/.ssh/known_hosts
 
-      - name: Clone repository on EC2
-        run: |
-          ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_PUBLIC_IP }} 'git clone https://github.com/minh261002/iTech.git || (cd /var/www/html/iTech && git pull)'
-
       - name: Install Composer dependencies
         run: |
           ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_PUBLIC_IP }} 'cd /var/www/html/iTech && composer install --no-interaction --prefer-dist --optimize-autoloader'
