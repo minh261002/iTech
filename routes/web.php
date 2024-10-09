@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\Product\ProductAttributeController;
 use App\Http\Controllers\Admin\Product\ProductController;
 use App\Http\Controllers\Admin\Product\ProductVariationController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Ajax\LocationController;
 use App\Http\Controllers\User\HomeController;
@@ -391,6 +392,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::middleware(['permission:editOrder', 'auth:admin'])->group(function () {
                 Route::get('/edit/{id}', [OrderController::class, 'edit'])->name('order.edit');
                 Route::put('/update', [OrderController::class, 'update'])->name('order.update');
+            });
+        });
+
+        Route::prefix('setting')->group(function () {
+            Route::middleware(['permission:generalSetting', 'auth:admin'])->group(function () {
+                Route::get('/general', [SettingController::class, 'general'])->name('setting.general');
+                Route::post('/general', [SettingController::class, 'updateGeneral'])->name('setting.general.update');
+            });
+
+            Route::middleware(['permission:seoSetting', 'auth:admin'])->group(function () {
+                Route::get('/seo', [SettingController::class, 'seo'])->name('setting.seo');
+                Route::post('/seo', [SettingController::class, 'updateSeo'])->name('setting.seo.update');
             });
         });
     });
