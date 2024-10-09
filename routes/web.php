@@ -409,4 +409,7 @@ Route::group(['as' => 'user.'], function () {
     Route::get('/reset-password', [UserAuthController::class, 'reset_password'])->name('reset-password');
     Route::get('/cart_0', [UserProductController::class, 'cart_0'])->name('cart');
     Route::get('/cart', [UserProductController::class, 'cart'])->name('cart');
+    Route::get('/purchase', [UserProductController::class, 'purchase'])->name('purchase');
+    Route::get('/payment', [UserProductController::class, 'payment'])->name('payment');
+    Route::get('/successful-payment', [UserProductController::class, 'successful_payment'])->name('successful-payment');
 });

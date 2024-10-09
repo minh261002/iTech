@@ -44,9 +44,9 @@
             </span>
             <span class="cart-navstep-item cart-navstep-item--complete ">
                 <b class="cart-navstep-item-label">
-                    Kiểm tra
+                    Đặt hàng
                     <br>
-                    giỏ hàng
+                    thành công
                 </b>
             </span>
         </div>
@@ -147,7 +147,7 @@
                 </div>
             </div>
         </div>
-        <div class="fcartbox px-0 pb-5 mb-0 pt-md-4 pt-lg-0 text-center d-none d-lg-block">
+        <div class="fcartbox px-0 pb-5 mb-0 pt-md-4 pt-lg-0 text-center">
             <button class="btn cart_btnitem w-100 cart_btnitem-red" type="submit">Đặt hàng</button>
         </div>
     </div>

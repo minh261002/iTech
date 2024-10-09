@@ -19,4 +19,6 @@ setInterval(function () {
     if (document.querySelector('.slider-outer .list-slide').scrollLeft >= totalWidth - containerWidth) {
         document.querySelector('.slider-outer .list-slide').scrollLeft = 0;
     }
-}, 5000); 
+}, 5000);
+
+

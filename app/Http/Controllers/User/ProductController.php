@@ -25,4 +25,19 @@ class ProductController extends Controller
     {
         return view('user.pages.user.cart');
     }
+
+    public function purchase()
+    {
+        return view('user.pages.user.purchase');
+    }
+
+    public function payment()
+    {
+        return view('user.pages.user.payment');
+    }
+
+    public function successful_payment()
+    {
+        return view('user.pages.user.successful-payment');
+    }
 }
