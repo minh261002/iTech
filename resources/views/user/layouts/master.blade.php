@@ -17,7 +17,9 @@
 
     <!-- Icons -->
     <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!--select2 css-->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -43,6 +45,7 @@
 <!-- body start -->
 
 <body data-menu-color="dark" data-sidebar="default">
+    <div id="fui-toast"></div>
 
     <!-- Begin page -->
     <div id="app-layout">
@@ -77,7 +80,7 @@
 
     </div>
     <!-- END wrapper -->
-    <script src="{{ asset('admin/assets/libs/ckeditor/ckeditor.js') }}"></script>
+    {{-- <script src="{{ asset('admin/assets/libs/ckeditor/ckeditor.js') }}"></script> --}}
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/js/toast@1.0.1/fuiToast.min.js"></script>
 
@@ -89,7 +92,7 @@
     <script src="{{ asset('admin/assets/libs/waypoints/lib/jquery.waypoints.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/jquery.counterup/jquery.counterup.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/feather-icons/feather.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/custom.js') }}"></script>
+    {{-- <script src="{{ asset('admin/assets/js/custom.js') }}"></script> --}}
     <script src="{{ asset('user/assets/js/main.js') }}"></script>
     <!--Select2 js-->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -101,12 +104,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!--finder custom -->
-    <script src="{{ asset('admin/assets/js/finder.js') }}"></script>
+    {{-- <script src="{{ asset('admin/assets/js/finder.js') }}"></script> --}}
 
     <!-- Data table js -->
     <script src="{{ asset('admin/assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/libs/ckfinder_2/ckfinder.js') }}"></script>
+    {{-- <script src="{{ asset('admin/assets/libs/ckfinder_2/ckfinder.js') }}"></script> --}}
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <!-- Flatpickr Timepicker Plugin js -->
     <script src="{{ asset('admin/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
@@ -119,7 +122,8 @@
     <script src="{{ asset('user/owlcarousel/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('user/assets/js/carousel-custom.js') }}"></script>
 
-
+    @include('user.partials.pusher')
+    @stack('scripts')
 </body>
 
 </html>
