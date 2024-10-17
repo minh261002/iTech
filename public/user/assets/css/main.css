@@ -685,6 +685,16 @@ html {
     border-left: .3em solid transparent;
 }
 
+.header_item-custom {
+    color: var(--primary);
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100px;
+    display: inline-block;
+}
+
 .rightbox__filteritem_runfilter {
     font-size: 11px;
     font-weight: 500;
@@ -1674,7 +1684,7 @@ html {
     max-width: var(--width-boxitem);
     padding: 0em;
     padding-top: 0em;
-    margin: 1.5rem auto 5rem;
+    margin: auto;
 }
 
 .auth-form .form-header {
@@ -1739,11 +1749,13 @@ html {
     letter-spacing: 1px;
     text-transform: uppercase;
     padding: .75rem;
-    background-color: #0074ff;
+    border: none;
+    background-color: var(--primary);
+    cursor: pointer !important;
 }
 
 .auth-form .btn:hover {
-    background-color: #1285ff;
+    background-color: var(--secondary);
 }
 
 .cart-container {

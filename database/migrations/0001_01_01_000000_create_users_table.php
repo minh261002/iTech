@@ -24,9 +24,11 @@ return new class extends Migration {
             $table->text('description')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->rememberToken();
+            $table->tinyInteger('is_facebook')->default(0); //0: 0 có 1: có
+            $table->tinyInteger('is_google')->default(0);//0: 0 có 1: có
             $table->timestamps();
         });
 
