@@ -32,7 +32,8 @@
         href="https://cdn.jsdelivr.net/gh/lelinh014756/fui-toast-js@master/assets/css/toast@1.0.1/fuiToast.min.css">
 
     <!-- User css  -->
-    <link href="{{ asset('user/assets/css/main.css') }}" rel="stylesheet" type="text/css" id="app-style" />
+    <link href="{{ asset('user/assets/css/main.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('user/assets/css/responsive.css') }}" rel="stylesheet" type="text/css" />
     <!-- Carousel -->
     <link href="{{ asset('user/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('user/owlcarousel//assets/owl.theme.default.min.css') }}" rel="stylesheet" />

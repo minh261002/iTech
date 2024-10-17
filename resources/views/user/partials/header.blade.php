@@ -1,138 +1,70 @@
 <section class="header-container ">
 
-    <div class="menu-container m-3">
-        <div class="container-xxl">
-            <div class="row">
-                <div class="col-2 d-flex align-items-center justify-content-center">
-                    <div class="logo">
-                        <img height="45" src="{{asset('admin/assets/images/logo.png')}}" alt="">
-                    </div>
+    <div class="menu-container ">
+        <div id="menu-header-wrapper" class="container-xxl">
+            <div class="row align-items-center">
+                <div class="col-auto col-lg-3 col-xl-2 text-center header__logo">
+                    <a class="d-inline-block" href="{{route('user.home')}}">
+                        <img class="img-responsive" height="40" src="{{asset('admin/assets/images/logo.png')}}" alt="">
+                    </a>
                 </div>
-                <div class="col-3 m-auto">
-                    <div class="box-search py-2 px-3 border border-2 rounded-4">
-                        <div class="row">
-                            <div class="col-10">
-                                <input type="text" class="w-100 border-0" placeholder="Bạn cần tìm gì..."></input>
-                            </div>
-                            <div class="col-2">
-                                <div class="search-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col col-md header__fsearch">
+                    <form class="header__action__fsearch position-relative">
+                        <input type="text" value="" placeholder="Bạn cần tìm gì?" autocomplete="off">
+                        <button class="btn-boxsearch-hover" aria-label="Search" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
                 </div>
-                <div class="col-7 m-auto ">
-                    <div class="row menu-header-box d-flex align-items-center g-0">
-                        <div class="col">
-                            <a href="#">
-                                <div class="row g-0">
-                                    <div class="col d-flex align-items-center justify-content-center" style="color:var(--primary);">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
-                                            <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z" />
-                                        </svg>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row my-1">
-                                            <h3 class="p-0" style="font-size: 15px; color: var(--secondary);">HOTLINE</h3>
-                                        </div>
-                                        <div class="row my-1">
-                                            <h3 class="p-0 fw-bold" style="color: var(--primary); font-size:15px;">19003355</h3>
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="col-auto">
+                    <ul class="row header__action">
+                        <li class="col-auto header__action__item header__action__item--hotline">
+                            <a href="tel:123" class="header__action__icon_hotline">
+                                <span>
+                                    hotline
+                                    <b class="">113</b>
+                                </span>
                             </a>
-                        </div>
-                        <div class="col ">
-                            <a href="#">
-                                <div class="row g-0">
-                                    <div class="col d-flex align-items-center justify-content-center" style="color:var(--primary);">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
-                                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
-                                        </svg>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row my-1">
-                                            <h3 class="p-0 fw-bold" style="color: var(--primary); font-size:15px; ">GIỎ HÀNG</h3>
-                                        </div>
-                                        <div class="row my-1">
-                                            <h3 class="p-0" style="font-size: 15px; color: var(--secondary);">CỦA BẠN</h3>
-                                        </div>
-                                    </div>
-                                </div>
+                        </li>
+                        <li class="col-auto header__action__item header__action__item--hotline">
+                            <a href="#" class="header__action__icon_order">
+                                <b>giỏ hàng</b>
+                                <span>0 sản phẩm</span>
                             </a>
-                        </div>
-                        <div class="col ">
-                            <a href="">
-                                <div class="row g-0">
-                                    <div class="col d-flex align-items-center justify-content-center" style="color:var(--primary);">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-truck-front" viewBox="0 0 16 16">
-                                            <path d="M5 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0m8 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-6-1a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2zM4 2a1 1 0 0 0-1 1v3.9c0 .625.562 1.092 1.17.994C5.075 7.747 6.792 7.5 8 7.5s2.925.247 3.83.394A1.008 1.008 0 0 0 13 6.9V3a1 1 0 0 0-1-1zm0 1h8v3.9q0 .002 0 0l-.002.004-.005.002h-.004C11.088 6.761 9.299 6.5 8 6.5s-3.088.26-3.99.406h-.003l-.005-.002L4 6.9q0 .002 0 0z" />
-                                            <path d="M1 2.5A2.5 2.5 0 0 1 3.5 0h9A2.5 2.5 0 0 1 15 2.5v9c0 .818-.393 1.544-1 2v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5V14H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2a2.5 2.5 0 0 1-1-2zM3.5 1A1.5 1.5 0 0 0 2 2.5v9A1.5 1.5 0 0 0 3.5 13h9a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 12.5 1z" />
-                                        </svg>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row my-1">
-                                            <h3 class="p-0" style="font-size: 15px; color: var(--secondary);">KIỂM TRA</h3>
-                                        </div>
-                                        <div class="row my-1">
-                                            <h3 class="p-0 fw-bold" style="color: var(--primary); font-size:15px;">ĐƠN HÀNG</h3>
-                                        </div>
-                                    </div>
-                                </div>
+                        </li>
+                        <li class="col-auto header__action__item header__action__item--hotline">
+                            <a href="#" class="header__action__icon_checkorder">
+                                <span>
+                                    kiểm tra
+                                    <b class="">đơn hàng</b>
+                                </span>
                             </a>
-                        </div>
-                        <div class="col ">
-                            <a href="">
-                                <div class="row g-0">
-                                    <div class="col d-flex align-items-center justify-content-center" style="color:var(--primary);">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
-                                            <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z" />
-                                        </svg>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row my-1">
-                                            <h3 class="p-0" style="font-size: 15px; color: var(--secondary);">HỆ THỐNG</h3>
-                                        </div>
-                                        <div class="row my-1">
-                                            <h3 class="p-0 fw-bold" style="color: var(--primary); font-size:15px;">CỬA HÀNG</h3>
-                                        </div>
-                                    </div>
-                                </div>
+                        </li>
+                        <li class="col-auto header__action__item header__action__item--hotline">
+                            <a href="#" class="header__action__icon_store">
+                                <b>hệ thống</b>
+                                <span class="">cửa hàng</span>
                             </a>
-                        </div>
-                        <div class="col ">
-                            <div class="row g-0">
-                                <div class="col d-flex align-items-center justify-content-center" style="color:var(--primary);">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
-                                    </svg>
-                                </div>
-                                <div class="col">
-                                    <div class="row my-1">
-                                        <h3 class="p-0" style="font-size: 15px; color: var(--secondary);">TÀI KHOẢN</h3>
-                                    </div>
-                                    <div class="row my-1">
-                                        <h3 class="p-0 fw-bold" style="color: var(--primary); font-size:15px;">ĐĂNG NHẬP</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
+                        </li>
+                        <li class="col-auto header__action__item header__action__item--hotline">
+                            <a href="#" class="header__action__icon_membership">
+                                <span>
+                                    Tài khoản
+                                    <b class="">Đăng nhập</b>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 
 
-    <div class="category-container p-3">
+    <div class="category-container header__nav__container">
         <div class="container-xxl">
             <div class="row">
-                <div class="col">
+                <div class="col navigation-itemlink">
                     <a href="#">
                         <div class="d-flex text-white gap-1 align-items-center">
                             <div class="icon-cate">
@@ -147,7 +79,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col">
+                <div class="col navigation-itemlink">
                     <a href="#">
                         <div class="d-flex text-white gap-1 align-items-center">
                             <div class="icon-cate">
@@ -162,7 +94,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col">
+                <div class="col navigation-itemlink">
                     <a href="#">
                         <div class="d-flex text-white gap-1 align-items-center">
                             <div class="icon-cate">
@@ -177,7 +109,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col">
+                <div class="col navigation-itemlink">
                     <a href="#">
                         <div class="d-flex text-white gap-1 align-items-center">
                             <div class="icon-cate">
@@ -192,7 +124,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col">
+                <div class="col navigation-itemlink">
                     <a href="#">
                         <div class="d-flex text-white gap-1 align-items-center">
                             <div class="icon-cate">
@@ -206,7 +138,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col">
+                <div class="col navigation-itemlink">
                     <a href="#">
                         <div class="d-flex text-white gap-1 align-items-center">
                             <div class="icon-cate">
@@ -220,7 +152,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col">
+                <div class="col navigation-itemlink">
                     <a href="#">
                         <div class="d-flex text-white gap-1 align-items-center">
                             <div class="icon-cate">
@@ -234,7 +166,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col">
+                <div class="col navigation-itemlink">
                     <a href="#">
                         <div class="d-flex text-white gap-1 align-items-center">
                             <div class="icon-cate">
@@ -249,7 +181,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col">
+                <div class="col navigation-itemlink">
                     <a href="#">
                         <div class="d-flex text-white gap-1 align-items-center">
                             <div class="icon-cate">
@@ -263,7 +195,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col">
+                <div class="col navigation-itemlink">
                     <a href="#">
                         <div class="d-flex text-white gap-1 align-items-center">
                             <div class="icon-cate">
