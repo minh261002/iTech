@@ -235,6 +235,7 @@
                             $('.wards').trigger('change');
                         }, 1400);
 
+
                         setTimeout(() => {
                             $('#address').val(response.address);
                         }, 1500);

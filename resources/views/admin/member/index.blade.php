@@ -34,6 +34,7 @@
                         <th>Email</th>
                         <th>Số điện thoại</th>
                         <th>Địa chỉ</th>
+                        <th>Loại</th>
                         <th>Trạng thái</th>
                         <th>Thao tác</th>
                     </tr>
@@ -51,7 +52,21 @@
                                 {{ $member->district->full_name ?? 'Quận / Huyện' }},
                                 {{ $member->province->full_name ?? 'Tỉnh / Thành Phố' }},
                             </td>
-
+                            <td>
+                                @if ($member->is_facebook == 1)
+                                    <span class="badge text-bg-primary">
+                                        <i class="fa-brands fa-facebook fs-14"></i> Facebook
+                                    </span>
+                                @elseif($member->is_google == 1)
+                                    <span class="badge text-bg-danger">
+                                        <i class="fa-brands fa-google fs-14"></i> Google
+                                    </span>
+                                @else
+                                    <span class="badge text-bg-light">
+                                        <i class="fa-solid fa-envelope fs-14"></i> Email
+                                    </span>
+                                @endif
+                            </td>
                             <td>
                                 <input type="checkbox" class="js-switch" {{ $member->status == 1 ? 'checked' : '' }}
                                     data-id={{ $member->id }}>

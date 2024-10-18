@@ -76,32 +76,34 @@
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h2 class="card-title mb-0">Mật khẩu</h2>
-                    </div>
+                @if ($member->is_facebook == 0 && $member->is_google == 0)
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h2 class="card-title mb-0">Mật khẩu</h2>
+                        </div>
 
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="password" class="form-label">Mật khẩu</label>
-                                <input type="password" class="form-control" id="password" name="password">
-                                @error('password')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="password" class="form-label">Mật khẩu</label>
+                                    <input type="password" class="form-control" id="password" name="password">
+                                    @error('password')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
 
-                            <div class="col-md-6">
-                                <label for="password_confirmation" class="form-label">Nhập lại mật khẩu</label>
-                                <input type="password" class="form-control" id="password_confirmation"
-                                    name="password_confirmation">
-                                @error('password_confirmation')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                                <div class="col-md-6">
+                                    <label for="password_confirmation" class="form-label">Nhập lại mật khẩu</label>
+                                    <input type="password" class="form-control" id="password_confirmation"
+                                        name="password_confirmation">
+                                    @error('password_confirmation')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
 
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between">

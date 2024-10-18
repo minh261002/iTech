@@ -5,7 +5,9 @@
             <div class="row">
                 <div class="col-2 d-flex align-items-center justify-content-center">
                     <div class="logo">
-                        <img height="45" src="{{ asset('admin/assets/images/logo.png') }}" alt="">
+                        <a href="{{ route('user.home') }}">
+                            <img height="45" src="{{ asset(config('settings.site_logo')) }}" alt="">
+                        </a>
                     </div>
                 </div>
                 <div class="col-3 m-auto">
@@ -173,7 +175,7 @@
     </div>
 
 
-    <div class="category-container p-3">
+    <div class="category-container p-2">
         <div class="container-xxl">
             <div class="row">
                 <div class="col">

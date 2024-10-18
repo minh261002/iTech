@@ -387,7 +387,7 @@ html {
 /* Product by category */
 .prod-cate-container {
     padding: 1.5rem 0;
-    background: linear-gradient(to top, #d9d9d900, #737373a2);
+    background: linear-gradient(to top, #d9d9d900, #efefef);
 }
 
 .prod-cate-list {

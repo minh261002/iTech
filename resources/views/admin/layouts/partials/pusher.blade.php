@@ -16,6 +16,14 @@
     var channel = pusher.subscribe(`App.Models.Admin.${adminId}`);
 
     channel.bind('App\\Events\\NotificationEvent', function(data) {
+        var audio = new Audio('{{ asset('audio.mp3') }}');
+        audio.muted = true;
+        audio.play().then(() => {
+            audio.muted = false;
+        }).catch(error => {
+            console.error('Audio playback failed:', error);
+        });
+
         FuiToast.info(data.title, {
             title: 'Bạn có thông báo mới'
         });
@@ -54,6 +62,6 @@
     });
 
     channel.bind('App\\Events\\UserLoginEvent', function(data) {
-        FuiToast.success('1');
+        //sự kiện user online
     });
 </script>

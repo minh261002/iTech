@@ -17,6 +17,13 @@
         var channel = pusher.subscribe(`App.Models.User.${userId}`);
 
         channel.bind('App\\Events\\NotificationEvent', function(data) {
+            var audio = new Audio('{{ asset('audio.mp3') }}');
+            audio.muted = true;
+            audio.play().then(() => {
+                audio.muted = false;
+            }).catch(error => {
+                console.error('Audio playback failed:', error);
+            });
             FuiToast.info(data.title, {
                 title: 'Bạn có thông báo mới'
             });

@@ -47,12 +47,6 @@
             <div class="tab-pane fade " id="v-pills-variation-variable" role="tabpanel"
                 aria-labelledby="v-pills-variation-tab-variable">
 
-                @if (!isset($product))
-                    <div class="alert alert-danger" id="alert_error">
-                        <i class="mdi mdi-alert"></i> Bạn cần lưu thuộc tính trước khi tạo các biến thể của sản phẩm
-                    </div>
-                @endif
-
                 <div class="variation_result accordion" id="accordion">
                     @if (isset($product) && $product->productAttributes->count() > 0)
                         @include('admin.product.components.box_variation', [
